@@ -1,8 +1,8 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
-var port = 3030;
 var env = process.env.NODE_ENV || 'development';
+var port = process.env.PORT || 3030;
 
 var app = express();
 
@@ -22,8 +22,13 @@ app.get('/partials/:partialArea/:partialName', function(req, res) {
 app.get('*', function (req, res){
     res.render('index');
 });
+if(env === 'development') {
+    mongoose.connect('mongodb://localhost/forumsystemdb');
+}
+else {
+    mongoose.connect('mongodb://admin:forumsystemdbadmin@ds035290.mongolab.com:35290/forumsystemdb')
+}
 
-mongoose.connect('mongodb://localhost/forumsystemdb');
 var db = mongoose.connection;
 db.once('open', function (err) {
      if(err) {
