@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.get('/partials/:partialArea/:partialName', function(req, res) {
     console.log('area: ' + req.params.partialArea);
     console.log('name: ' + req.params.partialName);
-     res.render('/public/app/' + req.params.partialArea + '/' + req.params.partialName);
+     res.render('../../public/app/' + req.params.partialArea + '/' + req.params.partialName);
 });
 app.get('*', function (req, res){
     res.render('index');

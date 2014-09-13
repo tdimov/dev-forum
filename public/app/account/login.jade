@@ -1,0 +1,18 @@
+.container
+    div.col-md-6.col-md-offset-3
+        div.row
+            div.panel.panel-success
+                div.panel-heading
+                    h3.panel-title.text-center.text-size-18 Login
+                div.panel-body
+                    form.form-horizontal
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Username") Username
+                            div.col-md-12
+                                input#Username.form-control(type="text", placeholder="Username", ng-model="user.username")
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Password") Password
+                            div.col-md-12
+                                input#Password.form-control(type="password", placeholder="Password", ng-model="user.password")
+                    button.btn.btn-success.pull-right(ng-click="register(user)") Login
+

@@ -1,0 +1,30 @@
+.container
+    div.col-md-6.col-md-offset-3
+        div.row
+            div.panel.panel-success
+                div.panel-heading
+                    h3.panel-title.text-center.text-size-18 Registration
+                div.panel-body
+                    form.form-horizontal(name="registerForm")
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Username") Username
+                            div.col-md-12
+                                input#Username.form-control(type="text", placeholder="Username", ng-model="user.username", required)
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Password") Password
+                            div.col-md-12
+                                input#Password.form-control(type="password", placeholder="Password", ng-model="user.password", required)
+                        div.form-group
+                            label.col-md-3.text-size-18(for="FirstName") First name
+                            div.col-md-12
+                                input#FirstName.form-control(type="text", placeholder="First name", ng-model="user.firstName", required)
+                        div.form-group
+                            label.col-md-3.text-size-18(for="LastName") Last name
+                            div.col-md-12
+                                input#LastName.form-control(type="text", placeholder="Last name", ng-model="user.lastName", required)
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Email") Email
+                            div.col-md-12
+                                input#Email.form-control(type="text", placeholder="Email", ng-model="user.email", required)
+                     span.text-info All fields are required
+                    button.btn.btn-success.pull-right(ng-disabled="registerForm.$invalid", ng-click="login(user)") Register
