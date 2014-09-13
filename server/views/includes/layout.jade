@@ -1,13 +1,37 @@
 doctype
 html
     head
-        title Forum system
+        title Forum for developers
         link(rel="stylesheet", href="/lib/bootstrap/dist/css/bootstrap.css")
+        link(rel="stylesheet", href="/lib/bootstrap/dist/css/bootstrap-theme.min.css")
         link(rel="stylesheet", href="/lib/toastr/toastr.css")
         link(rel="stylesheet", href="/css/site.css")
     body(ng-app="app")
-        h2 Hi from layout
-
+        header
+            nav
+                div.navbar.navbar-default
+                    div.container
+                        div.navbar-header
+                            button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-responsive-collapse")
+                                span.icon-bar
+                                span.icon-bar
+                                span.icon-bar
+                            a.navbar-brand(href="#/") Dev forum
+                        div.navbar-collapse.collapse.navbar-responsive-collapse
+                            ul.nav.navbar-nav
+                                li
+                                    a(href="#/") Questions
+                                li
+                                    a(href="#/") Tags
+                                li
+                                    a(href="/#") Users
+                                li
+                                    a(href="/#") Unanswered
+                                li.pull-right
+                                    a(href="/#") Ask question
         block main-content
 
+        footer
+            p.text-center
+                | &copy Tihomir Dimov
         include scripts

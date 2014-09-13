@@ -1,5 +1,4 @@
 extends includes/layout
 block main-content
-    h2 Hi from index
-    div(ng-controller="MainController")
-        | {{ hello }}
+    section
+        div(ng-view)
