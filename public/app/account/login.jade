@@ -1,5 +1,5 @@
 .container
-    div.col-md-6.col-md-offset-3
+    div.col-md-6.col-md-offset-3(ng-controller="AccountController")
         div.row
             div.panel.panel-success
                 div.panel-heading
@@ -14,5 +14,5 @@
                             label.col-md-3.text-size-18(for="Password") Password
                             div.col-md-12
                                 input#Password.form-control(type="password", placeholder="Password", ng-model="user.password")
-                    button.btn.btn-success.pull-right(ng-click="register(user)") Login
+                    button.btn.btn-success.pull-right(ng-click="login(user)") Login
 
