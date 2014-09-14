@@ -30,9 +30,11 @@ html
                                 li
                                     a(href="/#") Ask question
                             div.navbar-right(ng-include="'partials/account/login-register'")
+
         block main-content
 
         footer
             p.text-center
                 | &copy Owner Tihomir Dimov
         include scripts
+        include currentUser

@@ -13,7 +13,12 @@ module.exports = function (app, config) {
         extended: true
     }));
     app.use(bodyParser.json());
-    app.use(session());
+    app.use(session({
+        secret: 'samsung galaxy alpha',
+        proxy: true,
+        resave: true,
+        saveUninitialized: true
+    }));
     app.use(passport.initialize());
     app.use(passport.session());
 };

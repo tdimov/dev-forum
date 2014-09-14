@@ -1,6 +1,14 @@
-div.navbar-right
-    ul.nav.navbar-nav.navbar-right
+div.navbar-right(ng-controller="AccountController")
+    ul.nav.navbar-nav.navbar-right(ng-hide="identity.isAuthenticated()")
         li
             a(href="#/login") Login
         li
             a(href="#/register") Register
+    ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
+        li.dropdown
+            a.dropdown-toggle(href="", data-toggle="dropdown")
+                | {{ identity.currentUser.firstName + ' ' + identity.currentUser.lastName}}
+                span.caret
+            ul.dropdown-menu
+                li
+                    a(href="#", ng-click="logout()") Logout

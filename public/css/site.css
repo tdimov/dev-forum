@@ -6,3 +6,9 @@
 .text-size-18 {
     font-size: 18px;
 }
+.toast.toast-success {
+    background-color: #18bc9c;
+}
+.toast-top-right {
+    top: 70px;
+}
