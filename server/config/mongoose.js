@@ -23,7 +23,8 @@ module.exports = function (config){
         firstName: String,
         lastName: String,
         salt: String,
-        passHash: String
+        passHash: String,
+        roles: [String]
     });
 
     userSchema.method({
@@ -51,10 +52,10 @@ module.exports = function (config){
             var hashedPass;
             salt = generateSalt();
             hashedPass = generateHashedPassword(salt, 'Tihomir');
-            User.create({username: 'tihomir.dimov', firstName: 'Tihomir', lastName: 'Dimov', salt: salt, passHash: hashedPass});
+            User.create({username: 'tihomir.dimov', firstName: 'Tihomir', lastName: 'Dimov', salt: salt, passHash: hashedPass, roles: ['admin']});
             salt = generateSalt();
             hashedPass = generateHashedPassword(salt, 'Vladimir');
-            User.create({username: 'vladimir.dimov', firstName: 'Vladimir', lastName: 'Dimov', salt: salt, passHash: hashedPass});
+            User.create({username: 'vladimir.dimov', firstName: 'Vladimir', lastName: 'Dimov', salt: salt, passHash: hashedPass, roles: ['user']});
             console.log('Users addded to database');
         }
         //});

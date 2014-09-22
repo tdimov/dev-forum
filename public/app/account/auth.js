@@ -1,4 +1,4 @@
-app.factory('auth', function ($q, $http, identity) {
+app.factory('auth', function ($q, $http, identity, UsersResource) {
     return {
         login: function (user) {
             var deferred = $q.defer();
@@ -6,7 +6,9 @@ app.factory('auth', function ($q, $http, identity) {
             $http.post('/login', user)
                 .success(function (response) {
                     if(response.success) {
-                        identity.currentUser = response.user;
+                        var user = new UsersResource();
+                        angular.extend(user, response.user);
+                        identity.currentUser = user;
                         deferred.resolve(true);
                     }
                     else {
@@ -30,6 +32,14 @@ app.factory('auth', function ($q, $http, identity) {
             });
 
             return deferred.promise;
+        },
+        isAuthorizedForRole: function (role) {
+            if(identity.isAuthorizedForRole(role)) {
+                return true;
+            }
+            else {
+                return $q.reject('not authorized');
+            }
         }
     };
 });

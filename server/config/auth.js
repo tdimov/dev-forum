@@ -26,6 +26,28 @@ module.exports = {
         req.logout();
         res.send({success: true});
         res.end();
+    },
+    isAuthenticated: function(req, res, next) {
+        if (req.isAuthenticated()) {
+            next();
+        }
+        else {
+            res.status(403);
+            res.write("Unauthorized request.");
+            res.end()
+        }
+    },
+    isInRole: function (role) {
+        return function (req, res, next) {
+            if (req.isAuthenticated() && req.user.roles.indexOf(role) > - 1) {
+                next();
+            }
+            else {
+                res.status(403);
+                res.write("Unauthorized request.");
+                res.end()
+            }
+        }
 
     }
 };
