@@ -23,5 +23,17 @@ app.controller('AccountController', function ($scope, $location, notifier, ident
                 notifier.success('Logout failed!');
             }
         });
-    }
+    };
+
+    $scope.register = function (user) {
+        auth.register(user).then(function (success) {
+            if(success) {
+                notifier.success("Registration successful!");
+                $location.path('/');
+            }
+            else {
+                notifier.error("Please, enter correct user data!");
+            }
+        })
+    };
 });

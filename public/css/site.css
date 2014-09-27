@@ -12,3 +12,11 @@
 .toast-top-right {
     top: 70px;
 }
+
+input.ng-invalid.ng-dirty.form-validation {
+    border-color: #d62c1a;
+}
+
+input.ng-valid.ng-dirty.form-validation {
+    border-color: #18bc9c;
+}

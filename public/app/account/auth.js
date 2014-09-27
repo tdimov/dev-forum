@@ -40,6 +40,27 @@ app.factory('auth', function ($q, $http, identity, UsersResource) {
             else {
                 return $q.reject('not authorized');
             }
+        },
+        isUserAuthenticated: function () {
+            if(!identity.isAuthenticated()) {
+                return true;
+            }
+            else {
+                return $q.reject('authenticated');
+            }
+        },
+        register: function (user) {
+            var deferred = $q.defer();
+
+            var user = new UsersResource(user);
+            user.$save().then(function (response) {
+                identity.currentUser = response.user;
+                deferred.resolve(response.success);
+            }, function (response) {
+                deferred.reject(response.success);
+            });
+
+            return deferred.promise;
         }
     };
 });
