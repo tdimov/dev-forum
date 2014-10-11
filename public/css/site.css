@@ -20,3 +20,9 @@ input.ng-invalid.ng-dirty.form-validation {
 input.ng-valid.ng-dirty.form-validation {
     border-color: #18bc9c;
 }
+
+@-moz-document url-prefix() {
+    fieldset { display: table-cell; }
+}
+
+.margin-right { margin-right: 5px;}

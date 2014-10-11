@@ -7,6 +7,7 @@ module.exports = function (app) {
     });
 
     app.get('/api/users',auth.isInRole('admin'), usersController.getAllUsers);
+    app.get('/api/users/:id', auth.isInRole('admin'), usersController.getUserById);
     app.post('/api/users', usersController.register);
     app.put('/api/users', auth.isAuthenticated, usersController.updateUser);
 

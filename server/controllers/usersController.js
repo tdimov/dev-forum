@@ -4,13 +4,29 @@ var User = require('mongoose').model('User'),
 
 module.exports = {
     getAllUsers: function (req, res) {
-        User.find({}).exec(function(err, collection) {
+        User.find({_id: { '$ne': req.user._id }}).exec(function(err, collection) {
             if(err) {
                 console.log('Users could not be loaded: ' + err);
             }
 
             res.send(collection);
         })
+    },
+    getUserById: function(req, res) {
+        User.findOne({_id: req.params.id}).exec(function(err, user) {
+            if(err) {
+                console.log('User could not be loaded');
+            }
+            var userVM = {
+                '_id': user._id,
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                roles: user.roles
+            };
+            res.send(userVM);
+        });
     },
     register: function (req, res, next) {
         var newUserData = req.body;

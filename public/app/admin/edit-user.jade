@@ -1,0 +1,48 @@
+.container
+    div.row
+        div.col-md-8
+            div.panel.panel-success
+                div.panel-heading
+                    h3.panel-title.text-left.text-size-18 Edit user
+                div.panel-body(ng-controller="EditUserController")
+                    form.form-horizontal(name="editUserForm")
+                        .row
+                            .col-md-2
+                                strong Id:
+                            .col-md-6
+                                | {{ user._id }}
+                        .row
+                            .col-md-2
+                                strong Username:
+                            .col-md-6
+                                | {{ user.username }}
+                        .row
+                            .col-md-2
+                                strong First name:
+                            .col-md-6
+                                | {{ user.firstName }}
+                        .row
+                            .col-md-2
+                                strong Last name:
+                            .col-md-6
+                                | {{ user.lastName }}
+                        .row
+                            .col-md-2
+                                strong Email:
+                            .col-md-6
+                                | {{ user.email }}
+                        .row
+                            .col-md-2
+                                strong Current role:
+                            .col-md-6
+                                | {{ user.roles[0] }}
+                        .row
+                            .col-md-2
+                                strong Change role:
+                            .col-md-6
+                                select.form-control.input-sm(ng-model="user.newRole")
+                                    option(value=" " ng-selected="'true'") Select role
+                                    option(value="admin") Admin
+                                    option(value="moderator") Moderator
+                                    option(value="user") User
+                    button.btn.btn-success.pull-right(ng-click="update(user)") Save changes

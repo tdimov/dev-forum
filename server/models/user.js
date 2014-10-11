@@ -44,6 +44,6 @@ module.exports.seedInitialUsers = function () {
             User.create({username: 'vladimir.dimov', firstName: 'Vladimir', lastName: 'Dimov', email: "vladimir@abv.bg", salt: salt, passHash: hashedPass, roles: ['user']});
             console.log('Users addded to database');
         }
-        //});
+       // });
     });
 };

@@ -1,5 +1,19 @@
 .container
-    table.table.table-bordered(ng-controller="UsersController")
-        tr(ng-repeat="user in users")
-            td {{ user.firstName }}
-            td {{ user.lastName }}
+    div.table-responsive
+        table.table.table-bordered.table-hover(ng-controller="UsersController")
+            thead
+                tr
+                    th Username
+                    th Name
+                    th Email
+                    th Actions
+            .tbody
+                tr(ng-repeat="user in users")
+                    td {{ user.username }}
+                    td {{ user.firstName + ' ' + user.lastName }}
+                    td {{ user.email }}
+                    td
+                        a.btn.btn-primary.btn-sm.margin-right(href="#/admin/users/{{ user._id }}")
+                            i.glyphicon.glyphicon-pencil
+                        a.btn.btn-primary.btn-sm.margin-right(href="#/")
+                            i.glyphicon.glyphicon-remove

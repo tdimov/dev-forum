@@ -2,7 +2,9 @@ app.controller('SettingsController', function($scope, $location, identity, auth,
     $scope.user = {
         firstName: identity.currentUser.firstName,
         lastName: identity.currentUser.lastName,
-        email: identity.currentUser.email
+        email: identity.currentUser.email,
+        oldPassword: "",
+        newPassword: ""
     };
 
     $scope.update = function(user) {
