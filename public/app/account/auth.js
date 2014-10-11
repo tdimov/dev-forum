@@ -9,10 +9,10 @@ app.factory('auth', function ($q, $http, identity, UsersResource) {
                         var user = new UsersResource();
                         angular.extend(user, response.user);
                         identity.currentUser = user;
-                        deferred.resolve(true);
+                        deferred.resolve(response);
                     }
                     else {
-                        deferred.resolve(false);
+                        deferred.resolve(response);
                     }
                 });
 
@@ -24,10 +24,10 @@ app.factory('auth', function ($q, $http, identity, UsersResource) {
             $http.post('/logout').success(function (response){
                 if(response.success) {
                     identity.currentUser = undefined;
-                    deferred.resolve(true);
+                    deferred.resolve(response);
                 }
                 else {
-                    deferred.resolve(false);
+                    deferred.resolve(response);
                 }
             });
 
@@ -41,6 +41,14 @@ app.factory('auth', function ($q, $http, identity, UsersResource) {
                 return $q.reject('not authorized');
             }
         },
+        isUserNotAuthenticated: function() {
+            if(identity.isAuthenticated()) {
+                return false;
+            }
+            else {
+                return $q.reject('not authenticated');
+            }
+        },
         isUserAuthenticated: function () {
             if(!identity.isAuthenticated()) {
                 return true;
@@ -52,13 +60,25 @@ app.factory('auth', function ($q, $http, identity, UsersResource) {
         register: function (user) {
             var deferred = $q.defer();
 
-            var user = new UsersResource(user);
-            user.$save().then(function (response) {
+            var newUser = new UsersResource(user);
+            newUser.$save().then(function (response) {
                 identity.currentUser = response.user;
-                deferred.resolve(response.success);
+                deferred.resolve(response);
             }, function (response) {
-                deferred.reject(response.success);
+                deferred.reject(response);
             });
+
+            return deferred.promise;
+        },
+        update: function (user) {
+            var deferred = $q.defer();
+            var updatedUser = new UsersResource(user);
+            updatedUser._id = identity.currentUser._id;
+            updatedUser.$update().then(function(response) {
+                deferred.resolve(response);
+            }, function() {
+                deferred.reject(response);
+            })
 
             return deferred.promise;
         }

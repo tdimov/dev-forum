@@ -8,7 +8,7 @@ module.exports = {
             }
 
             if(!user) {
-                res.send({success: false});
+                res.send({success: false, message: "Wrong username or password!"});
             }
 
             req.logIn(user, function (err) {
@@ -16,7 +16,7 @@ module.exports = {
                     return next(err);
                 }
 
-                res.send({success: true, user: user});
+                res.send({success: true, message: "Successful login!", user: user});
             });
         });
 
@@ -24,7 +24,7 @@ module.exports = {
     },
     logout: function (req, res, next) {
         req.logout();
-        res.send({success: true});
+        res.send({success: true, message: 'Successful logout!'});
         res.end();
     },
     isAuthenticated: function(req, res, next) {

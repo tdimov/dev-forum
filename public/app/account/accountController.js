@@ -2,37 +2,37 @@ app.controller('AccountController', function ($scope, $location, notifier, ident
     $scope.identity = identity;
 
     $scope.login = function (user) {
-        auth.login(user).then(function(success) {
-            if(success) {
-                notifier.success("Successful login!");
+        auth.login(user).then(function(response) {
+            if(response.success) {
+                notifier.success(response.message);
                 $location.path('/');
             }
             else {
-                notifier.error("Wrong username or password!");
+                notifier.error(response.message);
             }
         });
     };
 
     $scope.logout = function () {
-        auth.logout().then(function(success){
-            if(success) {
-                notifier.success('Successful logout!');
+        auth.logout().then(function(response){
+            if(response.success) {
+                notifier.success(response.message);
                 $location.path('/');
             }
             else {
-                notifier.success('Logout failed!');
+                notifier.error('Logout failed!');
             }
         });
     };
 
     $scope.register = function (user) {
-        auth.register(user).then(function (success) {
-            if(success) {
-                notifier.success("Registration successful!");
+        auth.register(user).then(function (response) {
+            if(response.success) {
+                notifier.success(response.message);
                 $location.path('/');
             }
             else {
-                notifier.error("Please, enter correct user data!");
+                notifier.error(response.message);
             }
         })
     };

@@ -12,5 +12,7 @@ div.navbar-right(ng-controller="AccountController")
             ul.dropdown-menu
                 li(ng-show="identity.currentUser.isAdmin()")
                     a(href="#/admin/users") Users
+                li(ng-show="identity.isAuthenticated()")
+                    a(href="#/account/settings") Settings
                 li
                     a(href="#", ng-click="logout()") Logout

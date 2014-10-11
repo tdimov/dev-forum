@@ -8,6 +8,7 @@ module.exports = function (app) {
 
     app.get('/api/users',auth.isInRole('admin'), usersController.getAllUsers);
     app.post('/api/users', usersController.register);
+    app.put('/api/users', auth.isAuthenticated, usersController.updateUser);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);

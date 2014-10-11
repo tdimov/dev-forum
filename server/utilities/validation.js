@@ -24,10 +24,9 @@ function passwordsMatch(pass, conformPass) {
     }
     return true;
 }
-
+//TODO: Change email pattern in registration.jade with validator email pattern
 module.exports = {
     isRegistrationValid: function (user) {
-        console.log(user);
         if(user) {
             if(!areJsonPropsNullOrEmpty(user)) {
                 return false;
@@ -37,6 +36,26 @@ module.exports = {
             }
             else if(!validator.isEmail(user.email)) {
                 return false
+            }
+            else {
+                return true;
+            }
+        }
+    },
+    //TODO: Check passwords
+    isUpdateUserDataValid: function (user) {
+        if(user) {
+            var userRequiredData = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
+            };
+
+            if(!areJsonPropsNullOrEmpty(userRequiredData)) {
+                return false;
+            }
+            else if(!validator.isEmail(user.email)) {
+                return false;
             }
             else {
                 return true;

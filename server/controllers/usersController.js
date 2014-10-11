@@ -29,13 +29,44 @@ module.exports = {
                         return res.send({reason: err.toString()});
                     }
 
-                    res.send({success: true, user: user});
+                    res.send({success: true, message: "Registration successful!", user: user});
                 });
             });
         }
         else {
-            res.send({success: false})
+            res.send({success: false, message: "Please, enter correct user data!"});
         }
 
+    },
+    updateUser: function (req, res, next) {
+        var updatedUser = req.body;
+        if(req.user._id == updatedUser._id) {
+            if(validation.isUpdateUserDataValid(updatedUser)) {
+                if(updatedUser.newPassword && updatedUser.newPassword.length > 0) {
+                    updatedUser.salt = encryption.generateSalt();
+                    updatedUser.passHash = encryption.generateHashedPassword(updatedUser.salt, updatedUser.newPassword);
+                }
+
+                User.update({_id: updatedUser._id}, updatedUser, function(err) {
+                    if(err) {
+                        res.send({success: false, message: "Update profile failed!"});
+                        red.end();
+                    }
+                    else {
+                        res.send({success: true, message: "Successful update!"});
+                        res.end();
+                    }
+
+                });
+            }
+            else {
+                res.send({success: false, message: "Please, enter correct user data!"})
+            }
+
+        }
+        else {
+            res.send({success: false, message: "Update profile failed!" });
+            res.end();
+        }
     }
 };

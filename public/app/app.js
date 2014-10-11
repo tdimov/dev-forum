@@ -12,6 +12,11 @@ app.config(function ($routeProvider) {
             authenticated: function (auth) {
                 return auth.isUserAuthenticated();
             }
+        },
+        notAuthenticatedUser: {
+            isNotAuthenticated: function(auth) {
+                return auth.isUserNotAuthenticated()
+            }
         }
     };
 
@@ -30,6 +35,11 @@ app.config(function ($routeProvider) {
             controller: 'AccountController',
             resolve: routeChecks.authenticatedUser
         })
+        .when('/account/settings', {
+            templateUrl: '/partials/account/settings',
+            controller: 'AccountController',
+            resolve: routeChecks.notAuthenticatedUser
+        })
         .when('/admin/users', {
             templateUrl: '/partials/admin/users-list',
             controller: 'UsersController',
@@ -43,7 +53,7 @@ app.controller('MainController', function ($scope) {
 
 app.run(function($rootScope, $location) {
     $rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
-        if(rejection === 'not authorized' || rejection === 'authenticated') {
+        if(rejection === 'not authorized' || rejection === 'authenticated' || rejection === 'not authenticated') {
             $location.path('/');
         }
     });
