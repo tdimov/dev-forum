@@ -78,7 +78,7 @@ app.factory('auth', function ($q, $http, identity, UsersResource) {
                 deferred.resolve(response);
             }, function() {
                 deferred.reject(response);
-            })
+            });
 
             return deferred.promise;
         }

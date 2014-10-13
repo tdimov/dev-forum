@@ -1,5 +1,6 @@
-var passport = require('passport');
-
+var passport = require('passport'),
+    User = require('mongoose').model('User');
+//TODO: move Update user profile to another file if you want :)
 module.exports = {
     login: function (req, res, next) {
         var auth = passport.authenticate('local', function (err, user) {
@@ -12,14 +13,24 @@ module.exports = {
             }
 
             req.logIn(user, function (err) {
+
                 if(err) {
                     return next(err);
                 }
 
-                res.send({success: true, message: "Successful login!", user: user});
+                user.lastLoginDate = new Date().toLocaleString();
+
+                User.update({_id: user._id}, {$set: {lastLoginDate: new Date().toLocaleString()}}, {upsert: true}, function (err) {
+                    if(err) {
+                        console.log('Set last login date failed: ' + err);
+                        return;
+                    }
+
+                    res.send({success: true, message: "Successful login!", user: user});
+                });
+
             });
         });
-
         auth(req, res, next);
     },
     logout: function (req, res, next) {

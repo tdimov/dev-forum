@@ -2,6 +2,14 @@ var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption'),
     validation = require('../utilities/validation');
 
+function updateCurrentUser(req, res, updatedUser) {
+
+}
+
+function updateUserByAdmin(req, res, updatedUser) {
+
+}
+
 module.exports = {
     getAllUsers: function (req, res) {
         User.find({_id: { '$ne': req.user._id }}).exec(function(err, collection) {
@@ -23,6 +31,8 @@ module.exports = {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                registrationDate: user.registrationDate,
+                lastLoginDate: user.lastLoginDate,
                 roles: user.roles
             };
             res.send(userVM);
@@ -34,6 +44,9 @@ module.exports = {
         if(validation.isRegistrationValid(newUserData)) {
             newUserData.salt = encryption.generateSalt();
             newUserData.passHash = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
+            newUserData.roles = ['user'];
+            newUserData.registrationDate = new Date().toLocaleString();
+            newUserData.lastLoginDate = new Date().toLocaleString();
             User.create(newUserData, function (err, user){
                 if(err){
                     console.log('Failed to register new user: ' + err);
@@ -66,7 +79,7 @@ module.exports = {
                 User.update({_id: updatedUser._id}, updatedUser, function(err) {
                     if(err) {
                         res.send({success: false, message: "Update profile failed!"});
-                        red.end();
+                        res.end();
                     }
                     else {
                         res.send({success: true, message: "Successful update!"});
@@ -78,11 +91,26 @@ module.exports = {
             else {
                 res.send({success: false, message: "Please, enter correct user data!"})
             }
-
         }
         else {
             res.send({success: false, message: "Update profile failed!" });
             res.end();
+        }
+    },
+    updateEditedUser: function (req, res, next) {
+        var editedUser = req.body.user;
+        if(editedUser.newRole) {
+            User.update({_id: editedUser._id}, {$set: {roles: [editedUser.newRole]}}, {upsert: true}, function (err) {
+                if(err) {
+                    console.log('Set last login date failed: ' + err);
+                    return;
+                }
+
+                res.send({success: true, message: "Successful update!"});
+            });
+        }
+        else {
+            res.send({success: false, message: "Please, do any changes!"});
         }
     }
 };

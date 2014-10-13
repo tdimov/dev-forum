@@ -13,7 +13,12 @@
                     td {{ user.firstName + ' ' + user.lastName }}
                     td {{ user.email }}
                     td
-                        a.btn.btn-primary.btn-sm.margin-right(href="#/admin/users/{{ user._id }}")
+                        a.btn.btn-primary.btn-sm.margin-right(href="#/admin/users/{{ user._id }}", rel="tooltip", title="Edit")
                             i.glyphicon.glyphicon-pencil
-                        a.btn.btn-primary.btn-sm.margin-right(href="#/")
+                        a.btn.btn-primary.btn-sm.margin-right(href="#/", rel="tooltip", title="Delete")
                             i.glyphicon.glyphicon-remove
+    script(type="text/javascript").
+        $(document).ready(function() {
+            console.log($("[rel=tooltip]"));
+            $("[rel=tooltip]").tooltip({placement: 'right'});
+        });

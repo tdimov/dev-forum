@@ -10,6 +10,7 @@ module.exports = function (app) {
     app.get('/api/users/:id', auth.isInRole('admin'), usersController.getUserById);
     app.post('/api/users', usersController.register);
     app.put('/api/users', auth.isAuthenticated, usersController.updateUser);
+    app.put('/api/users/:user', auth.isInRole('admin'), usersController.updateEditedUser);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);

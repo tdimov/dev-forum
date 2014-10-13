@@ -10,38 +10,48 @@
                             .col-md-2
                                 strong Id:
                             .col-md-6
-                                | {{ user._id }}
+                                span {{ user._id }}
                         .row
                             .col-md-2
                                 strong Username:
                             .col-md-6
-                                | {{ user.username }}
+                                span {{ user.username }}
                         .row
                             .col-md-2
                                 strong First name:
                             .col-md-6
-                                | {{ user.firstName }}
+                                span {{ user.firstName }}
                         .row
                             .col-md-2
                                 strong Last name:
                             .col-md-6
-                                | {{ user.lastName }}
+                                span {{ user.lastName }}
                         .row
                             .col-md-2
                                 strong Email:
                             .col-md-6
-                                | {{ user.email }}
+                                span {{ user.email }}
+                        .row
+                            .col-md-2
+                                strong Registered:
+                            .col-md-6
+                                span {{ user.registrationDate }}
+                        .row
+                            .col-md-2
+                                strong Last login:
+                            .col-md-6
+                                span {{ user.lastLoginDate }}
                         .row
                             .col-md-2
                                 strong Current role:
                             .col-md-6
-                                | {{ user.roles[0] }}
+                                span {{ user.roles[0] }}
                         .row
                             .col-md-2
                                 strong Change role:
                             .col-md-6
                                 select.form-control.input-sm(ng-model="user.newRole")
-                                    option(value=" " ng-selected="'true'") Select role
+                                    option(value="" ng-selected="'true'") Select role
                                     option(value="admin") Admin
                                     option(value="moderator") Moderator
                                     option(value="user") User

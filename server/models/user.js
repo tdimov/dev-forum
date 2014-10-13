@@ -8,6 +8,8 @@ var userSchema = new mongoose.Schema({
     email: { type: String, require: '{PATH} is required'},
     salt: String,
     passHash: String,
+    registrationDate: { type: String, require: '{PATH} is required'},
+    lastLoginDate: String,
     roles: [String]
 });
 
@@ -38,12 +40,12 @@ module.exports.seedInitialUsers = function () {
             var hashedPass;
             salt = encryption.generateSalt();
             hashedPass = encryption.generateHashedPassword(salt, 'Tihomir');
-            User.create({username: 'tihomir.dimov', firstName: 'Tihomir', lastName: 'Dimov', email: "tihomir@abv.bg", salt: salt, passHash: hashedPass, roles: ['admin']});
+            User.create({username: 'tihomir.dimov', firstName: 'Tihomir', lastName: 'Dimov', email: "tihomir@abv.bg", salt: salt, passHash: hashedPass, registrationDate: new Date().toLocaleString(), lastLoginDate: new Date().toLocaleString(), roles: ['admin']});
             salt = encryption.generateSalt();
             hashedPass = encryption.generateHashedPassword(salt, 'Vladimir');
-            User.create({username: 'vladimir.dimov', firstName: 'Vladimir', lastName: 'Dimov', email: "vladimir@abv.bg", salt: salt, passHash: hashedPass, roles: ['user']});
+            User.create({username: 'vladimir.dimov', firstName: 'Vladimir', lastName: 'Dimov', email: "vladimir@abv.bg", salt: salt, passHash: hashedPass, registrationDate: new Date().toLocaleString(), lastLoginDate: new Date().toLocaleString(), roles: ['user']});
             console.log('Users addded to database');
         }
-       // });
+        //});
     });
 };
