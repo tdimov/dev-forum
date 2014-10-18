@@ -1,6 +1,6 @@
 .container
-    div.table-responsive
-        table.table.table-bordered.table-hover(ng-controller="UsersController")
+    div.table-responsive(ng-controller="UsersController")
+        table.table.table-bordered.table-hover
             thead
                 tr
                     th Username
@@ -13,12 +13,19 @@
                     td {{ user.firstName + ' ' + user.lastName }}
                     td {{ user.email }}
                     td
-                        a.btn.btn-primary.btn-sm.margin-right(href="#/admin/users/{{ user._id }}", rel="tooltip", title="Edit")
+                        a.btn.btn-primary.btn-sm.margin-right(href="#/admin/users/{{ user._id }}", title="Edit")
                             i.glyphicon.glyphicon-pencil
-                        a.btn.btn-primary.btn-sm.margin-right(href="#/", rel="tooltip", title="Delete")
+                        btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="deleteUser(user._id)" title="Delete", data-toggle="modal", data-target="#acceptModal")
                             i.glyphicon.glyphicon-remove
-    script(type="text/javascript").
-        $(document).ready(function() {
-            console.log($("[rel=tooltip]"));
-            $("[rel=tooltip]").tooltip({placement: 'right'});
-        });
+
+        div#acceptModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
+                        button.close(type="button", data-dismiss="modal")
+                            span(aria-hidden="true") &times;
+                            span.sr-only Close
+                        h4.modal-title Are you sure?
+                    div.modal-footer
+                        button.btn.btn-primary(type="button", ng-click="acceptDeleting()", data-dismiss="modal") Yes
+                        button.btn.btn-default(data-dismiss="modal") No

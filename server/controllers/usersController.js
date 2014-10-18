@@ -102,7 +102,7 @@ module.exports = {
         if(editedUser.newRole) {
             User.update({_id: editedUser._id}, {$set: {roles: [editedUser.newRole]}}, {upsert: true}, function (err) {
                 if(err) {
-                    console.log('Set last login date failed: ' + err);
+                    console.log('Edit user failed: ' + err);
                     return;
                 }
 
@@ -110,7 +110,24 @@ module.exports = {
             });
         }
         else {
-            res.send({success: false, message: "Please, do any changes!"});
+            res.send({success: false, message: "Please, do some changes!"});
+        }
+    },
+    deleteUser: function (req, res, next) {
+        var userId = req.params.id;
+        if(userId) {
+            User.remove({_id: userId}, function (err) {
+                if(err) {
+                    console.log("A user was not removed from db: " + err);
+                    res.send({success: false, message: "Delete failed!"});
+                    res.end();
+                    return;
+                }
+                else {
+                    res.send({success: true, message: "Successful delete!"});
+                    res.end();
+                }
+            })
         }
     }
 };

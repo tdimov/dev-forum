@@ -9,6 +9,16 @@ app.factory('UsersService', function($q, $http) {
                 });
 
             return deferred.promise;
+        },
+        deleteUser: function (userId) {
+            var deferred = $q.defer();
+
+            $http.delete('/api/users/' + userId)
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
         }
     }
 });

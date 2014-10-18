@@ -11,6 +11,7 @@ module.exports = function (app) {
     app.post('/api/users', usersController.register);
     app.put('/api/users', auth.isAuthenticated, usersController.updateUser);
     app.put('/api/users/:user', auth.isInRole('admin'), usersController.updateEditedUser);
+    app.delete('/api/users/:id', auth.isInRole('admin'), usersController.deleteUser);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);
