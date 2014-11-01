@@ -40,31 +40,33 @@ module.exports = {
     },
     register: function (req, res, next) {
         var newUserData = req.body;
-
-        if(validation.isRegistrationValid(newUserData)) {
-            newUserData.salt = encryption.generateSalt();
-            newUserData.passHash = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
-            newUserData.roles = ['user'];
-            newUserData.registrationDate = new Date().toLocaleString();
-            newUserData.lastLoginDate = new Date().toLocaleString();
-            User.create(newUserData, function (err, user){
-                if(err){
-                    console.log('Failed to register new user: ' + err);
-                    return;
-                }
-                req.logIn(user, function (err) {
-                    if(err) {
-                        res.status(400);
-                        return res.send({reason: err.toString()});
-                    }
-
-                    res.send({success: true, message: "Registration successful!", user: user});
-                });
-            });
-        }
-        else {
-            res.send({success: false, message: "Please, enter correct user data!"});
-        }
+        console.log(req.files);
+        console.log(req.body);
+        console.log(req);
+//        if(validation.isRegistrationValid(newUserData)) {
+//            newUserData.salt = encryption.generateSalt();
+//            newUserData.passHash = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
+//            newUserData.roles = ['user'];
+//            newUserData.registrationDate = new Date().toLocaleString();
+//            newUserData.lastLoginDate = new Date().toLocaleString();
+//            User.create(newUserData, function (err, user){
+//                if(err){
+//                    console.log('Failed to register new user: ' + err);
+//                    return;
+//                }
+//                req.logIn(user, function (err) {
+//                    if(err) {
+//                        res.status(400);
+//                        return res.send({reason: err.toString()});
+//                    }
+//
+//                    res.send({success: true, message: "Registration successful!", user: user});
+//                });
+//            });
+//        }
+//        else {
+//            res.send({success: false, message: "Please, enter correct user data!"});
+//        }
 
     },
     updateUser: function (req, res, next) {

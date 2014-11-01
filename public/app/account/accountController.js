@@ -26,6 +26,7 @@ app.controller('AccountController', function ($scope, $location, notifier, ident
     };
 
     $scope.register = function (user) {
+        console.log(user);
         auth.register(user).then(function (response) {
             if(response.success) {
                 notifier.success(response.message);

@@ -49,6 +49,10 @@ app.config(function ($routeProvider) {
             templateUrl: '/partials/admin/edit-user',
             controller: "EditUserController",
             resolve: routeChecks.admin
+        })
+        .when('/tags', {
+            templateUrl: '/partials/tags/tags-list',
+            controller: ''
         });
 });
 //TODO: create MainController in another file

@@ -2,10 +2,19 @@
     margin-right: 10px;
     border: 1px;
 }
-
+.text-size-10 {
+    font-size: 10px;
+}
+.text-size-12 {
+    font-size: 12px;
+}
+.text-size-14 {
+    font-size: 14px;
+}
 .text-size-18 {
     font-size: 18px;
 }
+
 .toast.toast-success {
     background-color: #18bc9c;
 }
@@ -26,3 +35,7 @@ input.ng-valid.ng-dirty.form-validation {
 }
 
 .margin-right { margin-right: 5px;}
+.margin-bottom { margin-bottom: 5px;}
+.text-white { color: #ffffff; }
+.h-margin-top {margin-top: 0;}
+a.not-hover:hover { color: #ffffff; text-decoration: underline;}
