@@ -1,6 +1,7 @@
 .container
     div.row
         h3 All questions
+        hr
         div.col-md-9
             ul.list-group
                 li.row.list-group-item
@@ -15,7 +16,7 @@
                         p.text-primary.text-center views
                     div.col-md-9
                         h3.h-margin-top
-                            a(href="#") My question title here
+                            a(href="#/questions/question") My question title here
                         div.row
                             ul.col-md-7.list-inline
                                 li.label.label-primary.margin-right
@@ -39,7 +40,7 @@
                         p.text-primary.text-center views
                     div.col-md-9
                         h3.h-margin-top
-                            a(href="#") My question title here
+                            a(href="#/questions/question") My question title here
                         div.row
                             ul.col-md-7.list-inline
                                 li.label.label-primary.margin-right
@@ -67,5 +68,24 @@
                             a(href="#") Question 4
                         li
                             a(href="#") Question 5
+                div.panel-footer
+                    a(href="#") See all...
+            div.panel.panel-default
+                div.panel-heading
+                    h4 Tags
+                div.panel-body
+                    ul.list-inline
+                        li.label.label-primary.margin-right
+                            a.text-white.not-hover(href="#") C#
+                        li.label.label-primary.margin-right
+                            a.text-white.not-hover(href="#") Javascript
+                        li.label.label-primary.margin-right
+                            a.text-white.not-hover(href="#") MongoDb
+                        li.label.label-primary.margin-right
+                            a.text-white.not-hover(href="#") Java
+                        li.label.label-primary.margin-right
+                            a.text-white.not-hover(href="#") Nodejs
+                        li.label.label-primary.margin-right
+                            a.text-white.not-hover(href="#") AngularJS
                 div.panel-footer
                     a(href="#") See all...

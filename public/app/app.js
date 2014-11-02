@@ -50,6 +50,10 @@ app.config(function ($routeProvider) {
             controller: "EditUserController",
             resolve: routeChecks.admin
         })
+        .when('/questions/question', {
+            templateUrl: '/partials/questions/question',
+            controller: ''
+        })
         .when('/tags', {
             templateUrl: '/partials/tags/tags-list',
             controller: ''
