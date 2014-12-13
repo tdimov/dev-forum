@@ -22,11 +22,11 @@
     top: 70px;
 }
 
-input.ng-invalid.ng-dirty.form-validation {
+input.ng-invalid.ng-dirty.form-validation, textarea.ng-invalid.ng-dirty.form-validation {
     border-color: #d62c1a;
 }
 
-input.ng-valid.ng-dirty.form-validation {
+input.ng-valid.ng-dirty.form-validation, textarea.ng-valid.ng-dirty.form-validation {
     border-color: #18bc9c;
 }
 
@@ -36,6 +36,7 @@ input.ng-valid.ng-dirty.form-validation {
 
 .margin-right { margin-right: 5px;}
 .margin-bottom { margin-bottom: 5px;}
+.margin-top-15 { margin-top: 15px; }
 .text-white { color: #ffffff; }
 .h-margin-top {margin-top: 0;}
 a.not-hover:hover { color: #ffffff; text-decoration: underline;}

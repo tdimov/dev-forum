@@ -1,42 +1,35 @@
 .container
-    div.row
-        h3 Tags
-        hr
-        div.form-group.col-md-6
-            label.text-size-18(for="Search") Search a tag
-            input#Search.form-control(type="text", ng-model="search", placeholder="Tag name")
-    div.row
-        div.col-md-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-md-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-md-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-md-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-    div.row
-        div.col-md-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-md-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-md-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-md-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
+    div(ng-controller="TagsController")
+        div.margin-top-15
+            a.btn.btn-primary(href="#/admin/tags/add") Add new tag
+        p.text.text-info.text-size-18(ng-show="hasTags()") There are no tags added!
+        div.table-responsive.margin-top-15(ng-hide="hasTags()")
+            table.table.table-bordered.table-hover
+                thead
+                    tr
+                        th Name
+                        th Description
+                        th Questions count
+                        th Actions
+                .tbody
+                    tr(ng-repeat="tag in tags")
+                        td {{ tag.name }}
+                        td {{ tag.description }}
+                        td {{ tag.questionsCount }}
+                        td
+                            a.btn.btn-primary.btn-sm.margin-right(href="#/admin/tags/{{ tag._id }}", title="Edit")
+                                i.glyphicon.glyphicon-pencil
+                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="deleteTag(tag._id)" title="Delete", data-toggle="modal", data-target="#acceptModal")
+                                i.glyphicon.glyphicon-remove
 
+            div#acceptModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
+                div.modal-dialog
+                    div.modal-content
+                        div.modal-header
+                            button.close(type="button", data-dismiss="modal")
+                                span(aria-hidden="true") &times;
+                                span.sr-only Close
+                            h4.modal-title Are you sure?
+                        div.modal-footer
+                            button.btn.btn-primary(type="button", ng-click="acceptDeleting()", data-dismiss="modal") Yes
+                            button.btn.btn-default(data-dismiss="modal") No

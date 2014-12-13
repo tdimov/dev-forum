@@ -1,5 +1,10 @@
 var mongoose = require('mongoose'),
-    user = require('../models/user');
+    user = require('../models/user'),
+    question = require('../models/question'),
+    tag = require('../models/tag'),
+    answer = require('../models/answer'),
+    vote = require('../models/vote'),
+    comment = require('../models/comment');
 
 module.exports = function (config){
     mongoose.connect(config.db);

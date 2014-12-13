@@ -10,8 +10,10 @@ div.navbar-right(ng-controller="AccountController")
                 | {{ identity.currentUser.firstName + ' ' + identity.currentUser.lastName}}
                 span.caret
             ul.dropdown-menu
-                li(ng-show="identity.currentUser.isAdmin()")
-                    a(href="#/admin/users") Users
+                li(ng-show="identity.currentUser.isInRole('admin')")
+                    a(href="#/admin/admin-panel") Admin panel
+                li(ng-show="identity.currentUser.isInRole('moderator')")
+                    a(href="#/moderator/moderator-panel") Moderator panel
                 li(ng-show="identity.isAuthenticated()")
                     a(href="#/account/settings") Settings
                 li

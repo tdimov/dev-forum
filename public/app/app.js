@@ -8,6 +8,11 @@ app.config(function ($routeProvider) {
                 return auth.isAuthorizedForRole('admin');
             }
         },
+        moderator: {
+            auth: function(auth) {
+                return auth.isAuthorizedForRole('moderator');
+            }
+        },
         authenticatedUser: {
             authenticated: function (auth) {
                 return auth.isUserAuthenticated();
@@ -40,9 +45,9 @@ app.config(function ($routeProvider) {
             controller: 'AccountController',
             resolve: routeChecks.notAuthenticatedUser
         })
-        .when('/admin/users', {
-            templateUrl: '/partials/admin/users-list',
-            controller: 'UsersController',
+        //ADMIN
+        .when('/admin/admin-panel', {
+            templateUrl: '/partials/admin/admin-panel',
             resolve: routeChecks.admin
         })
         .when('/admin/users/:id', {
@@ -50,13 +55,45 @@ app.config(function ($routeProvider) {
             controller: "EditUserController",
             resolve: routeChecks.admin
         })
+        .when('/admin/tags/tags-list', {
+            templateUrl: '/partials/tags/tags-list',
+            controller: 'TagsController',
+            resolve: routeChecks.admin
+        })
+        .when('/admin/tags/add', {
+            templateUrl: '/partials/tags/add-tag',
+            controller: "TagsController",
+            resolve: routeChecks.admin
+        })
+        .when('/admin/tags/:id', {
+            templateUrl: '/partials/tags/edit-tag',
+            controller: 'EditTagController',
+            resolve: routeChecks.admin
+        })
+        //MODERATOR
+        .when('/moderator/moderator-panel', {
+            templateUrl: '/partials/moderator/moderator-panel',
+            resolve: routeChecks.moderator
+        })
+        .when('/users', {
+            templateUrl: '/partials/users/users-list',
+            controller: ''
+        })
+        .when('/questions/ask', {
+            templateUrl: '/partials/questions/ask-question',
+            controller: '',
+            resolve: routeChecks.notAuthenticatedUser
+        })
         .when('/questions/question', {
             templateUrl: '/partials/questions/question',
             controller: ''
         })
         .when('/tags', {
-            templateUrl: '/partials/tags/tags-list',
+            templateUrl: '/partials/tags/tags',
             controller: ''
+        })
+        .otherwise({
+            redirectTo: '/'
         });
 });
 //TODO: create MainController in another file
@@ -66,8 +103,15 @@ app.controller('MainController', function ($scope) {
 
 app.run(function($rootScope, $location) {
     $rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
-        if(rejection === 'not authorized' || rejection === 'authenticated' || rejection === 'not authenticated') {
-            $location.path('/');
+//        console.log(rejection);
+//        if(rejection === 'not authorized' || rejection === 'authenticated' || rejection === 'not authenticated') {
+//            $location.path('/');
+//        }
+        if(rejection === 'not authenticated') {
+            $location.path('/login');
+        }
+        if(rejection === 'not authorized' || rejection === 'authenticated') {
+            $location.path('/;')
         }
     });
 });

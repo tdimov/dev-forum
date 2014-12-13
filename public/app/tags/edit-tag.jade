@@ -1,0 +1,24 @@
+.container
+    div.row
+        h3  Edit tag
+        hr
+        div.col-md-9
+            div.panel.panel-default
+                div.panel-body(ng-controller="EditTagController")
+                    form.form-horizontal(name="editTagForm")
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Name") Name
+                            div.col-md-8
+                                input#Name.form-control.form-validation(type="text", placeholder="Name", ng-model="tag.name", required)
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Description") Description
+                            div.col-md-8
+                                textarea#Description.form-control.form-validation(placeholder="Description", ng-model="tag.description", rows="12", ng-required="true")
+                        div.form-group
+                            label.col-md-3.text-size-18 Questions
+                            div.col-md-8
+                                span.text-size-18 {{ tag.questions.length }}
+                    button.btn.btn-success.pull-right(ng-click="update(tag)") Update tag
+        div.col-md-3
+            include ../includes/lastQuestions
+            include ../includes/tagsAside

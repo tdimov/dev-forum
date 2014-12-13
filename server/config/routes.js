@@ -1,5 +1,7 @@
 var auth = require('./auth'),
-    usersController = require('../controllers/usersController');
+    usersController = require('../controllers/usersController'),
+    questionsController = require('../controllers/questionsController'),
+    tagsController = require('../controllers/tagsController');
 
 module.exports = function (app) {
     app.get('/partials/:partialArea/:partialName', function(req, res) {
@@ -12,6 +14,15 @@ module.exports = function (app) {
     app.put('/api/users', auth.isAuthenticated, usersController.updateUser);
     app.put('/api/users/:user', auth.isInRole('admin'), usersController.updateEditedUser);
     app.delete('/api/users/:id', auth.isInRole('admin'), usersController.deleteUser);
+
+    app.get('/api/questions', auth.isAuthenticated, questionsController.getQuestions);
+    app.post('/api/questions', auth.isAuthenticated, questionsController.addQuestion);
+
+    app.get('/api/tags', tagsController.getTags);
+    app.get('/api/tags/:id', tagsController.getTagById);
+    app.post('/api/tags', auth.isInRole('admin'), tagsController.addTag);
+    app.put('/api/tags', auth.isInRole('admin'), tagsController.updateTag);
+    app.delete('/api/tags/:id', auth.isInRole('admin'), tagsController.deleteTag);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);

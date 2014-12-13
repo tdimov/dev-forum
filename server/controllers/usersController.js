@@ -15,28 +15,36 @@ module.exports = {
         User.find({_id: { '$ne': req.user._id }}).exec(function(err, collection) {
             if(err) {
                 console.log('Users could not be loaded: ' + err);
+                return;
             }
 
             res.send(collection);
+            res.end();
         })
     },
     getUserById: function(req, res) {
-        User.findOne({_id: req.params.id}).exec(function(err, user) {
-            if(err) {
-                console.log('User could not be loaded');
-            }
-            var userVM = {
-                '_id': user._id,
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                registrationDate: user.registrationDate,
-                lastLoginDate: user.lastLoginDate,
-                roles: user.roles
-            };
-            res.send(userVM);
-        });
+        var id = req.params.id;
+
+        if(id) {
+            User.findOne({_id: id}).exec(function(err, user) {
+                if(err || !user) {
+                    console.log('User could not be loaded');
+                    return;
+                }
+                var userVM = {
+                    '_id': user._id,
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    registrationDate: user.registrationDate,
+                    lastLoginDate: user.lastLoginDate,
+                    roles: user.roles
+                };
+                res.send(userVM);
+                res.end();
+            });
+        }
     },
     register: function (req, res, next) {
         var newUserData = req.body;
@@ -105,6 +113,8 @@ module.exports = {
             User.update({_id: editedUser._id}, {$set: {roles: [editedUser.newRole]}}, {upsert: true}, function (err) {
                 if(err) {
                     console.log('Edit user failed: ' + err);
+                    res.send({success: false, message: "Edit user failed!"});
+                    res.end();
                     return;
                 }
 

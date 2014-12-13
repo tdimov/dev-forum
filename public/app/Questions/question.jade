@@ -88,7 +88,7 @@
                     a(href="#") add a comment
             hr
             h3 Your answer
-            textarea.form-control.margin-bottom
+            textarea.form-control.margin-bottom(rows="12")
             button.btn.btn-success Post your answer
         div.col-md-3
             div.panel.panel-default
@@ -102,39 +102,5 @@
                     div.col-md-4 active
                     div.col-md-8
                         strong today
-            div.panel.panel-default
-                div.panel-heading
-                    h4 Last 5 questions
-                div.panel-body
-                    ul.list-unstyled
-                        li
-                            a(href="#") Question 1
-                        li
-                            a(href="#") Question 2
-                        li
-                            a(href="#") Question 3
-                        li
-                            a(href="#") Question 4
-                        li
-                            a(href="#") Question 5
-                div.panel-footer
-                    a(href="#") See all...
-            div.panel.panel-default
-                div.panel-heading
-                    h4 Tags
-                div.panel-body
-                    ul.list-inline
-                        li.label.label-primary.margin-right
-                            a.text-white.not-hover(href="#") C#
-                        li.label.label-primary.margin-right
-                            a.text-white.not-hover(href="#") Javascript
-                        li.label.label-primary.margin-right
-                            a.text-white.not-hover(href="#") MongoDb
-                        li.label.label-primary.margin-right
-                            a.text-white.not-hover(href="#") Java
-                        li.label.label-primary.margin-right
-                            a.text-white.not-hover(href="#") Nodejs
-                        li.label.label-primary.margin-right
-                            a.text-white.not-hover(href="#") AngularJS
-                div.panel-footer
-                    a(href="#") See all...
+            include ../includes/lastQuestions
+            include ../includes/tagsAside

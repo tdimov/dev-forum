@@ -1,0 +1,20 @@
+.container
+    div.row
+        h3  Add new tag
+        hr
+        div.col-md-9
+            div.panel.panel-default
+                div.panel-body(ng-controller="TagsController")
+                    form.form-horizontal(name="addNewTagForm", method="post")
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Name") Name
+                            div.col-md-8
+                                input#Name.form-control.form-validation(type="text", placeholder="Name", ng-model="tag.name", required)
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Description") Description
+                            div.col-md-8
+                                textarea#Description.form-control.form-validation(placeholder="Description", ng-model="tag.description", rows="12", ng-required="true")
+                    button.btn.btn-success.pull-right(ng-click="addNewTag(tag)") Add tag
+        div.col-md-3
+            include ../includes/lastQuestions
+            include ../includes/tagsAside

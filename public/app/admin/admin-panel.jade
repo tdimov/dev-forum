@@ -1,0 +1,17 @@
+.container
+    h1 Admin panel
+    hr
+    ul.nav.nav-tabs
+        li.active
+            a(href="#questions", target="_self", data-toggle="tab") Questions
+        li
+            a(href="#tags", target="_self", data-toggle="tab") Tags
+        li
+            a(href="#users", target="_self", data-toggle="tab") Users
+    div#tabContent.tab-content
+        div#question.tab-pane.fade.active.in
+            p Questions
+        div#tags.tab-pane.fade
+            include ../tags/tags-list
+        div#users.tab-pane.fade
+            include users-list

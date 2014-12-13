@@ -1,10 +1,10 @@
-var mongoose = require("mongoose");
+var mongoose = require("mongoose"),
+    mongooseSchema = mongoose.Schema;
 
 var commentSchema = new mongoose.Schema({
     text: {type: String, require: '{PATH} is required'},
     postedDate: {type: Date, require: '{PATH} is required', default: Date.now},
-    answerId: {type: ObjectId, require: '{PATH} is required'},
-    userId: {type: ObjectId, require: '{PATH} is required'}
+    author: {type: mongooseSchema.Types.ObjectId, ref: 'User', require: '{PATH} is required'}
 });
 
-var Comment = nmongoose.model('Comment', commentSchema);
+var Comment = mongoose.model('Comment', commentSchema);

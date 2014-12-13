@@ -24,6 +24,13 @@ function passwordsMatch(pass, conformPass) {
     }
     return true;
 }
+
+function isCSV(val) {
+    var pattern = new RegExp("/([^,]+)/");
+    var isValid = pattern.test(val);
+
+    return isValid;
+}
 //TODO: Change email pattern in registration.jade with validator email pattern
 module.exports = {
     isRegistrationValid: function (user) {
@@ -55,6 +62,29 @@ module.exports = {
                 return false;
             }
             else if(!validator.isEmail(user.email)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    },
+    isAskQuestionValid: function(question) {
+        if(question) {
+            if(!areJsonPropsNullOrEmpty(question)) {
+                return false;
+            }
+            else if(isCSV(question.tags)){
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    },
+    isTagValid: function(tag) {
+        if(tag) {
+            if(!areJsonPropsNullOrEmpty(tag)) {
                 return false;
             }
             else {

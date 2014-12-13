@@ -1,0 +1,25 @@
+.container
+    div.row
+        h3  Ask question
+        hr
+        div.col-md-9
+            div.panel.panel-default
+                div.panel-body(ng-controller="QuestionsController")
+                    form.form-horizontal(name="askQuestionForm", method="post")
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Title") Title
+                            div.col-md-8
+                                input#Title.form-control.form-validation(type="text", placeholder="Title", ng-model="question.title", required)
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Question") Question
+                            div.col-md-8
+                                textarea#Question.form-control.form-validation(placeholder="Question", ng-model="question.text", rows="12", ng-required="true")
+                        div.form-group
+                            label.col-md-3.text-size-18(for="Tags") Tags
+                            div.col-md-8
+                                input#Tags.form-control.form-validation(type="text", placeholder="Tags", ng-model="question.tags", required)
+                                span.text.text-info CSV (Comma-separated values)
+                    button.btn.btn-success.pull-right(ng-click="askQuestion(question)") Ask your question
+        div.col-md-3
+            include ../includes/lastQuestions
+            include ../includes/tagsAside
