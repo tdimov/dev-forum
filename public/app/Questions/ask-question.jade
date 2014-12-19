@@ -1,4 +1,5 @@
 .container
+    script(type="text/javascript" src="../../lib/ckeditor/ckeditor.js")
     div.row
         h3  Ask question
         hr
@@ -20,6 +21,18 @@
                                 input#Tags.form-control.form-validation(type="text", placeholder="Tags", ng-model="question.tags", required)
                                 span.text.text-info CSV (Comma-separated values)
                     button.btn.btn-success.pull-right(ng-click="askQuestion(question)") Ask your question
+        script.
+            CKEDITOR.replace('Question',
+            {
+                startupFocus: true,
+                toolbar: [
+                    ['document', 'mode'],
+                    ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
+                    ['Cut', 'Copy', 'Paste', 'PasteText'],
+                    ['Undo', 'Redo'],
+                    ['Image', 'SpecialChar']
+                ]
+            });
         div.col-md-3
             include ../includes/lastQuestions
             include ../includes/tagsAside

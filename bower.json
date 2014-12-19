@@ -21,6 +21,7 @@
     "angular-resource": "~1.2.23",
     "angular-route": "~1.2.23",
     "toastr": "~2.0.3",
-    "bootstrap": "~3.2.0"
+    "bootstrap": "~3.2.0",
+    "ckeditor": "~4.4.6"
   }
 }
