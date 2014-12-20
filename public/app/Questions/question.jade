@@ -1,5 +1,4 @@
 .container
-    script(type="text/javascript" src="../../lib/ckeditor/ckeditor.js")
     div.row
         h3 Best algorithm for video stabilization
         hr
@@ -104,28 +103,6 @@
                     div.modal-footer
                         button.btn.btn-primary(type="button", ng-click="addComment()", data-dismiss="modal") Comment
                         button.btn.btn-default(data-dismiss="modal") Cancel
-            script.
-                CKEDITOR.replace('Comment', {
-                    startupFocus: true,
-                    toolbar: [
-                        ['document', 'mode'],
-                        ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-                        ['Cut', 'Copy', 'Paste', 'PasteText'],
-                        ['Undo', 'Redo'],
-                        ['Image', 'SpecialChar']
-                    ]
-                });
-        script.
-            CKEDITOR.replace('Answer', {
-                startupFocus: true,
-                toolbar: [
-                    ['document', 'mode'],
-                    ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-                    ['Cut', 'Copy', 'Paste', 'PasteText'],
-                    ['Undo', 'Redo'],
-                    ['Image', 'SpecialChar']
-                ]
-            });
         div.col-md-3
             div.panel.panel-default
                 div.panel-body

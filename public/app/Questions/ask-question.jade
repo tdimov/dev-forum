@@ -1,11 +1,10 @@
 .container
-    script(type="text/javascript" src="../../lib/ckeditor/ckeditor.js")
     div.row
         h3  Ask question
         hr
         div.col-md-9
             div.panel.panel-default
-                div.panel-body(ng-controller="QuestionsController")
+                div#panelBody.panel-body(ng-controller="QuestionsController")
                     form.form-horizontal(name="askQuestionForm", method="post")
                         div.form-group
                             label.col-md-3.text-size-18(for="Title") Title
@@ -14,24 +13,50 @@
                         div.form-group
                             label.col-md-3.text-size-18(for="Question") Question
                             div.col-md-8
-                                textarea#Question.form-control.form-validation(placeholder="Question", ng-model="question.text", rows="12", ng-required="true")
+                                textarea#Question.form-control.form-validation(placeholder="Question", ckeditor="editorOptions", ng-model="question.text", rows="12", ng-required="true")
                         div.form-group
                             label.col-md-3.text-size-18(for="Tags") Tags
                             div.col-md-8
-                                input#Tags.form-control.form-validation(type="text", placeholder="Tags", ng-model="question.tags", required)
-                                span.text.text-info CSV (Comma-separated values)
+                                select#chooseTags.form-control
+                                    option(value='') choose tags...
+                                    option(value="c#") c#
+                                    option(value="javascript") javascript
+                                    option(value="php") php
+                                    option(value="html") html
+                                    option(value="css3") css3
+                                span.text.text-info min 1 tag, max 5 tags
+                                ul#choosenTags.list-unstyled.list-inline.margin-top-15
                     button.btn.btn-success.pull-right(ng-click="askQuestion(question)") Ask your question
         script.
-            CKEDITOR.replace('Question',
-            {
-                startupFocus: true,
-                toolbar: [
-                    ['document', 'mode'],
-                    ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-                    ['Cut', 'Copy', 'Paste', 'PasteText'],
-                    ['Undo', 'Redo'],
-                    ['Image', 'SpecialChar']
-                ]
+            var choosenTagsValues = [];
+
+            function removeTag(element) {
+                var tag = $(element).parent().text().trim(),
+                    index = choosenTagsValues.indexOf(tag);
+                angular.element('#panelBody').scope().removeSelectedTag(tag);
+                if(index > -1) {
+                    choosenTagsValues.splice(index, 1);
+                    $(element).parent().remove();
+                }
+            }
+            $(document).ready(function() {
+                $('#chooseTags').change(function() {
+                    var choosenTags = $('#choosenTags'),
+                        selectedVal = $('#chooseTags option:selected').val().trim();
+
+                    if(selectedVal) {
+                        if(choosenTagsValues.indexOf(selectedVal) > -1) {
+                            toastr.error("The tag is already added!");
+                        }
+                        else {
+                            var html = "<li>" + selectedVal + "&nbsp<button onclick='removeTag(this)' class='btn btn-primary badge'><i class='glyphicon glyphicon-remove'></i></button></li>";
+                            choosenTagsValues.push(selectedVal);
+                            angular.element('#panelBody').scope().updateSelected(selectedVal);
+                            console.log(angular.element('#panelBody').scope().allSelectedTags);
+                            choosenTags.append(html);
+                        }
+                    }
+                });
             });
         div.col-md-3
             include ../includes/lastQuestions

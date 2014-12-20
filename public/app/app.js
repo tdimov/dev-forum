@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'ngResource']).value('toastr', toastr);
+var app = angular.module('app', ['ngRoute', 'ngResource', 'ngCkeditor']).value('toastr', toastr);
 
 app.config(function ($routeProvider) {
 
