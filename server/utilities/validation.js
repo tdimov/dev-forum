@@ -1,4 +1,5 @@
 var validator = require('validator');
+
 function isNullOrEmpty(str) {
     if(!str || validator.isNull(str)) {
         return true;

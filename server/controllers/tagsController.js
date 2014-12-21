@@ -1,6 +1,6 @@
 var Tag = require('mongoose').model('Tag'),
     _ = require('underscore'),
-    validation = require('../utilities/validation');
+    tagsValidator = require('../utilities/validation/tagsValidator');
 
 function isTagExist(tagName) {
 }
@@ -63,7 +63,7 @@ module.exports = {
     addTag: function (req, res, next) {
         var newTag = req.body;
 
-        if(validation.isTagValid(newTag)) {
+        if(tagsValidator.isTagValid(newTag)) {
             Tag.create(newTag, function (err, tag) {
                 if(err) {
                     console.log("An error occurred while creating new tag: " + err);
@@ -103,8 +103,7 @@ module.exports = {
     },
     deleteTag: function (req, res, next) {
         var tagId = req.params.id;
-        console.log(req.params);
-        console.log(tagId);
+
         if(tagId) {
             Tag.remove({_id: tagId}, function (err) {
                 if(err) {

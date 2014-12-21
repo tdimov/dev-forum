@@ -13,7 +13,7 @@
                         div.form-group
                             label.col-md-3.text-size-18(for="Question") Question
                             div.col-md-8
-                                textarea#Question.form-control.form-validation(placeholder="Question", ckeditor="editorOptions", ng-model="question.text", rows="12", ng-required="true")
+                                textarea#Question.form-control.form-validation(ckeditor="editorOptions", ng-model="question.text", rows="12", required)
                         div.form-group
                             label.col-md-3.text-size-18(for="Tags") Tags
                             div.col-md-8
@@ -52,7 +52,6 @@
                             var html = "<li>" + selectedVal + "&nbsp<button onclick='removeTag(this)' class='btn btn-primary badge'><i class='glyphicon glyphicon-remove'></i></button></li>";
                             choosenTagsValues.push(selectedVal);
                             angular.element('#panelBody').scope().updateSelected(selectedVal);
-                            console.log(angular.element('#panelBody').scope().allSelectedTags);
                             choosenTags.append(html);
                         }
                     }

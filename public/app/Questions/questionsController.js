@@ -1,6 +1,6 @@
 app.controller('QuestionsController', function ($scope, $location, notifier, questionsService) {
 
-    $scope.allSelectedTags = [];
+    var allSelectedTags = [];
     $scope.editorOptions = {
         toolbar: [
                     ['document', 'mode'],
@@ -13,21 +13,21 @@ app.controller('QuestionsController', function ($scope, $location, notifier, que
     };
 
     $scope.updateSelected = function (tag) {
-        if(tag && $scope.allSelectedTags.indexOf(tag) == -1) {
-            $scope.allSelectedTags.push(tag);
+        if(tag && allSelectedTags.indexOf(tag) == -1) {
+            allSelectedTags.push(tag);
         }
     };
 
     $scope.removeSelectedTag = function (tag) {
-        if(tag && $scope.allSelectedTags.indexOf(tag) > -1) {
-            var index = $scope.allSelectedTags.indexOf(tag);
-            $scope.allSelectedTags.splice(index, 1);
+        if(tag && allSelectedTags.indexOf(tag) > -1) {
+            var index = allSelectedTags.indexOf(tag);
+            allSelectedTags.splice(index, 1);
         }
     };
 
     $scope.askQuestion = function (question) {
         if(question) {
-            question.selectedTags = $scope.allSelectedTags;
+            question.tags = allSelectedTags;
             questionsService.askQuestion(question)
                 .then(function (response) {
                     if(response.success) {

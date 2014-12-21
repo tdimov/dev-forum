@@ -1,6 +1,6 @@
 var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption'),
-    validation = require('../utilities/validation');
+    usersValidator = require('../utilities/validation/usersValidator');
 
 function updateCurrentUser(req, res, updatedUser) {
 
@@ -51,7 +51,7 @@ module.exports = {
         console.log(req.files);
         console.log(req.body);
         console.log(req);
-//        if(validation.isRegistrationValid(newUserData)) {
+//        if(usersValidator.isRegistrationValid(newUserData)) {
 //            newUserData.salt = encryption.generateSalt();
 //            newUserData.passHash = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
 //            newUserData.roles = ['user'];
@@ -80,7 +80,7 @@ module.exports = {
     updateUser: function (req, res, next) {
         var updatedUser = req.body;
         if(req.user._id == updatedUser._id) {
-            if(validation.isUpdateUserDataValid(updatedUser)) {
+            if(usersValidator.isUpdateUserDataValid(updatedUser)) {
                 if(updatedUser.newPassword && updatedUser.newPassword.length > 0) {
                     updatedUser.salt = encryption.generateSalt();
                     updatedUser.passHash = encryption.generateHashedPassword(updatedUser.salt, updatedUser.newPassword);
