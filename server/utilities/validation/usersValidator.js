@@ -1,5 +1,5 @@
 var validator = require('validator'),
-    commonValidator = require('commonValidator');
+    commonValidator = require('./commonValidator');
 
 function passwordsMatch(pass, conformPass) {
     if (pass != conformPass) {

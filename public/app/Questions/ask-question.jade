@@ -19,11 +19,13 @@
                             div.col-md-8
                                 select#chooseTags.form-control
                                     option(value='') choose tags...
-                                    option(value="c#") c#
-                                    option(value="javascript") javascript
-                                    option(value="php") php
-                                    option(value="html") html
-                                    option(value="css3") css3
+                                    //option(value="c#") c#
+                                    //option(value="javascript") javascript
+                                    //option(value="php") php
+                                    //option(value="html") html
+                                    //option(value="css3") css3
+                                    //option(value="css3") java
+                                    option(ng-repeat="tag in tags", value="{{ tag.name }}") {{tag.name}}
                                 span.text.text-info min 1 tag, max 5 tags
                                 ul#choosenTags.list-unstyled.list-inline.margin-top-15
                     button.btn.btn-success.pull-right(ng-click="askQuestion(question)") Ask your question

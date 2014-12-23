@@ -20,6 +20,7 @@ module.exports = function (app) {
 
     app.get('/api/tags', tagsController.getTags);
     app.get('/api/tags/:id', tagsController.getTagById);
+    app.get('/tags/askQuestion', auth.isAuthenticated, tagsController.getTagsAskQuestion);
     app.post('/api/tags', auth.isInRole('admin'), tagsController.addTag);
     app.put('/api/tags', auth.isInRole('admin'), tagsController.updateTag);
     app.delete('/api/tags/:id', auth.isInRole('admin'), tagsController.deleteTag);

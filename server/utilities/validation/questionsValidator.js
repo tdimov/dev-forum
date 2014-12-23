@@ -1,33 +1,34 @@
-var commonValidator = require('commonValidator');
+var commonValidator = require('./commonValidator'),
+    validator = require('validator');
 
 function isTagsLengthValid(tags) {
 
     var len = tags.length;
 
     if(len >= 1 && len <= 5) {
-        return true;
-    }
-
-    return false;
-}
-
-function areTagsValuesValid(tags) {
-    for(var i, len = tags.length; i < len; i++) {
-        if(commonValidator.isNullOrEmpty(tags[i])) {
-            return false;
-        }
+        return false;
     }
 
     return true;
 }
 
+function areTagsValuesValid(tags) {
+    for(var i, len = tags.length; i < len; i++) {
+        if(commonValidator.isNullOrEmpty(tags[i])) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 module.exports = {
     isAskQuestionValid: function(question) {
         if(question) {
-            if(!commonValidator.areJsonPropsNullOrEmpty(question)) {
+            if(commonValidator.isNullOrEmpty(question.title) || commonValidator.isNullOrEmpty(question.text)) {
                 return false;
             }
-            else if(question.tags) {
+            if(question.tags) {
                 if(isTagsLengthValid(question.tags)) {
                     return false;
                 }
@@ -36,9 +37,10 @@ module.exports = {
                     return false;
                 }
             }
-            else {
-                return true;
-            }
+
+            return true;
         }
+
+        return false;
     }
 };

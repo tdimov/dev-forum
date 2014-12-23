@@ -2,7 +2,7 @@ var Question = require('mongoose').model('Question'),
     Tag = require('mongoose').model('Tag'),
     User = require('mongoose').model('User'),
     Answer = require('mongoose').model('Answer'),
-    validation = require('../utilities/validation'),
+    questionsValidator = require('../utilities/validation/questionsValidator'),
     tagsController = require('../controllers/tagsController');
 
 function createTagJsonFromArr(items) {
@@ -56,10 +56,32 @@ module.exports = {
         var newQuestion = req.body,
             currentUser = req.user;
 
-        if(validation.isAskQuestionValid(newQuestion)) {
+        if(questionsValidator.isAskQuestionValid(newQuestion)) {
+            newQuestion.author = currentUser._id;
+            Question.create(newQuestion, function (err, question) {
+                if(err || !question) {
+                    console.log("An error occurred while creating new question: " + err);
+                    res.send({success: false, message: "Sorry, an error occurred while saving your question!"});
+                    res.end();
+                    return;
+                }
+
+                if(question.tags) {
+                    question.tags.forEach(function(element, index) {
+                        Tag.findOneAndUpdate({name: element}, {$push: {questions: question._id}}, {safe: true, upsert: true}, function (err, tag){
+                            if(err) {
+                                console.log(err);
+                            }
+                        })
+                    });
+                }
+                res.send({success: true, message: "Question is added successful!"});
+                res.end();
+            });
         }
         else {
             res.send({success: false, message: "Please, enter correct question data!"});
+            res.end();
         }
     },
     updateQuestion: function (req, res, next) {

@@ -8,16 +8,25 @@ function isTagExist(tagName) {
 function addNewTag(tagName) {
 }
 
-function getAllTags() {
+function getAllTags(options, callback) {
+    Tag.find(options).exec(function (err, tags) {
+        if(err || !tags) {
+            callback(err, null);
+        }
+
+        callback(null, tags);
+    });
 }
 
 module.exports = {
     getTags: function (req, res, next){
-        Tag.find({}).exec(function(err, tags) {
+        getAllTags({}, function(err, tags) {
             if(err) {
                 console.log("Cannot load tags: " + err);
+                res.send({success: false, message: "An error occurred while loading tags!"});
+                res.end();
+                return;
             }
-
             var models = [];
 
             for(var i = 0, len = tags.length; i < len; i++) {
@@ -35,6 +44,27 @@ module.exports = {
             res.end();
         });
 
+    },
+    getTagsAskQuestion: function (req, res) {
+        getAllTags({}, function(err, tags) {
+            if(err) {
+                console.log("Cannot load the tag: " + err);
+                res.send({success: false, message: "An error occurred while loading tags!"});
+                res.end();
+                return;
+            }
+
+            var models = [];
+
+            for(var i = 0, len = tags.length; i < len; i++) {
+                var tagVM = { name: tags[i].name };
+                models.push(tagVM)
+            }
+
+            res.send(models);
+            res.end();
+
+        });
     },
     getTagById: function (req, res) {
         var id = req.params.id;

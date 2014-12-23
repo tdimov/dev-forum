@@ -1,4 +1,4 @@
-var commonValidator = require('commonValidator');
+var commonValidator = require('./commonValidator');
 
 module.exports = {
     isTagValid: function(tag) {

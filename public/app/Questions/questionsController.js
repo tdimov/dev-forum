@@ -1,4 +1,4 @@
-app.controller('QuestionsController', function ($scope, $location, notifier, questionsService) {
+app.controller('QuestionsController', function ($scope, $location, notifier, questionsService, tagsService) {
 
     var allSelectedTags = [];
     $scope.editorOptions = {
@@ -24,6 +24,10 @@ app.controller('QuestionsController', function ($scope, $location, notifier, que
             allSelectedTags.splice(index, 1);
         }
     };
+
+    tagsService.getTagsAskQuestion(function (data){
+        $scope.tags = data;
+    });
 
     $scope.askQuestion = function (question) {
         if(question) {
