@@ -3,45 +3,53 @@ var Question = require('mongoose').model('Question'),
     User = require('mongoose').model('User'),
     Answer = require('mongoose').model('Answer'),
     questionsValidator = require('../utilities/validation/questionsValidator'),
+    dateFormat = require('../utilities/dateFormat'),
     tagsController = require('../controllers/tagsController');
 
-function createTagJsonFromArr(items) {
-    var json = [];
-
-    for(var i = 0, len = items.length; i < len; i++) {
-        json.push({name: items[i].trim()});
-    }
-
-    return json;
-}
-
-//remove it
-function getAuthor(authorId) {
-    User.findOne({_id: authorId}).exec(function (err, author) {
-        if(err) {
-            console.log("Author cannot be found: " + err);
+function getAllQuestions(options, callback) {
+    Question.find(options).exec(function(err, questions){
+        if(err || !questions) {
+            callback(err, null);
         }
-        var authorVM = {
-            id: author._id,
-            username: author.username
-        };
 
-        return authorVM;
+        callback(null, questions);
     });
 }
 
-function getQuestionTags(questionId) {
-}
 
-function getTags(tagId) {
-}
 
-function getAnswers(questionId) {
-}
-
-//TODO: add tags and questionsTags
 module.exports = {
-    getQuestions: function (req, res, next) {
+    getTopQuestions: function (req, res, next) {
+        Question.find({}).sort('-postedDate').limit(3).populate('author').exec(function(err, questions) {
+            if(err || !questions) {
+                console.log("Cannot load top questions: " + err);
+                return;
+            }
+
+            var models = [];
+            console.log(questions);
+            for(var i = 0, len = questions.length; i < len; i++) {
+                var questionVM = {
+                    id: questions[i]._id,
+                    title: questions[i].title,
+                    author: {
+                        id: questions[i].author._id,
+                        username: questions[i].author.username
+                    },
+                    tags: questions[i].tags,
+                    votes: questions[i].rating,
+                    answers: questions[i].answers.length,
+                    views: questions[i].viewed,
+                    date: dateFormat.createDateFormat(questions[i].postedDate)
+                };
+
+                models.push(questionVM);
+            }
+
+            res.send(models);
+            res.end();
+
+        });
     },
     getQuestionById: function (req, res, next) {
         var id = req.params.id;

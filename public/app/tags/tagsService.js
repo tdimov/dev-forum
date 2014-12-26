@@ -26,13 +26,6 @@ app.factory('tagsService', function($http, $q, identity) {
                 callback(data);
             });
         },
-        getTagById: function (id, callback) {
-            $http.get('/api/tags/' + id).success(function(tag) {
-                if(tag) {
-                    callback(tag);
-                }
-            })
-        },
         updateEditedTag: function(tag) {
             var deferred = $q.defer();
 

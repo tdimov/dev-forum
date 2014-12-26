@@ -15,7 +15,8 @@ module.exports = function (app) {
     app.put('/api/users/:user', auth.isInRole('admin'), usersController.updateEditedUser);
     app.delete('/api/users/:id', auth.isInRole('admin'), usersController.deleteUser);
 
-    app.get('/api/questions', auth.isAuthenticated, questionsController.getQuestions);
+    app.get('/api/topQuestions', questionsController.getTopQuestions);
+    app.get('/api/questions/:id', questionsController.getQuestionById);
     app.post('/api/questions', auth.isAuthenticated, questionsController.addQuestion);
 
     app.get('/api/tags', tagsController.getTags);
