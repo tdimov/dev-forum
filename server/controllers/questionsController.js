@@ -2,10 +2,12 @@ var Question = require('mongoose').model('Question'),
     Tag = require('mongoose').model('Tag'),
     User = require('mongoose').model('User'),
     Answer = require('mongoose').model('Answer'),
+    Comment = require('mongoose').model('Comment'),
     questionsValidator = require('../utilities/validation/questionsValidator'),
-    dateFormat = require('../utilities/dateFormat'),
-    tagsController = require('../controllers/tagsController');
+    commonValidator = require('../utilities/validation/commonValidator'),
+    dateFormat = require('../utilities/dateFormat');
 
+//Unused for now
 function getAllQuestions(options, callback) {
     Question.find(options).exec(function(err, questions){
         if(err || !questions) {
@@ -16,18 +18,18 @@ function getAllQuestions(options, callback) {
     });
 }
 
-
-
 module.exports = {
-    getTopQuestions: function (req, res, next) {
-        Question.find({}).sort('-postedDate').limit(3).populate('author').exec(function(err, questions) {
+    getQuestions: function (req, res, next) {
+        //var pageId = req.params.pageId;
+        var itemsPerPage = 20;
+        Question.find({}).sort('-postedDate').limit(itemsPerPage).exec(function(err, questions) {
             if(err || !questions) {
                 console.log("Cannot load top questions: " + err);
                 return;
             }
 
             var models = [];
-            console.log(questions);
+
             for(var i = 0, len = questions.length; i < len; i++) {
                 var questionVM = {
                     id: questions[i]._id,
@@ -38,7 +40,39 @@ module.exports = {
                     },
                     tags: questions[i].tags,
                     votes: questions[i].rating,
-                    answers: questions[i].answers.length,
+                    answers: questions[i].answersCount,
+                    views: questions[i].viewed,
+                    date: dateFormat.createDateFormat(questions[i].postedDate)
+                };
+
+                models.push(questionVM);
+            }
+
+            res.send(models);
+            res.end();
+
+        });
+    },
+    getTopQuestions: function (req, res, next) {
+        Question.find({}).sort('-postedDate').limit(3).exec(function(err, questions) {
+            if(err || !questions) {
+                console.log("Cannot load top questions: " + err);
+                return;
+            }
+
+            var models = [];
+
+            for(var i = 0, len = questions.length; i < len; i++) {
+                var questionVM = {
+                    id: questions[i]._id,
+                    title: questions[i].title,
+                    author: {
+                        id: questions[i].author._id,
+                        username: questions[i].author.username
+                    },
+                    tags: questions[i].tags,
+                    votes: questions[i].rating,
+                    answers: questions[i].answersCount,
                     views: questions[i].viewed,
                     date: dateFormat.createDateFormat(questions[i].postedDate)
                 };
@@ -54,10 +88,71 @@ module.exports = {
     getQuestionById: function (req, res, next) {
         var id = req.params.id;
         Question.findOne({_id: id}).exec(function (err, question) {
-            if(err) {
-                console.log('Cannot load the question: ' + err);
+            if(err || !question) {
+                console.log('getQuestionById Cannot load the question: ' + err);
+                return;
             }
 
+            Answer.find({questionId: question._id}).populate('comments').exec(function (err, answers) {
+                if(err || !answers) {
+                    console.log("getQuestionById Cannot load answers: " + err);
+                    return;
+                }
+                var answersVM = [];
+
+                for(var i = 0, len = answers.length; i < len; i++) {
+                    var answer = answers[i],
+                        commentsVM = [];
+
+                    for(var j = 0, commentsLen = answer.comments.length; j < commentsLen; j++) {
+                        var comment = answer.comments[j];
+
+                        var commentVM = {
+                            text: comment.text,
+                            author: {
+                                id: comment.author._id,
+                                username: comment.author.username
+                            },
+                            date: dateFormat.createDateFormat(comment.postedDate)
+                        };
+
+                        commentsVM.push(commentVM);
+                    }
+
+                    var answerVM = {
+                        id: answer._id,
+                        votes: answer.rating,
+                        text: answer.text,
+                        author: {
+                            id: answer.author._id,
+                            username: answer.author.username
+                        },
+                        comments: commentsVM,
+                        date: dateFormat.createDateFormat(answer.postedDate)
+                    };
+
+                    answersVM.push(answerVM);
+                }
+
+                var model = {
+                    id: question._id,
+                    title: question.title,
+                    text: question.text,
+                    author: {
+                        id: question.author._id,
+                        username: question.author.username
+                    },
+                    tags: question.tags,
+                    votes: question.rating,
+                    answers: answersVM,
+                    views: question.viewed,
+                    date: dateFormat.createDateFormat(question.postedDate),
+                    lastActiveDate: dateFormat.createDateFormat(question.lastActiveDate)
+                };
+
+                res.send(model);
+                res.end();
+            });
         });
     },
     addQuestion: function (req, res, next) {
@@ -65,7 +160,11 @@ module.exports = {
             currentUser = req.user;
 
         if(questionsValidator.isAskQuestionValid(newQuestion)) {
-            newQuestion.author = currentUser._id;
+            newQuestion.author = {
+                _id: currentUser._id,
+                username: currentUser.username
+            };
+
             Question.create(newQuestion, function (err, question) {
                 if(err || !question) {
                     console.log("An error occurred while creating new question: " + err);
@@ -74,16 +173,7 @@ module.exports = {
                     return;
                 }
 
-                if(question.tags) {
-                    question.tags.forEach(function(element, index) {
-                        Tag.findOneAndUpdate({name: element}, {$push: {questions: question._id}}, {safe: true, upsert: true}, function (err, tag){
-                            if(err) {
-                                console.log(err);
-                            }
-                        })
-                    });
-                }
-                res.send({success: true, message: "Question is added successful!"});
+                res.send({success: true, message: "Question is added successful!", questionId: question._id});
                 res.end();
             });
         }

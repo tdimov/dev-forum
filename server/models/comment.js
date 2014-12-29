@@ -4,7 +4,11 @@ var mongoose = require("mongoose"),
 var commentSchema = new mongoose.Schema({
     text: {type: String, require: '{PATH} is required'},
     postedDate: {type: Date, require: '{PATH} is required', default: Date.now},
-    author: {type: mongooseSchema.Types.ObjectId, ref: 'User', require: '{PATH} is required'}
+    author: {
+        _id: {type: mongooseSchema.Types.ObjectId, ref: 'User', require: '{PATH} is required'},
+        username: {type: String, require: '{PATH} is required'}
+    },
+    answerId: {type: mongooseSchema.Types.ObjectId, ref: 'Answer', require: '{PATH} is required'}
 });
 
 var Comment = mongoose.model('Comment', commentSchema);

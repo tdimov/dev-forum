@@ -1,6 +1,8 @@
 var auth = require('./auth'),
     usersController = require('../controllers/usersController'),
     questionsController = require('../controllers/questionsController'),
+    answersController = require('../controllers/answersController'),
+    commentsController = require('../controllers/commentsController'),
     tagsController = require('../controllers/tagsController');
 
 module.exports = function (app) {
@@ -15,9 +17,14 @@ module.exports = function (app) {
     app.put('/api/users/:user', auth.isInRole('admin'), usersController.updateEditedUser);
     app.delete('/api/users/:id', auth.isInRole('admin'), usersController.deleteUser);
 
+    app.get('/api/questions', questionsController.getQuestions);
     app.get('/api/topQuestions', questionsController.getTopQuestions);
     app.get('/api/questions/:id', questionsController.getQuestionById);
     app.post('/api/questions', auth.isAuthenticated, questionsController.addQuestion);
+
+    app.post('/api/answers', auth.isAuthenticated, answersController.addAnswer);
+
+    app.post('/api/comments', auth.isAuthenticated, commentsController.addComment);
 
     app.get('/api/tags', tagsController.getTags);
     app.get('/api/tags/:id', tagsController.getTagById);

@@ -7,8 +7,12 @@ var answerSchema = new mongoose.Schema({
     editedDate: {type: Date, require: '{PATH} is required'},
     rating: {type: Number, require: '{PATH} is required', default: 0},
     votes: [{type: mongooseSchema.Types.ObjectId, ref: 'Vote'}],
+    author: {
+        _id: {type: mongooseSchema.Types.ObjectId, ref: 'User', require: '{PATH} is required'},
+        username: {type: String, require: '{PATH} is required'}
+    },
     comments: [{type: mongooseSchema.Types.ObjectId, ref: 'Comment'}],
-    user: {type: mongooseSchema.ObjectId, ref: 'User', require: '{PATH} is required'}
+    questionId: {type: mongooseSchema.Types.ObjectId, ref: 'Question', require: '{PATH} is required'}
 });
 
 var Answer = mongoose.model('Answer', answerSchema);

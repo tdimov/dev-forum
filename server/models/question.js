@@ -8,11 +8,14 @@ var questionSchema = new mongoose.Schema({
     edited: {type: Date, default: Date.now},
     isAnswered: {type: Boolean, default: false},
     viewed: {type: Number, require: '{PATH} is required', default: 0},
-    lastActiveDate: {type: Date, require: '{PATH} is required'},
+    lastActiveDate: {type: Date, require: '{PATH} is required', default: Date.now},
     rating: {type: Number, require: '{PATH} is required', default: 0},
     votes: [{type: mongooseSchema.Types.ObjectId, ref: 'Vote'}],
-    answers: [{type: mongooseSchema.Types.ObjectId, ref: 'Answer'}],
-    author: {type: mongooseSchema.Types.ObjectId, ref: 'User', require: '{PATH} is required'},
+    answersCount: {type: Number, require: '{PATH} is required', default: 0},
+    author: {
+        _id: {type: mongooseSchema.Types.ObjectId, ref: 'User', require: '{PATH} is required'},
+        username: {type: String, require: '{PATH} is required'}
+    },
     tags: [{type: String, ref: 'Tag'}]
 });
 

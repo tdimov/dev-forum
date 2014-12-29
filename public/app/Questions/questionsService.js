@@ -1,5 +1,12 @@
-app.factory('questionsService', function($http, $q, identity) {
+app.factory('questionsService', function($http, $q) {
     return {
+        getQuestions: function (pageId, callback) {
+            $http.get('/api/questions/').success(function(questions) {
+                if(questions) {
+                    callback(questions);
+                }
+            })
+        },
         getTopQuestions: function (callback) {
             $http.get('/api/topQuestions/').success(function(questions) {
                 if(questions) {
@@ -13,6 +20,36 @@ app.factory('questionsService', function($http, $q, identity) {
                     callback(question);
                 }
             })
+        },
+        addAnswer: function (newAnswer) {
+            var deferred = $q.defer();
+
+            $http.post('/api/answers', newAnswer)
+                .success(function (response) {
+                    if(response.success) {
+                        deferred.resolve(response);
+                    }
+                    else {
+                        deferred.resolve(response);
+                    }
+                });
+
+            return deferred.promise;
+        },
+        addComment: function (newComment) {
+            var deferred = $q.defer();
+
+            $http.post('/api/comments', newComment)
+                .success(function (response) {
+                    if(response.success) {
+                        deferred.resolve(response);
+                    }
+                    else {
+                        deferred.resolve(response);
+                    }
+                });
+
+            return deferred.promise;
         },
         askQuestion: function (question) {
             var deferred = $q.defer();

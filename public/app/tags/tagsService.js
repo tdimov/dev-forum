@@ -21,8 +21,6 @@ app.factory('tagsService', function($http, $q, identity) {
         },
         getTagsAskQuestion: function (callback) {
             $http.get('/tags/askQuestion').success(function(data){
-                console.log(data);
-                console.log("hi");
                 callback(data);
             });
         },

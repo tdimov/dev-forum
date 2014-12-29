@@ -1,6 +1,5 @@
-app.controller('QuestionsController', function ($scope, $location, $routeParams, notifier, questionsService, tagsService) {
-
-    questionsService.getTopQuestions(function (data){
-        console.log("top tags");
+app.controller('QuestionsController', function ($scope, $routeParams, questionsService) {
+    questionsService.getQuestions(3, function (data) {
+        $scope.questions = data;
     });
 });

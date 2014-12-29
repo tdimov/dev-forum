@@ -1,6 +1,6 @@
 .container
     div.row
-        h3 Top questions
+        h3 Top Questions
         hr
         div.col-md-9
             ul.list-group(ng-controller="TopQuestionsController")
@@ -22,8 +22,10 @@
                                 li.label.label-primary.margin-right(ng-repeat="tag in question.tags")
                                     a.text-white.not-hover(href="#/questions/{{tag}}") {{ tag }}
                             div.col-md-5
-                                span.text-default.pull-right asked {{ question.date }} by &nbsp
-                                    a(href="#/users/{{ question.author.id }}"){{ question.author.username }}
+                                span.text-default.pull-right asked {{ question.date }}
+                                    br
+                                    | by &nbsp
+                                    a(href="#/users/{{ question.author.id }}") {{ question.author.username }}
         div.col-md-3
             include ../includes/lastQuestions
             include ../includes/tagsAside

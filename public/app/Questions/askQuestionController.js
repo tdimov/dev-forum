@@ -36,12 +36,13 @@ app.controller("AskQuestionController", function ($scope, $location, notifier, q
                 .then(function (response) {
                     if(response.success) {
                         notifier.success(response.message);
+                        //$location.path('/questions/' + response.questionId);
                         $location.path('/');
                     }
                     else {
                         notifier.error(response.message);
                     }
-                })
+                });
         }
     }
 });
