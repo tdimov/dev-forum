@@ -96,6 +96,10 @@ app.config(function ($routeProvider) {
             templateUrl: '/partials/questions/question',
             controller: 'SingleQuestionController'
         })
+        .when('/questionsByTag/:tag', {
+            templateUrl: '/partials/questions/questionsByTag',
+            controller: 'QuestionsByTagController'
+        })
         .when('/tags', {
             templateUrl: '/partials/tags/tags',
             controller: ''

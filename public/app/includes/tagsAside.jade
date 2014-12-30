@@ -2,18 +2,8 @@ div.panel.panel-default
     div.panel-heading
         h4 Tags
     div.panel-body
-        ul.list-inline
-            li.label.label-primary.margin-right
-                a.text-white.not-hover(href="#") C#
-            li.label.label-primary.margin-right
-                a.text-white.not-hover(href="#") Javascript
-            li.label.label-primary.margin-right
-                a.text-white.not-hover(href="#") MongoDb
-            li.label.label-primary.margin-right
-                a.text-white.not-hover(href="#") Java
-            li.label.label-primary.margin-right
-                a.text-white.not-hover(href="#") Nodejs
-            li.label.label-primary.margin-right
-                a.text-white.not-hover(href="#") AngularJS
+        ul.list-inline(ng-controller="TagsController")
+            li.label.label-primary.margin-right(ng-repeat="tag in tags")
+                a.text-white.not-hover(href="#/questionsByTag/{{tag.name}}") {{ tag.name }}
     div.panel-footer
-        a(href="#") See all...
+        a(href="#/tags") See all...

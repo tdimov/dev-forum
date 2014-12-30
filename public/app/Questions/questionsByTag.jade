@@ -1,0 +1,9 @@
+.container
+    div.row(ng-controller="QuestionsByTagController")
+        h3 {{ tagName }}
+        hr
+        div.col-md-9
+            include questionsUI
+        div.col-md-3
+            include ../includes/lastQuestions
+            include ../includes/tagsAside

@@ -4,6 +4,7 @@ var Question = require('mongoose').model('Question'),
     Answer = require('mongoose').model('Answer'),
     Comment = require('mongoose').model('Comment'),
     questionsValidator = require('../utilities/validation/questionsValidator'),
+    _ = require("underscore"),
     commonValidator = require('../utilities/validation/commonValidator'),
     dateFormat = require('../utilities/dateFormat');
 
@@ -137,6 +138,40 @@ module.exports = {
             res.send(models);
             res.end();
 
+        });
+    },
+    getQuestionsByTag: function (req, res) {
+        var tag = req.params.tag;
+        Tag.findOne({name: tag}).populate('questions').exec(function (err, tag){
+
+            if(err && !tag) {
+                console.log("getQuestionsByTag Cannot load tag: " + err);
+                return;
+            }
+
+            var models = [];
+            var questions = tag.questions;
+            questions.reverse();
+            for(var i = 0, len = questions.length; i < len; i++) {
+                var questionVM = {
+                    id: questions[i]._id,
+                    title: questions[i].title,
+                    author: {
+                        id: questions[i].author._id,
+                        username: questions[i].author.username
+                    },
+                    tags: questions[i].tags,
+                    votes: questions[i].rating,
+                    answers: questions[i].answersCount,
+                    views: questions[i].viewed,
+                    date: dateFormat.createDateFormat(questions[i].postedDate)
+                };
+
+                models.push(questionVM);
+            }
+
+            res.send({questions: models, tagName: tag.name});
+            res.end();
         });
     },
     getQuestionById: function (req, res, next) {

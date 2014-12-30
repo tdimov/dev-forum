@@ -28,6 +28,13 @@ app.factory('questionsService', function($http, $q) {
                 }
             })
         },
+        getQuestionsByTag: function (tag, callback) {
+            $http.get('/api/questionsByTag/' + tag).success(function(questions) {
+                if(questions) {
+                    callback(questions);
+                }
+            })
+        },
         getQuestionById: function (id, callback) {
             $http.get('/api/questions/' + id).success(function(question) {
                 if(question) {
