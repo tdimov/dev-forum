@@ -81,12 +81,16 @@ app.config(function ($routeProvider) {
         })
         .when('/questions', {
             templateUrl: '/partials/questions/questions',
-            controller: ''
+            controller: 'QuestionsController'
         })
         .when('/questions/ask', {
             templateUrl: '/partials/questions/ask-question',
-            controller: '',
+            controller: 'AskQuestionController',
             resolve: routeChecks.notAuthenticatedUser
+        })
+        .when('/questions/unanswered', {
+            templateUrl: '/partials/questions/unanswered-questions',
+            controller: 'UnansweredQuestionsController'
         })
         .when('/questions/:id', {
             templateUrl: '/partials/questions/question',

@@ -1,0 +1,23 @@
+ul.list-group
+    li.row.list-group-item(ng-repeat="question in questions")
+        div.col-sm-1
+            p.text-primary.text-center.text-size-18 {{ question.votes }}
+            p.text-primary.text-center votes
+        div.col-sm-1
+            p.text-primary.text-center.text-size-18 {{ question.answers }}
+            p.text-primary.text-center answers
+        div.col-sm-1
+            p.text-primary.text-center.text-size-18 {{ question.views }}
+            p.text-primary.text-center views
+        div.col-md-9
+            h3.h-margin-top
+                a(href="#/questions/{{ question.id }}") {{ question.title }}
+            div.row
+                ul.col-md-7.list-inline
+                    li.label.label-primary.margin-right(ng-repeat="tag in question.tags")
+                        a.text-white.not-hover(href="#/questions/{{tag}}") {{ tag }}
+                div.col-md-5
+                    span.text-default.pull-right asked {{ question.date }}
+                        br
+                        | by &nbsp
+                        a(href="#/users/{{ question.author.id }}") {{ question.author.username }}

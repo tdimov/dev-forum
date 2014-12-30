@@ -19,6 +19,7 @@ module.exports = function (app) {
 
     app.get('/api/questions', questionsController.getQuestions);
     app.get('/api/topQuestions', questionsController.getTopQuestions);
+    app.get('/api/unansweredQuestions', questionsController.getUnansweredQuestions);
     app.get('/api/lastFiveQuestions', questionsController.getLastFiveQuestions);
     app.get('/api/questions/:id', questionsController.getQuestionById);
     app.post('/api/questions', auth.isAuthenticated, questionsController.addQuestion);

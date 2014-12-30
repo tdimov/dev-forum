@@ -91,7 +91,6 @@ module.exports = {
                 console.log("getLastFiveQuestions Cannot load last five questions: " + err);
                 return;
             }
-            //console.log(questions);
             var models = [];
 
             for(var i = 0, len = questions.length; i < len; i++) {
@@ -104,9 +103,40 @@ module.exports = {
 
                 models.push(questionVM);
             }
-            console.log(models);
             res.send(models);
             res.end();
+        });
+    },
+    getUnansweredQuestions: function (req, res) {
+        Question.find({isAnswered: false}).sort('-postedDate').limit(3).exec(function(err, questions) {
+            if(err || !questions) {
+                console.log("Cannot load top questions: " + err);
+                return;
+            }
+
+            var models = [];
+
+            for(var i = 0, len = questions.length; i < len; i++) {
+                var questionVM = {
+                    id: questions[i]._id,
+                    title: questions[i].title,
+                    author: {
+                        id: questions[i].author._id,
+                        username: questions[i].author.username
+                    },
+                    tags: questions[i].tags,
+                    votes: questions[i].rating,
+                    answers: questions[i].answersCount,
+                    views: questions[i].viewed,
+                    date: dateFormat.createDateFormat(questions[i].postedDate)
+                };
+
+                models.push(questionVM);
+            }
+
+            res.send(models);
+            res.end();
+
         });
     },
     getQuestionById: function (req, res, next) {
