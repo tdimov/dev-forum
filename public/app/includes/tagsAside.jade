@@ -2,7 +2,7 @@ div.panel.panel-default
     div.panel-heading
         h4 Tags
     div.panel-body
-        ul.list-inline(ng-controller="TagsController")
+        ul.list-inline(ng-controller="TagsAsideController")
             li.label.label-primary.margin-right(ng-repeat="tag in tags")
                 a.text-white.not-hover(href="#/questionsByTag/{{tag.name}}") {{ tag.name }}
     div.panel-footer

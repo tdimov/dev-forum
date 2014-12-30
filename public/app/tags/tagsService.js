@@ -19,6 +19,11 @@ app.factory('tagsService', function($http, $q, identity) {
                 callback(data);
             });
         },
+        getLimitedTags: function (callback) {
+            $http.get('/api/tagsAside').success(function(data) {
+                callback(data);
+            });
+        },
         getTagsAskQuestion: function (callback) {
             $http.get('/tags/askQuestion').success(function(data){
                 callback(data);

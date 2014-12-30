@@ -2,12 +2,6 @@ var Tag = require('mongoose').model('Tag'),
     _ = require('underscore'),
     tagsValidator = require('../utilities/validation/tagsValidator');
 
-function isTagExist(tagName) {
-}
-
-function addNewTag(tagName) {
-}
-
 function getAllTags(options, callback) {
     Tag.find(options).exec(function (err, tags) {
         if(err || !tags) {
@@ -64,6 +58,27 @@ module.exports = {
             res.send(models);
             res.end();
 
+        });
+    },
+    getTagsAside: function (req, res) {
+        Tag.find({}).sort('-questions').limit(10).exec(function (err, tags) {
+            if(err || !tags) {
+                console.log("getLimitedTags Cannot load tags: " + err);
+                return;
+            }
+
+            var models = [];
+
+            for(var i = 0, len = tags.length; i < len; i++) {
+                var tagVM = {
+                    name: tags[i].name
+                };
+
+                models.push(tagVM);
+            }
+
+            res.send(models);
+            res.end();
         });
     },
     getTagById: function (req, res) {

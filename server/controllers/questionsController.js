@@ -4,7 +4,6 @@ var Question = require('mongoose').model('Question'),
     Answer = require('mongoose').model('Answer'),
     Comment = require('mongoose').model('Comment'),
     questionsValidator = require('../utilities/validation/questionsValidator'),
-    _ = require("underscore"),
     commonValidator = require('../utilities/validation/commonValidator'),
     dateFormat = require('../utilities/dateFormat');
 
