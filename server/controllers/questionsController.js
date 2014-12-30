@@ -221,10 +221,21 @@ module.exports = {
 
             Question.create(newQuestion, function (err, question) {
                 if(err || !question) {
-                    console.log("An error occurred while creating new question: " + err);
+                    console.log("addQuestion An error occurred while creating new question: " + err);
                     res.send({success: false, message: "Sorry, an error occurred while saving your question!"});
                     res.end();
                     return;
+                }
+
+                if(question.tags) {
+                    question.tags.forEach(function (tag) {
+                        Tag.findOneAndUpdate({name: tag}, {$push: {questions: question._id}}, function (err) {
+                            if(err) {
+                                console.log('addQuestions Cannot push question id to tag: ' + err);
+                                return;
+                            }
+                        })
+                    });
                 }
 
                 res.send({success: true, message: "Question is added successful!", questionId: question._id});
