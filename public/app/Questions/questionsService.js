@@ -14,6 +14,13 @@ app.factory('questionsService', function($http, $q) {
                 }
             })
         },
+        getLastFiveQuestions: function (callback) {
+            $http.get('/api/lastFiveQuestions').success(function(questions) {
+                if(questions) {
+                    callback(questions);
+                }
+            })
+        },
         getQuestionById: function (id, callback) {
             $http.get('/api/questions/' + id).success(function(question) {
                 if(question) {

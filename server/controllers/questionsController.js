@@ -85,6 +85,30 @@ module.exports = {
 
         });
     },
+    getLastFiveQuestions: function (req, res) {
+        Question.find({}).sort('-postedDate').limit(5).exec(function (err, questions) {
+            if(err || !questions) {
+                console.log("getLastFiveQuestions Cannot load last five questions: " + err);
+                return;
+            }
+            //console.log(questions);
+            var models = [];
+
+            for(var i = 0, len = questions.length; i < len; i++) {
+                var question = questions[i];
+
+                var questionVM = {
+                    id: question._id,
+                    title: question.title
+                };
+
+                models.push(questionVM);
+            }
+            console.log(models);
+            res.send(models);
+            res.end();
+        });
+    },
     getQuestionById: function (req, res, next) {
         var id = req.params.id;
         Question.findOne({_id: id}).exec(function (err, question) {

@@ -45,7 +45,8 @@
                                     | by &nbsp
                                     a(href="#/users/{{ answer.author.id }}") {{ answer.author.username }}
                         div(ng-show="answer.comments.length > 0")
-                            h4 Comments
+                            h4
+                                strong Comments
                             hr
                             div(ng-repeat="comment in answer.comments")
                                 p.text-size-14 {{ comment.text }} - &nbsp
