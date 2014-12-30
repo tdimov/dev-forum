@@ -2,19 +2,9 @@ var Tag = require('mongoose').model('Tag'),
     _ = require('underscore'),
     tagsValidator = require('../utilities/validation/tagsValidator');
 
-function getAllTags(options, callback) {
-    Tag.find(options).exec(function (err, tags) {
-        if(err || !tags) {
-            callback(err, null);
-        }
-
-        callback(null, tags);
-    });
-}
-
 module.exports = {
     getTags: function (req, res, next){
-        getAllTags({}, function(err, tags) {
+        Tag.find({}).sort('-questions').exec(function(err, tags) {
             if(err) {
                 console.log("Cannot load tags: " + err);
                 res.send({success: false, message: "An error occurred while loading tags!"});
@@ -40,7 +30,7 @@ module.exports = {
 
     },
     getTagsAskQuestion: function (req, res) {
-        getAllTags({}, function(err, tags) {
+        Tag.find({}).exec(function(err, tags) {
             if(err) {
                 console.log("Cannot load the tag: " + err);
                 res.send({success: false, message: "An error occurred while loading tags!"});

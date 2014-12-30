@@ -5,38 +5,9 @@
         div.form-group.col-md-6
             label.text-size-18(for="Search") Search a tag
             input#Search.form-control(type="text", ng-model="search", placeholder="Tag name")
-    div.row
-        div.col-xs-6.col-sm-3
-            a.text-size-14.label.label-primary(href="#") javascript
+    div.row(ng-controller="TagsController")
+        div.col-xs-6.col-sm-3(ng-repeat="tag in tags")
+            a.text-size-14.label.label-primary(href="#/questionsByTag/{{tag.name}}") {{ tag.name }}
+            span &nbsp x {{ tag.questionsCount }}
             p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-xs-6.col-sm-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-xs-6.col-sm-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-xs-6.col-sm-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-    div.row
-        div.col-xs-6.col-sm-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-xs-6.col-sm-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-xs-6.col-sm-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-        div.col-xs-6.col-sm-3
-            a.text-size-14.label.label-primary(href="#") javascript
-            p.text-size-12.text-primary
-                | JavaScript (not to be confused with Java) is a dynamically-typed language commonly used for client-side scripting. Use this tag
-
+                | {{ tag.description }}
