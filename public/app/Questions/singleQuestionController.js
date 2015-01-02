@@ -1,4 +1,4 @@
-app.controller('SingleQuestionController', function ($scope, $sce, $location, $routeParams, questionsService, identity, notifier){
+app.controller('SingleQuestionController', function ($scope, $sce, $location, $routeParams, questionsService, answersService, identity, notifier){
     var questionId = $routeParams.id,
         answerId;
 
@@ -16,6 +16,88 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
     $scope.setAnswerId = function (id) {
         if (id) {
             answerId = id;
+        }
+    };
+
+    $scope.voteUpQuestion = function (questionId) {
+        if(identity.isAuthenticated()) {
+            answersService.voteUp(questionId)
+                .then(function (response) {
+                    if (response.success) {
+                        notifier.success(response.message);
+                        $location.path('/');
+                    }
+                    else {
+                        notifier.error(response.message);
+                    }
+                });
+        }
+        else {
+            $location.path('/login');
+        }
+    };
+
+    $scope.voteDownQuestion = function (questionId) {
+        if(identity.isAuthenticated()) {
+            questionsService.voteDown(questionId)
+                .then(function (response) {
+                    if (response.success) {
+                        notifier.success(response.message);
+                        $location.path('/');
+                    }
+                    else {
+                        notifier.error(response.message);
+                    }
+                });
+        }
+        else {
+            $location.path('/login');
+        }
+    };
+
+    $scope.voteUpAnswer = function (answerId) {
+        var ids = {
+            answerId: answerId,
+            questionId: questionId
+        };
+
+        if(identity.isAuthenticated()) {
+            answersService.voteUp(ids)
+                .then(function (response) {
+                    if (response.success) {
+                        notifier.success(response.message);
+                        $location.path('/');
+                    }
+                    else {
+                        notifier.error(response.message);
+                    }
+                });
+        }
+        else {
+            $location.path('/login');
+        }
+    };
+
+    $scope.voteDownAnswer = function (answerId) {
+        var ids = {
+            answerId: answerId,
+            questionId: questionId
+        };
+
+        if(identity.isAuthenticated()) {
+            answersService.voteDown(ids)
+                .then(function (response) {
+                    if (response.success) {
+                        notifier.success(response.message);
+                        $location.path('/');
+                    }
+                    else {
+                        notifier.error(response.message);
+                    }
+                });
+        }
+        else {
+            $location.path('/login');
         }
     };
 

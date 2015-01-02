@@ -72,6 +72,47 @@ app.factory('questionsService', function($http, $q) {
 
             return deferred.promise;
         },
+        voteUp: function (questionId) {
+            var deferred = $q.defer();
+            var vote = {
+                questionId: questionId
+            };
+            $http.post('/api/questionsVoteUp', vote)
+                .success(function (response) {
+                    if(response.success) {
+                        deferred.resolve(response);
+                    }
+                    else {
+                        deferred.resolve(response);
+                    }
+                });
+
+            return deferred.promise;
+        },
+        voteDown: function (questionId) {
+            var deferred = $q.defer();
+            var vote = {
+                questionId: questionId
+            };
+
+            $http.post('/api/questionsVoteDown', vote)
+                .success(function (response) {
+                    if(response.success) {
+                        deferred.resolve(response);
+                    }
+                    else {
+                        deferred.resolve(response);
+                    }
+                });
+
+            return deferred.promise;
+        },
+        voteUpAnswer: function (answerId) {
+
+        },
+        voteDownAnswer: function (answerId) {
+
+        },
         askQuestion: function (question) {
             var deferred = $q.defer();
             $http.post('/api/questions', question)

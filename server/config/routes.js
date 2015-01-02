@@ -23,9 +23,13 @@ module.exports = function (app) {
     app.get('/api/lastFiveQuestions', questionsController.getLastFiveQuestions);
     app.get('/api/questionsByTag/:tag', questionsController.getQuestionsByTag);
     app.get('/api/questions/:id', questionsController.getQuestionById);
+    app.post('/api/questionsVoteUp', auth.isAuthenticated, questionsController.voteUp);
+    app.post('/api/questionsVoteDown', auth.isAuthenticated, questionsController.voteDown);
     app.post('/api/questions', auth.isAuthenticated, questionsController.addQuestion);
 
     app.post('/api/answers', auth.isAuthenticated, answersController.addAnswer);
+    app.post('/api/answersVoteUp', auth.isAuthenticated, answersController.voteUp)
+    app.post('/api/answersVoteDown', auth.isAuthenticated, answersController.voteDown)
 
     app.post('/api/comments', auth.isAuthenticated, commentsController.addComment);
 

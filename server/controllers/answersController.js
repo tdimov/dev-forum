@@ -1,5 +1,7 @@
 var Answer = require('mongoose').model('Answer'),
     Question = require('mongoose').model('Question'),
+    Vote = require('mongoose').model('Vote'),
+    answersValidator = require('../utilities/validation/answersValidator'),
     commonValidator = require('../utilities/validation/commonValidator');
 
 module.exports = {
@@ -33,6 +35,113 @@ module.exports = {
         }
         else {
             res.send({success: false, message: "Please, enter correct answer data!"});
+            res.end();
+        }
+    },
+    voteUp: function (req, res) {
+        var currentUser = req.user,
+            ids = req.body;
+
+        if(currentUser) {
+            var newVote = {
+                userId: currentUser._id,
+                score: 'up'
+            };
+
+            answersValidator.isUserVote(currentUser._id, ids.answerId, function (err, isUserVote) {
+                if(err) {
+                    console.log("voteUp An error occurred with vote: " + err);
+                    return;
+                }
+
+                if(!isUserVote) {
+                    Vote.create(newVote, function (err, vote) {
+                        if(err || !vote) {
+                            console.log("voteUp Cannot create a new vote: " + err);
+                            return;
+                        }
+
+                        Question.findOneAndUpdate({_id: ids.questionId}, {$set: {'lastActiveDate': new Date()} }, function (err) {
+                            if(err) {
+                                console.log("voteUp Cannot update question: " + err);
+                                return;
+                            }
+                            Answer.findOneAndUpdate({_id: ids.answerId}, {$push: { 'votes': vote._id }, $inc: {'rating': 1} }, function (err) {
+                                if(err) {
+                                    console.log("voteUp Cannot update answer: " + err);
+                                    return;
+                                }
+
+                                res.send({success: true, message: "You vote up successful!"});
+                                res.end();
+                            });
+                        });
+                    });
+                }
+                else {
+                    res.send({success: false, message: "You've already voted for this question!"});
+                    res.end();
+                }
+
+            });
+
+
+        }
+        else {
+            res.send({success: false, message: "Please, log in!"});
+            res.end();
+        }
+    },
+    voteDown: function (req, res) {
+        var currentUser = req.user,
+            ids = req.body;
+
+        if(currentUser) {
+            var newVote = {
+                userId: currentUser._id,
+                score: 'down'
+            };
+            answersValidator.isUserVote(currentUser._id, ids.answerId, function (err, isUserVote) {
+                if(err) {
+                    console.log("voteDown An error occurred with vote: " + err);
+                    return;
+                }
+
+                if(!isUserVote) {
+                    Vote.create(newVote, function (err, vote) {
+                        if(err || !vote) {
+                            console.log("voteDown Cannot create a new vote: " + err);
+                            return;
+                        }
+
+                        Question.findOneAndUpdate({_id: ids.questionId}, {$set: {'lastActiveDate': new Date()} }, function (err) {
+                            if(err) {
+                                console.log("voteDown Cannot update question: " + err);
+                                return
+                            }
+                            Answer.findOneAndUpdate({_id: ids.answerId}, {$push: { 'votes': vote._id }, $inc: {'rating': -1} }, function (err) {
+                                if(err) {
+                                    console.log("voteUp Cannot update answer: " + err);
+                                    return;
+                                }
+
+                                res.send({success: true, message: "You vote up successful!"});
+                                res.end();
+                            });
+                        });
+                    });
+                }
+                else {
+                    res.send({success: false, message: "You've already voted for this question!"});
+                    res.end();
+                }
+
+            });
+
+
+        }
+        else {
+            res.send({success: false, message: "Please, log in!"});
             res.end();
         }
     }

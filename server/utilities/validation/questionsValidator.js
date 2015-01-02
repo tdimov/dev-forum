@@ -1,4 +1,5 @@
-var commonValidator = require('./commonValidator'),
+var Question = require('mongoose').model('Question'),
+    commonValidator = require('./commonValidator'),
     validator = require('validator');
 
 function isTagsLengthValid(tags) {
@@ -42,5 +43,27 @@ module.exports = {
         }
 
         return false;
+    },
+    isUserVote: function (userId, questionId, callback) {
+        Question.findOne({_id: questionId}).populate('votes').exec(function (err, question) {
+            var isVote = false;
+
+            if(err || !question) {
+                console.log("isUserVote Cannot load question: " + err);
+                callback(err, isVote);
+                return;
+            }
+
+            for(var i = 0, len = question.votes.length; i < len; i++) {
+                var vote = question.votes[i];
+                var id = "" + vote.userId + "";
+                if(id == userId) {
+                    isVote = true;
+                    break;
+                }
+            }
+
+            callback(null, isVote);
+        });
     }
 };

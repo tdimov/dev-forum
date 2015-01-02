@@ -3,6 +3,7 @@ var Question = require('mongoose').model('Question'),
     User = require('mongoose').model('User'),
     Answer = require('mongoose').model('Answer'),
     Comment = require('mongoose').model('Comment'),
+    Vote = require('mongoose').model('Vote'),
     questionsValidator = require('../utilities/validation/questionsValidator'),
     commonValidator = require('../utilities/validation/commonValidator'),
     dateFormat = require('../utilities/dateFormat');
@@ -39,7 +40,7 @@ module.exports = {
                         username: questions[i].author.username
                     },
                     tags: questions[i].tags,
-                    votes: questions[i].rating,
+                    votes: questions[i].votes.length,
                     answers: questions[i].answersCount,
                     views: questions[i].viewed,
                     date: dateFormat.createDateFormat(questions[i].postedDate)
@@ -71,7 +72,7 @@ module.exports = {
                         username: questions[i].author.username
                     },
                     tags: questions[i].tags,
-                    votes: questions[i].rating,
+                    votes: questions[i].votes.length,
                     answers: questions[i].answersCount,
                     views: questions[i].viewed,
                     date: dateFormat.createDateFormat(questions[i].postedDate)
@@ -125,7 +126,7 @@ module.exports = {
                         username: questions[i].author.username
                     },
                     tags: questions[i].tags,
-                    votes: questions[i].rating,
+                    votes: questions[i].votes.length,
                     answers: questions[i].answersCount,
                     views: questions[i].viewed,
                     date: dateFormat.createDateFormat(questions[i].postedDate)
@@ -160,7 +161,7 @@ module.exports = {
                         username: questions[i].author.username
                     },
                     tags: questions[i].tags,
-                    votes: questions[i].rating,
+                    votes: questions[i].votes.length,
                     answers: questions[i].answersCount,
                     views: questions[i].viewed,
                     date: dateFormat.createDateFormat(questions[i].postedDate)
@@ -278,6 +279,101 @@ module.exports = {
         }
         else {
             res.send({success: false, message: "Please, enter correct question data!"});
+            res.end();
+        }
+    },
+    voteUp: function (req, res) {
+        var questionId = req.body.questionId,
+            currentUser = req.user;
+
+        if(currentUser) {
+            var newVote = {
+                userId: currentUser._id,
+                score: 'up'
+            };
+            questionsValidator.isUserVote(currentUser._id, questionId, function (err, isUserVote) {
+                if(err) {
+                    console.log("voteUp An error occurred with vote: " + err);
+                    return;
+                }
+
+                if(!isUserVote) {
+                    Vote.create(newVote, function (err, vote) {
+                        if(err || !vote) {
+                            console.log("voteUp Cannot create a new vote: " + err);
+                            return;
+                        }
+
+                        Question.findOneAndUpdate({_id: questionId}, {$push: { 'votes': vote._id }, $set: {'lastActiveDate': new Date()}, $inc: {'rating': 1} }, function (err) {
+                            if(err) {
+                                console.log("voteUp Cannot update question: " + err);
+                                return
+                            }
+
+                            res.send({success: true, message: "You vote up successful!"});
+                            res.end();
+                        });
+                    });
+                }
+                else {
+                    res.send({success: false, message: "You've already voted for this question!"});
+                    res.end();
+                }
+
+            });
+
+
+        }
+        else {
+            res.send({success: false, message: "Please, log in!"});
+            res.end();
+        }
+    },
+    voteDown: function (req, res) {
+        var questionId = req.body.questionId,
+            currentUser = req.user;
+
+        if(currentUser) {
+            var newVote = {
+                userId: currentUser._id,
+                score: 'down'
+            };
+
+            questionsValidator.isUserVote(currentUser._id, questionId, function (err, isUserVote) {
+                if(err) {
+                    console.log("voteDown An error occurred with vote: " + err);
+                    return;
+                }
+
+                if(!isUserVote) {
+                    Vote.create(newVote, function (err, vote) {
+                        if(err || !vote) {
+                            console.log("voteDown Cannot create a new vote: " + err);
+                            return;
+                        }
+
+                        Question.findOneAndUpdate({_id: questionId}, {$push: { 'votes': vote._id }, $set: {'lastActiveDate': new Date()}, $inc: {'rating': -1} }, function (err) {
+                            if(err) {
+                                console.log("voteDown Cannot update question: " + err);
+                                return
+                            }
+
+                            res.send({success: true, message: "You vote down successful!"});
+                            res.end();
+                        });
+                    });
+                }
+                else {
+                    res.send({success: false, message: "You've already voted for this question!"});
+                    res.end();
+                }
+
+            });
+
+
+        }
+        else {
+            res.send({success: false, message: "Please, log in!"});
             res.end();
         }
     },
