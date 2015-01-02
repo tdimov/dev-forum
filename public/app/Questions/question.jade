@@ -18,8 +18,8 @@
                         ul.col-md-8.list-inline
                             li.label.label-primary.margin-right(ng-repeat="tag in question.tags")
                                 a.text-white.not-hover(href="#/questions/{{tag}}") {{ tag }}
-                        div.col-md-4.well
-                            span.text-default.pull-right asked {{ question.date }}
+                        div.col-md-4.well.pull-right
+                            span.text-default asked {{ question.date }}
                                 br
                                 | by &nbsp
                                 a(href="#/users/{{ question.author.id }}") {{ question.author.username }}

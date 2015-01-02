@@ -12,7 +12,7 @@ module.exports = {
         if(commonValidator.areJsonPropsNullOrEmpty(newAnswer) && currentUser) {
             newAnswer.author = {
                 _id: currentUser._id,
-                username: currentUser._id
+                username: currentUser.username
             };
 
             Answer.create(newAnswer, function (err, answer) {

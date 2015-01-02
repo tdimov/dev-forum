@@ -21,7 +21,7 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
 
     $scope.voteUpQuestion = function (questionId) {
         if(identity.isAuthenticated()) {
-            answersService.voteUp(questionId)
+            questionsService.voteUp(questionId)
                 .then(function (response) {
                     if (response.success) {
                         notifier.success(response.message);
