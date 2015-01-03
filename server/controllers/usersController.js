@@ -2,14 +2,6 @@ var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption'),
     usersValidator = require('../utilities/validation/usersValidator');
 
-function updateCurrentUser(req, res, updatedUser) {
-
-}
-
-function updateUserByAdmin(req, res, updatedUser) {
-
-}
-
 module.exports = {
     getAllUsers: function (req, res) {
         User.find({_id: { '$ne': req.user._id }}).exec(function(err, collection) {
@@ -21,6 +13,33 @@ module.exports = {
             res.send(collection);
             res.end();
         })
+    },
+    getUsersByReputation: function (req, res) {
+        //var usersPerPage = req.params.pageId;
+
+        User.find({}).sort('-reputation').limit(20).exec(function (err, users) {
+            if(err || !users) {
+                console.log("getUsersByReputation Cannot load users: " + err);
+                return;
+            }
+            var models = [];
+            for(var i = 0, len = users.length; i < len; i++) {
+                var userVM = {
+                    id: users[i]._id,
+                    username: users[i].username,
+                    reputation: users[i].reputation
+                };
+
+                if(users[i].country && users[i].city) {
+                    userVM.address = users[i].city + ", " + users[i].country
+                }
+
+                models.push(userVM);
+            }
+
+            res.send(models);
+            res.end();
+        });
     },
     getUserById: function(req, res) {
         var id = req.params.id;

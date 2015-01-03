@@ -1,5 +1,12 @@
-app.factory('UsersService', function($q, $http) {
+app.factory('usersService', function($q, $http) {
     return {
+        getUsers: function (itemsPerPage, callback) {
+            $http.get('/api/usersByReputation/').success(function(users) {
+                if(users) {
+                    callback(users);
+                }
+            })
+        },
         updateEditedUser: function (user) {
             var deferred = $q.defer();
 

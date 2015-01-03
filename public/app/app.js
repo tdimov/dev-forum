@@ -81,8 +81,8 @@ app.config(function ($routeProvider) {
             resolve: routeChecks.moderator
         })
         .when('/users', {
-            templateUrl: '/partials/users/users-list',
-            controller: ''
+            templateUrl: '/partials/users/users',
+            controller: 'UsersController'
         })
         .when('/questions', {
             templateUrl: '/partials/questions/questions',
