@@ -82,7 +82,7 @@ app.config(function ($routeProvider) {
         })
         .when('/users', {
             templateUrl: '/partials/users/users',
-            controller: 'UsersController'
+            controller: 'UsersByReputationController'
         })
         .when('/questions', {
             templateUrl: '/partials/questions/questions',

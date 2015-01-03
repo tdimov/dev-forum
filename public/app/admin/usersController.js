@@ -1,4 +1,4 @@
-app.controller('UsersController', function ($scope, $location, $route, UsersResource, UsersService, notifier) {
+app.controller('UsersController', function ($scope, $location, $route, UsersResource, usersService, notifier) {
     var userForDeleteId;
     $scope.users = UsersResource.query();
 
@@ -7,13 +7,11 @@ app.controller('UsersController', function ($scope, $location, $route, UsersReso
     };
 
     $scope.acceptDeleting = function () {
-        UsersService.deleteUser(userForDeleteId)
+        usersService.deleteUser(userForDeleteId)
             .then(function (response) {
                 if(response.success) {
                     notifier.success(response.message);
-                    //TODO: choose location path or reload whole page
-                    //$location.path('/');
-                    $route.reload();
+                    $location.path('/');
                 }
                 else {
                     notifier.error(response.message);

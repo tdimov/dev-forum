@@ -5,6 +5,8 @@ var userSchema = new mongoose.Schema({
     username: { type: String, require: '{PATH} is required', unique: true },
     firstName: { type: String, require: '{PATH} is required'},
     lastName: { type: String, require: '{PATH} is required'},
+    aboutMe: String,
+    website: String,
     reputation: {type: Number, default: 0},
     country: String,
     city: String,
