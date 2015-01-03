@@ -9,8 +9,8 @@
         li
             a(href="#users", target="_self", data-toggle="tab") Users
     div#tabContent.tab-content
-        div#question.tab-pane.fade.active.in
-            p Questions
+        div#questions.tab-pane.fade.active.in
+            include ../questions/questions-list
         div#tags.tab-pane.fade
             include ../tags/tags-list
         div#users.tab-pane.fade

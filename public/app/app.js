@@ -70,6 +70,11 @@ app.config(function ($routeProvider) {
             controller: 'EditTagController',
             resolve: routeChecks.admin
         })
+        .when('/admin/questions/questions-list', {
+            templateUrl: '/partials/questions/questions-list',
+            controller: 'QuestionsAdminController',
+            resolve: routeChecks.admin
+        })
         //MODERATOR
         .when('/moderator/moderator-panel', {
             templateUrl: '/partials/moderator/moderator-panel',

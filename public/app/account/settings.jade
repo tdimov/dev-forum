@@ -15,6 +15,14 @@
                             div.col-md-10
                                 input#newPassword.form-control.form-validation(type="password", name="newPassword", placeholder="New password", ng-model="user.newPassword")
                         div.form-group
+                            label.col-md-4.text-size-18(for="country") Country
+                            div.col-md-10
+                                input#country.form-control(type="text", name="country" placeholder="Country", ng-model="user.country")
+                        div.form-group
+                            label.col-md-4.text-size-18(for="city") City
+                            div.col-md-10
+                                input#city.form-control(type="text", name="city" placeholder="City", ng-model="user.city")
+                        div.form-group
                             label.col-md-4.text-size-18(for="FirstName") First name
                             div.col-md-10
                                 input#FirstName.form-control.form-validation(type="text", name="firstName" placeholder="First name", ng-model="user.firstName", required)

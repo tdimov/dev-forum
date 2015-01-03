@@ -1,0 +1,46 @@
+.container
+    div(ng-controller="QuestionsAdminController")
+        p.text.text-info.text-size-18(ng-show="hasQustions()") There are no questions!
+        div.table-responsive.margin-top-15(ng-hide="hasQustions()")
+            table.table.table-bordered.table-hover
+                thead
+                    tr
+                        th Title
+                        th Author
+                        th Posted date
+                        th Actions
+                .tbody
+                    tr(ng-repeat="question in questions")
+                        td
+                            a(href="#/questions/{{question.id}}") {{ question.title }}
+                        td
+                            a(href="#/users/{{ question.author.id }}") {{ question.author.username }}
+                        td {{ question.date }}
+                        td
+                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="lockQuestion(question.id)" title="Lock", data-toggle="modal", data-target="#lockModal")
+                                i.glyphicon.glyphicon-off
+                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="deleteTag(question.id)" title="Delete", data-toggle="modal", data-target="#deleteModal")
+                                i.glyphicon.glyphicon-remove
+
+            div#lockModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
+                div.modal-dialog
+                    div.modal-content
+                        div.modal-header
+                            button.close(type="button", data-dismiss="modal")
+                                span(aria-hidden="true") &times;
+                                span.sr-only Close
+                            h4.modal-title Are you sure?
+                        div.modal-footer
+                            button.btn.btn-primary(type="button", ng-click="acceptLock()", data-dismiss="modal") Yes
+                            button.btn.btn-default(data-dismiss="modal") No
+            div#deleteModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
+                div.modal-dialog
+                    div.modal-content
+                        div.modal-header
+                            button.close(type="button", data-dismiss="modal")
+                                span(aria-hidden="true") &times;
+                                span.sr-only Close
+                            h4.modal-title Are you sure?
+                        div.modal-footer
+                            button.btn.btn-primary(type="button", ng-click="acceptDeleting()", data-dismiss="modal") Yes
+                            button.btn.btn-default(data-dismiss="modal") No

@@ -107,11 +107,20 @@ app.factory('questionsService', function($http, $q) {
 
             return deferred.promise;
         },
-        voteUpAnswer: function (answerId) {
+        lockQuestion: function (questionId) {
+            var deferred = $q.defer();
+            var id = {questionId: questionId}
+            $http.put('/api/lockQuestion/', id)
+                .success(function (response) {
+                    if(response.success) {
+                        deferred.resolve(response);
+                    }
+                    else {
+                        deferred.resolve(response);
+                    }
+                });
 
-        },
-        voteDownAnswer: function (answerId) {
-
+            return deferred.promise;
         },
         askQuestion: function (question) {
             var deferred = $q.defer();
