@@ -1,5 +1,5 @@
 app.controller('EditTagController', function($scope, $routeParams, $location, notifier, tagsService){
-    $scope.tag = tagsService.getTagById($routeParams.id, function(tag) {
+    tagsService.getTagById($routeParams.id, function(tag) {
         $scope.tag = tag;
     });
 
