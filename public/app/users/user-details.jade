@@ -1,0 +1,45 @@
+.container(ng-controller="UserDetailsController")
+    div.row
+        h3 {{ user.username }}
+        hr
+        div.col-md-7
+            div.col-md-3
+                div.margin-bottom
+                    img.center-block(src="https://www.gravatar.com/avatar/24780fb6df85a943c7aea0402c843737?s=128&d=identicon&r=PG", width="128" height="128")
+                strong
+                    p.text-center.text-size-18 {{ user.reputation }}
+                p.text-center reputation
+            div.col-md-9
+                div.col-md-4
+                    p website:
+                    p address:
+                    p real name:
+                    p email:
+                    p last login:
+                    p member since:
+                div.com-md-8
+                    p
+                        a(href="{{ user.website }}", target="_blank") Link
+                    p
+                        span {{ user.address }}
+                    p
+                        span {{ user.firstName + ' ' + user.lastName}}
+                    p
+                        span {{ user.email }}
+                    p
+                        span {{ user.lastLoginDate }}
+                    p
+                        span {{ user.registrationDate }}
+        div.col-md-5
+            span about me:
+            p.well {{ user.aboutMe }}
+    div.row
+        div.col-md-6.margin-top-15
+            h4 {{ questions.length }} Questions
+            hr
+            ul.list-unstyled
+                li(ng-repeat="question in user.questions")
+                    div.col-md-1
+                        span.text-center.text-size-18 {{ question.rating }}
+                    div.col-md-11
+                        a(href="#/questions/{{ question.id }}") {{ question.title }}

@@ -1,6 +1,7 @@
 var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption'),
-    usersValidator = require('../utilities/validation/usersValidator');
+    usersValidator = require('../utilities/validation/usersValidator'),
+    dateFormat = require('../utilities/dateFormat');
 
 module.exports = {
     getAllUsers: function (req, res) {
@@ -45,21 +46,47 @@ module.exports = {
         var id = req.params.id;
 
         if(id) {
-            User.findOne({_id: id}).exec(function(err, user) {
+            User.findOne({_id: id}).populate('questions').exec(function(err, user) {
                 if(err || !user) {
                     console.log('User could not be loaded');
                     return;
                 }
+                var questions = [];
+
+                for(var i = 0, len = user.questions.length; i < len; i++) {
+                    var questionVM = {
+                        id: user.questions[i]._id,
+                        title: user.questions[i].title,
+                        rating: user.questions[i].rating
+                    };
+
+                    questions.push(questionVM);
+                }
+
                 var userVM = {
                     '_id': user._id,
                     username: user.username,
                     firstName: user.firstName,
                     lastName: user.lastName,
+                    reputation: user.reputation,
+                    aboutMe: 'n/a',
+                    address: 'n/a',
+                    website: 'n/a',
                     email: user.email,
-                    registrationDate: user.registrationDate,
-                    lastLoginDate: user.lastLoginDate,
+                    registrationDate: dateFormat.createDateFormat(user.registrationDate),
+                    lastLoginDate: dateFormat.createDateFormat(user.lastLoginDate),
+                    questions: questions,
                     roles: user.roles
                 };
+                if(user.website) {
+                    userVM.website = user.website;
+                }
+                if(user.aboutMe) {
+                    userVM.aboutMe = user.aboutMe;
+                }
+                if(user.city && user.country) {
+                    userVM.address = user.city + ", " + user.country;
+                }
                 res.send(userVM);
                 res.end();
             });
@@ -67,15 +94,12 @@ module.exports = {
     },
     register: function (req, res, next) {
         var newUserData = req.body;
-        console.log(req.files);
-        console.log(req.body);
-        console.log(req);
 //        if(usersValidator.isRegistrationValid(newUserData)) {
 //            newUserData.salt = encryption.generateSalt();
 //            newUserData.passHash = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
 //            newUserData.roles = ['user'];
-//            newUserData.registrationDate = new Date().toLocaleString();
-//            newUserData.lastLoginDate = new Date().toLocaleString();
+//            newUserData.registrationDate = new Date();
+//            newUserData.lastLoginDate = new Date();
 //            User.create(newUserData, function (err, user){
 //                if(err){
 //                    console.log('Failed to register new user: ' + err);

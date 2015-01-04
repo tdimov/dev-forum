@@ -84,6 +84,10 @@ app.config(function ($routeProvider) {
             templateUrl: '/partials/users/users',
             controller: 'UsersByReputationController'
         })
+        .when('/users/:id', {
+            templateUrl: '/partials/users/user-details',
+            controller: ''
+        })
         .when('/questions', {
             templateUrl: '/partials/questions/questions',
             controller: 'QuestionsController'

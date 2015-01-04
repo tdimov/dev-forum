@@ -5,16 +5,17 @@ var userSchema = new mongoose.Schema({
     username: { type: String, require: '{PATH} is required', unique: true },
     firstName: { type: String, require: '{PATH} is required'},
     lastName: { type: String, require: '{PATH} is required'},
-    aboutMe: String,
-    website: String,
+    aboutMe: { type: String, default: 'n/a' },
+    website: { type: String, default: 'n/a' },
     reputation: {type: Number, default: 0},
-    country: String,
-    city: String,
+    country: { type: String, default: 'n/a' },
+    city: { type: String, default: 'n/a' },
     email: { type: String, require: '{PATH} is required'},
     salt: String,
     passHash: String,
-    registrationDate: { type: String, require: '{PATH} is required'},
-    lastLoginDate: String,
+    registrationDate: { type: Date, require: '{PATH} is required'},
+    lastLoginDate: {type: Date, default: new Date()},
+    questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}],
     roles: [String]
 });
 
@@ -45,10 +46,10 @@ module.exports.seedInitialUsers = function () {
             var hashedPass;
             salt = encryption.generateSalt();
             hashedPass = encryption.generateHashedPassword(salt, 'Tihomir');
-            User.create({username: 'tihomir.dimov', firstName: 'Tihomir', lastName: 'Dimov', email: "tihomir@abv.bg", salt: salt, passHash: hashedPass, registrationDate: new Date().toLocaleString(), lastLoginDate: new Date().toLocaleString(), roles: ['admin']});
+            User.create({username: 'tihomir.dimov', firstName: 'Tihomir', lastName: 'Dimov', email: "tihomir@abv.bg", salt: salt, passHash: hashedPass, registrationDate: new Date(), lastLoginDate: new Date(), roles: ['admin']});
             salt = encryption.generateSalt();
             hashedPass = encryption.generateHashedPassword(salt, 'Vladimir');
-            User.create({username: 'vladimir.dimov', firstName: 'Vladimir', lastName: 'Dimov', email: "vladimir@abv.bg", salt: salt, passHash: hashedPass, registrationDate: new Date().toLocaleString(), lastLoginDate: new Date().toLocaleString(), roles: ['user']});
+            User.create({username: 'vladimir.dimov', firstName: 'Vladimir', lastName: 'Dimov', email: "vladimir@abv.bg", salt: salt, passHash: hashedPass, registrationDate: new Date(), lastLoginDate: new Date(), roles: ['user']});
             console.log('Users addded to database');
         }
         //});

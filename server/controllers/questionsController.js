@@ -261,20 +261,26 @@ module.exports = {
                     res.end();
                     return;
                 }
+                User.findOneAndUpdate({_id: currentUser._id}, {$push: {'questions': question._id}}, function (err) {
+                    if(err) {
+                        console.log('addQuestion Cannot update user: ' + err);
+                        return;
+                    }
 
-                if(question.tags) {
-                    question.tags.forEach(function (tag) {
-                        Tag.findOneAndUpdate({name: tag}, {$push: {questions: question._id}}, function (err) {
-                            if(err) {
-                                console.log('addQuestions Cannot push question id to tag: ' + err);
-                                return;
-                            }
-                        })
-                    });
-                }
+                    if(question.tags) {
+                        question.tags.forEach(function (tag) {
+                            Tag.findOneAndUpdate({name: tag}, {$push: {questions: question._id}}, function (err) {
+                                if(err) {
+                                    console.log('addQuestions Cannot push question id to tag: ' + err);
+                                    return;
+                                }
+                            })
+                        });
+                    }
 
-                res.send({success: true, message: "Question is added successful!", questionId: question._id});
-                res.end();
+                    res.send({success: true, message: "Question is added successful!", questionId: question._id});
+                    res.end();
+                });
             });
         }
         else {

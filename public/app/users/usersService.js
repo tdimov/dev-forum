@@ -7,6 +7,14 @@ app.factory('usersService', function($q, $http) {
                 }
             })
         },
+        getUserById: function (id, callback) {
+            $http.get('/api/users/' + id)
+                .success(function (response) {
+                    if(response) {
+                        callback(response);
+                    }
+                });
+        },
         updateEditedUser: function (user) {
             var deferred = $q.defer();
 
