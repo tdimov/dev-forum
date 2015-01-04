@@ -1,6 +1,7 @@
 var Answer = require('mongoose').model('Answer'),
     Question = require('mongoose').model('Question'),
     Vote = require('mongoose').model('Vote'),
+    User = require('mongoose').model('User'),
     answersValidator = require('../utilities/validation/answersValidator'),
     commonValidator = require('../utilities/validation/commonValidator');
 
@@ -14,22 +15,28 @@ module.exports = {
                 _id: currentUser._id,
                 username: currentUser.username
             };
-
-            Answer.create(newAnswer, function (err, answer) {
-                if(err || !answer) {
-                    console.log("Cannot add an answer: " + err);
-                    res.send({success: false, message: "An error occurred while adding an answer"});
+            User.findOneAndUpdate({_id: currentUser._id}, {$inc: {'reputation': 2}}, function (err) {
+                if(err) {
+                    console.log('addAnswer Cannot update user: ' + err);
                     return;
                 }
 
-                Question.update({_id: answer.questionId}, {$inc: {'answersCount': 1}, $set: {lastActiveDate: new Date(), isAnswered: true}}, function (err) {
-                    if(err) {
-                        console.log("Cannot update answers count: " + err);
-                        return
+                Answer.create(newAnswer, function (err, answer) {
+                    if(err || !answer) {
+                        console.log("Cannot add an answer: " + err);
+                        res.send({success: false, message: "An error occurred while adding an answer"});
+                        return;
                     }
 
-                    res.send({success: true, message: "Answer is added successful!"});
-                    res.end();
+                    Question.update({_id: answer.questionId}, {$inc: {'answersCount': 1}, $set: {lastActiveDate: new Date(), isAnswered: true}}, function (err) {
+                        if(err) {
+                            console.log("Cannot update answers count: " + err);
+                            return
+                        }
+
+                        res.send({success: true, message: "Answer is added successful!"});
+                        res.end();
+                    });
                 });
             });
         }
@@ -55,25 +62,32 @@ module.exports = {
                 }
 
                 if(!isUserVote) {
-                    Vote.create(newVote, function (err, vote) {
-                        if(err || !vote) {
-                            console.log("voteUp Cannot create a new vote: " + err);
+                    User.findOneAndUpdate({_id: currentUser._id}, {$inc: {'reputation': 1}}, function (err) {
+                        if (err) {
+                            console.log('voteUp Cannot update user: ' + err);
                             return;
                         }
 
-                        Question.findOneAndUpdate({_id: ids.questionId}, {$set: {'lastActiveDate': new Date()} }, function (err) {
-                            if(err) {
-                                console.log("voteUp Cannot update question: " + err);
+                        Vote.create(newVote, function (err, vote) {
+                            if(err || !vote) {
+                                console.log("voteUp Cannot create a new vote: " + err);
                                 return;
                             }
-                            Answer.findOneAndUpdate({_id: ids.answerId}, {$push: { 'votes': vote._id }, $inc: {'rating': 1} }, function (err) {
+
+                            Question.findOneAndUpdate({_id: ids.questionId}, {$set: {'lastActiveDate': new Date()} }, function (err) {
                                 if(err) {
-                                    console.log("voteUp Cannot update answer: " + err);
+                                    console.log("voteUp Cannot update question: " + err);
                                     return;
                                 }
+                                Answer.findOneAndUpdate({_id: ids.answerId}, {$push: { 'votes': vote._id }, $inc: {'rating': 1} }, function (err) {
+                                    if(err) {
+                                        console.log("voteUp Cannot update answer: " + err);
+                                        return;
+                                    }
 
-                                res.send({success: true, message: "You vote up successful!"});
-                                res.end();
+                                    res.send({success: true, message: "You vote up successful!"});
+                                    res.end();
+                                });
                             });
                         });
                     });
@@ -108,25 +122,32 @@ module.exports = {
                 }
 
                 if(!isUserVote) {
-                    Vote.create(newVote, function (err, vote) {
-                        if(err || !vote) {
-                            console.log("voteDown Cannot create a new vote: " + err);
+                    User.findOneAndUpdate({_id: currentUser._id}, {$inc: {'reputation': 1}}, function (err) {
+                        if (err) {
+                            console.log('voteDown Cannot update user: ' + err);
                             return;
                         }
 
-                        Question.findOneAndUpdate({_id: ids.questionId}, {$set: {'lastActiveDate': new Date()} }, function (err) {
-                            if(err) {
-                                console.log("voteDown Cannot update question: " + err);
-                                return
+                        Vote.create(newVote, function (err, vote) {
+                            if(err || !vote) {
+                                console.log("voteDown Cannot create a new vote: " + err);
+                                return;
                             }
-                            Answer.findOneAndUpdate({_id: ids.answerId}, {$push: { 'votes': vote._id }, $inc: {'rating': -1} }, function (err) {
-                                if(err) {
-                                    console.log("voteUp Cannot update answer: " + err);
-                                    return;
-                                }
 
-                                res.send({success: true, message: "You vote up successful!"});
-                                res.end();
+                            Question.findOneAndUpdate({_id: ids.questionId}, {$set: {'lastActiveDate': new Date()} }, function (err) {
+                                if(err) {
+                                    console.log("voteDown Cannot update question: " + err);
+                                    return
+                                }
+                                Answer.findOneAndUpdate({_id: ids.answerId}, {$push: { 'votes': vote._id }, $inc: {'rating': -1} }, function (err) {
+                                    if(err) {
+                                        console.log("voteUp Cannot update answer: " + err);
+                                        return;
+                                    }
+
+                                    res.send({success: true, message: "You vote up successful!"});
+                                    res.end();
+                                });
                             });
                         });
                     });
