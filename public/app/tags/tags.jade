@@ -1,13 +1,17 @@
-.container
+.container(ng-controller="TagsController")
     div.row
         h3 Tags
         hr
-        div.form-group.col-md-6
-            label.text-size-18(for="Search") Search a tag
-            input#Search.form-control(type="text", ng-model="search", placeholder="Tag name")
-    div.row(ng-controller="TagsController")
+        div.form-group
+            label.control-label Search
+            div.input-group.col-md-6
+                input#Search.form-control(type="text", ng-model="query", placeholder="Tag name")
+                span.input-group-btn
+                    button.btn.btn-primary(type="button", ng-click="searchTag()") Search
+    div.row.margin-top-15
+        p.text-size-14(ng-hide="hasSearchResults") No tags found!
         div.col-xs-6.col-sm-3(ng-repeat="tag in tags")
             a.text-size-14.label.label-primary(href="#/questionsByTag/{{tag.name}}") {{ tag.name }}
             span &nbsp x {{ tag.questionsCount }}
-            p.text-size-12.text-primary
+            p.margin-top-15.text-size-12.text-primary
                 | {{ tag.description }}

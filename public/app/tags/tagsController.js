@@ -35,7 +35,13 @@ app.controller('TagsController', function($scope, $location, notifier, tagsServi
     };
 
     tagsService.getAllTags(function (data) {
-        $scope.tags = data;
+        if(data) {
+            $scope.tags = data;
+            $scope.hasSearchResults = true;
+        }
+        else {
+            $scope.hasSearchResults = false;
+        }
     });
 
     $scope.hasTags = function () {
@@ -43,5 +49,23 @@ app.controller('TagsController', function($scope, $location, notifier, tagsServi
             return false;
         }
         return true;
+    };
+
+    $scope.searchTag = function () {
+        if($scope.query) {
+            tagsService.searchTag($scope.query, function (tags) {
+                if(tags.length > 0) {
+                    $scope.tags = tags;
+                    $scope.hasSearchResults = true;
+                }
+                else {
+                    $scope.tags = [];
+                    $scope.hasSearchResults = false;
+                }
+            })
+        }
+        else {
+            notifier.error("Please, enter which tag you are looking for!");
+        }
     }
 });

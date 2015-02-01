@@ -36,6 +36,13 @@ app.factory('tagsService', function($http, $q, identity) {
                 }
             });
         },
+        searchTag: function (query, callback) {
+            $http.get('/tags/searchTag/' + query).success(function (data) {
+                if(data) {
+                    callback(data);
+                }
+            })
+        },
         updateEditedTag: function(tag) {
             var deferred = $q.defer();
 

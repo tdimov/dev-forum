@@ -95,6 +95,45 @@ module.exports = {
 
         return ids;
     },
+    searchTag: function (req, res) {
+        var query = req.params.query;
+
+        if(query) {
+            Tag.find({}).sort('-questions').exec(function (err, tags) {
+                if(err || !tags) {
+                    console.log('searchTag Cannot laod tags: ' + err);
+                    return;
+                }
+                var searchedTags = [];
+
+                for(var i = 0, len = tags.length; i < len; i++) {
+                    if(tags[i].name.indexOf(query) > - 1) {
+                        searchedTags.push(tags[i]);
+                    }
+                }
+
+                var models = [];
+
+                for(var i = 0, len = searchedTags.length; i < len; i++) {
+                    var tagVM = {
+                        _id: searchedTags[i]._id,
+                        name: searchedTags[i].name,
+                        description: searchedTags[i].description,
+                        questionsCount: searchedTags[i].questions.length
+                    };
+
+                    models.push(tagVM);
+                }
+
+                res.send(models);
+                res.end();
+            });
+        }
+        else {
+            res.send({message: "Please, enter which tag you are looking for!", tags: []});
+            res.end();
+        }
+    },
     addTag: function (req, res, next) {
         var newTag = req.body;
 
