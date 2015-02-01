@@ -130,7 +130,7 @@ module.exports = {
             });
         }
         else {
-            res.send({message: "Please, enter which tag you are looking for!", tags: []});
+            res.send([]);
             res.end();
         }
     },

@@ -92,6 +92,49 @@ module.exports = {
             });
         }
     },
+    searchUser: function (req, res) {
+        var query = req.params.query;
+        console.log(query);
+        if(query) {
+            User.find({}).sort('-reputation').exec(function (err, users) {
+                if(err || !users) {
+                    console.log('searchUser Cannot load users: ' + err);
+                    return;
+                }
+
+                var searchedUsers = [];
+
+                for(var i = 0, len = users.length; i < len; i++) {
+                    if(users[i].username.indexOf(query) > - 1) {
+                        searchedUsers.push(users[i]);
+                    }
+                }
+
+                var models = [];
+
+                for(var i = 0, len = searchedUsers.length; i < len; i++) {
+                    var userVM = {
+                        id: searchedUsers[i]._id,
+                        username: searchedUsers[i].username,
+                        reputation: searchedUsers[i].reputation
+                    };
+
+                    if(searchedUsers[i].country && searchedUsers[i].city) {
+                        userVM.address = searchedUsers[i].city + ", " + searchedUsers[i].country
+                    }
+
+                    models.push(userVM);
+                }
+
+                res.send(models);
+                res.end();
+            });
+        }
+        else {
+            res.send([]);
+            res.end();
+        }
+    },
     register: function (req, res, next) {
         var newUserData = req.body;
 //        if(usersValidator.isRegistrationValid(newUserData)) {

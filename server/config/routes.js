@@ -13,6 +13,7 @@ module.exports = function (app) {
     app.get('/api/users',auth.isInRole('admin'), usersController.getAllUsers);
     app.get('/api/users/:id', usersController.getUserById);
     app.get('/api/usersByReputation', usersController.getUsersByReputation);
+    app.get('/users/searchUser/:query', usersController.searchUser);
     app.post('/api/users', usersController.register);
     app.put('/api/users', auth.isAuthenticated, usersController.updateUser);
     app.put('/api/users/:user', auth.isInRole('admin'), usersController.updateEditedUser);

@@ -15,6 +15,13 @@ app.factory('usersService', function($q, $http) {
                     }
                 });
         },
+        searchUser: function (query, callback) {
+            $http.get('/users/searchUser/' + query).success(function (data) {
+                if(data) {
+                    callback(data);
+                }
+            })
+        },
         updateEditedUser: function (user) {
             var deferred = $q.defer();
 
