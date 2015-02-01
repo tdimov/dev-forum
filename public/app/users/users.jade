@@ -2,10 +2,14 @@
     div.row
         h3 Users
         hr
-        div.form-group.col-md-6
-            label.text-size-18(for="Search") Search user
-            input#Search.form-control(type="text", ng-model="search", placeholder="Username")
+        div.form-group
+            label.control-label Search user
+            div.input-group.col-md-6
+                input#Search.form-control(type="text", ng-model="query", placeholder="Username")
+                span.input-group-btn
+                    button.btn.btn-primary(type="button", ng-click="searchUser()") Search
     div.row
+        p.text-size-14(ng-hide="hasSearchResults") No users found!
         div.col-xs-6.col-sm-3(ng-repeat="user in users")
             div.col-md-4
                 img(src="https://www.gravatar.com/avatar/24780fb6df85a943c7aea0402c843737?s=128&d=identicon&r=PG", width="75" height="75")
