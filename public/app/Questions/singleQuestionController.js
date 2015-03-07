@@ -12,7 +12,13 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
         ],
         height: '300px'
     };
+    $scope.hasUser = function () {
+        if(identity.isAuthenticated()) {
+            return false;
+        }
 
+        return true;
+    };
     $scope.setAnswerId = function (id) {
         if (id) {
             answerId = id;

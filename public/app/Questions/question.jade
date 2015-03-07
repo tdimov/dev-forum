@@ -56,7 +56,7 @@
                             hr
                     a(href="#", target="_self", data-toggle="modal", data-target="#commentModal", ng-click="setAnswerId(answer.id)") add a comment
                     hr
-            div.alert.alert-dismissable.alert-success
+            div.alert.alert-dismissable.alert-success(ng-show="hasUser()")
                 strong To add an answer you have to &nbsp
                     a.text.text-uppercase.text-danger(href="#/login") log in
             h3 Your answer
