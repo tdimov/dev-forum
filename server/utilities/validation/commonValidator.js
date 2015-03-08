@@ -11,7 +11,7 @@ module.exports = {
     },
     areJsonPropsNullOrEmpty: function (obj) {
         for(var key in obj) {
-            if(this.isNullOrEmpty(obj[key])) {
+            if(this.isNullOrEmpty(obj[key].toString())) {
                 return false;
             }
         }

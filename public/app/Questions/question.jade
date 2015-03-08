@@ -56,25 +56,28 @@
                             hr
                     a(href="#", target="_self", data-toggle="modal", data-target="#commentModal", ng-click="setAnswerId(answer.id)") add a comment
                     hr
-            div.alert.alert-dismissable.alert-success(ng-show="hasUser()")
+            div.row.alert.alert-dismissable.alert-success(ng-hide="hasUser()")
                 strong To add an answer you have to &nbsp
                     a.text.text-uppercase.text-danger(href="#/login") log in
-            h3 Your answer
-            textarea#Answer.form-control.margin-bottom(rows="12", ckeditor="editorOptions", ng-model="newAnswer.text")
-            button.margin-top-15.btn.btn-success(ng-click="addAnswer(newAnswer)") Post your answer
-            div#commentModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
-                div.modal-dialog
-                    div.modal-content
-                        div.modal-header
-                            button.close(type="button", data-dismiss="modal")
-                                span(aria-hidden="true") &times;
-                                span.sr-only Close
-                            h4.modal-title Enter your comment
-                        div.modal-body
-                            textarea#Comment.form-control(rows="10", required="true", ng-model="newAnswerComment.text")
-                        div.modal-footer
-                            button.btn.btn-primary(type="button", ng-click="addComment(newAnswerComment)", data-dismiss="modal") Comment
-                            button.btn.btn-default(data-dismiss="modal") Cancel
+            div.row.alert.alert-dismissable.alert-warning(ng-show="hasUser() && question.isLocked")
+                strong The question is locked!
+            div.row(ng-show="hasUser()")
+                h3 Your answer
+                textarea#Answer.form-control.margin-bottom(rows="12", ckeditor="editorOptions", ng-model="newAnswer.text")
+                button.margin-top-15.btn.btn-success(ng-click="addAnswer(newAnswer)") Post your answer
+                div#commentModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
+                    div.modal-dialog
+                        div.modal-content
+                            div.modal-header
+                                button.close(type="button", data-dismiss="modal")
+                                    span(aria-hidden="true") &times;
+                                    span.sr-only Close
+                                h4.modal-title Enter your comment
+                            div.modal-body
+                                textarea#Comment.form-control(rows="10", required="true", ng-model="newAnswerComment.text")
+                            div.modal-footer
+                                button.btn.btn-primary(type="button", ng-click="addComment(newAnswerComment)", data-dismiss="modal") Comment
+                                button.btn.btn-default(data-dismiss="modal") Cancel
         div.col-md-3
             div.panel.panel-default
                 div.panel-body

@@ -27,6 +27,7 @@ app.controller("QuestionsAdminController", function ($scope, $location, question
             .then(function (response) {
                 if(response.success) {
                     notifier.success(response.message);
+                    $location.path('/');
                 }
                 else {
                     notifier.error(response.message);

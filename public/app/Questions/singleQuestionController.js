@@ -14,11 +14,21 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
     };
     $scope.hasUser = function () {
         if(identity.isAuthenticated()) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     };
+//
+//    $scope.isLocked = function () {
+//        console.log($scope.question);
+//        if($scope.question.isLocked) {
+//            return true;
+//        }
+//
+//        return false;
+//    };
+
     $scope.setAnswerId = function (id) {
         if (id) {
             answerId = id;
@@ -109,6 +119,7 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
 
     $scope.addAnswer = function (newAnswer) {
         if(identity.isAuthenticated()) {
+            newAnswer.isQuestionLocked = $scope.question.isLocked;
             if(newAnswer && newAnswer.text) {
                 newAnswer.questionId = questionId;
                 questionsService.addAnswer(newAnswer)
@@ -133,6 +144,7 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
 
     $scope.addComment = function (newComment) {
         if(identity.isAuthenticated()) {
+            newComment.isQuestionLocked = $scope.question.isLocked;
             if(newComment && newComment.text) {
                 newComment.answerId = answerId;
                 questionsService.addComment(newComment)

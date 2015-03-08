@@ -232,6 +232,7 @@ module.exports = {
                     },
                     tags: question.tags,
                     votes: question.rating,
+                    isLocked: question.isLocked,
                     answers: answersVM,
                     views: question.viewed,
                     date: dateFormat.createDateFormat(question.postedDate),
@@ -393,6 +394,22 @@ module.exports = {
         else {
             res.send({success: false, message: "Please, log in!"});
             res.end();
+        }
+    },
+    lockQuestion: function (req, res) {
+        var questionId = req.body.questionId;
+
+        if(questionId) {
+            Question.findByIdAndUpdate({_id: questionId}, {$set: {isLocked: true}}, function (err) {
+                if(err) {
+                    console.log('lockQuestion Cannot lock the question: ' + err);
+                    res.send({success: false, message: "Cannot lock the question"});
+                    return;
+                }
+
+                res.send({success: true, message: "Question was locked successful!"});
+                res.end();
+            })
         }
     },
     updateQuestion: function (req, res, next) {

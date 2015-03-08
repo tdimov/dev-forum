@@ -28,6 +28,7 @@ module.exports = function (app) {
     app.post('/api/questionsVoteUp', auth.isAuthenticated, questionsController.voteUp);
     app.post('/api/questionsVoteDown', auth.isAuthenticated, questionsController.voteDown);
     app.post('/api/questions', auth.isAuthenticated, questionsController.addQuestion);
+    app.put('/api/lockQuestion/:id', auth.isInRole('admin'), questionsController.lockQuestion);
     app.delete('/api/questions/:id', auth.isInRole('admin'), questionsController.deleteQuestion);
 
     app.post('/api/answers', auth.isAuthenticated, answersController.addAnswer);

@@ -109,8 +109,8 @@ app.factory('questionsService', function($http, $q) {
         },
         lockQuestion: function (questionId) {
             var deferred = $q.defer();
-            var id = {questionId: questionId}
-            $http.put('/api/lockQuestion/', id)
+            var id = {questionId: questionId};
+            $http.put('/api/lockQuestion/' + id, id)
                 .success(function (response) {
                     if(response.success) {
                         deferred.resolve(response);
