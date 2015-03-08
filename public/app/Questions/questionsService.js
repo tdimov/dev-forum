@@ -135,6 +135,16 @@ app.factory('questionsService', function($http, $q) {
                 });
 
             return deferred.promise;
+        },
+        deleteQuestion: function (questionId) {
+            var deferred = $q.defer();
+
+            $http.delete('/api/questions/' + questionId)
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
         }
     };
 });

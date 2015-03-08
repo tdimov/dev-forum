@@ -17,9 +17,9 @@
                             a(href="#/users/{{ question.author.id }}") {{ question.author.username }}
                         td {{ question.date }}
                         td
-                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="lockQuestion(question.id)" title="Lock", data-toggle="modal", data-target="#lockModal")
+                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="setQuestionId(question.id)" title="Lock", data-toggle="modal", data-target="#lockModal")
                                 i.glyphicon.glyphicon-off
-                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="deleteTag(question.id)" title="Delete", data-toggle="modal", data-target="#deleteModal")
+                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="setQuestionId(question.id)" title="Delete", data-toggle="modal", data-target="#deleteModal")
                                 i.glyphicon.glyphicon-remove
 
             div#lockModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
@@ -31,7 +31,7 @@
                                 span.sr-only Close
                             h4.modal-title Are you sure?
                         div.modal-footer
-                            button.btn.btn-primary(type="button", ng-click="acceptLock()", data-dismiss="modal") Yes
+                            button.btn.btn-primary(type="button", ng-click="lockQuestion()", data-dismiss="modal") Yes
                             button.btn.btn-default(data-dismiss="modal") No
             div#deleteModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
                 div.modal-dialog
@@ -42,5 +42,5 @@
                                 span.sr-only Close
                             h4.modal-title Are you sure?
                         div.modal-footer
-                            button.btn.btn-primary(type="button", ng-click="acceptDeleting()", data-dismiss="modal") Yes
+                            button.btn.btn-primary(type="button", ng-click="deleteQuestion()", data-dismiss="modal") Yes
                             button.btn.btn-default(data-dismiss="modal") No

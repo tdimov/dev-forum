@@ -5,7 +5,6 @@ var Question = require('mongoose').model('Question'),
     Comment = require('mongoose').model('Comment'),
     Vote = require('mongoose').model('Vote'),
     questionsValidator = require('../utilities/validation/questionsValidator'),
-    commonValidator = require('../utilities/validation/commonValidator'),
     dateFormat = require('../utilities/dateFormat');
 
 //Unused for now
@@ -399,7 +398,43 @@ module.exports = {
     updateQuestion: function (req, res, next) {
 
     },
-    deleteQuestion: function (req, res, next) {
+    deleteQuestion: function (req, res) {
+        var questionId = req.params.id;
 
+        if(questionId) {
+            Question.findOne({_id: questionId}).exec(function (err, question) {
+                var tags = question.tags;
+
+                for(var i = 0, len = tags.length; i < len; i++) {
+                    Tag.findOne({name: tags[i]}).exec(function (err, tag) {
+                        if(err) {
+                            console.log('deleteQuestion Cannot find tag: ' + err);
+                            res.send({success: false, message: "Delete failed!"});
+                            return;
+                        }
+                        var index = tag.questions.indexOf(questionId);
+
+                        if(index > -1) {
+                            tag.questions.splice(index, 1);
+                        }
+
+                        tag.save();
+                    })
+                }
+
+                question.remove(function (err) {
+                    if(err) {
+                        console.log("deleteQuestion The question was not removed from db: " + err);
+                        res.send({success: false, message: "Delete failed!"});
+                        res.end();
+                        return;
+                    }
+                    else {
+                        res.send({success: true, message: "Successful delete!"});
+                        res.end();
+                    }
+                });
+            });
+        }
     }
 };
