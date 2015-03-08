@@ -76,7 +76,7 @@ app.factory('auth', function ($q, $http, identity, UsersResource) {
             updatedUser._id = identity.currentUser._id;
             updatedUser.$update().then(function(response) {
                 deferred.resolve(response);
-            }, function() {
+            }, function(response) {
                 deferred.reject(response);
             });
 
