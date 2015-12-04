@@ -17,7 +17,7 @@ function getAllQuestions(options, callback) {
         callback(null, questions);
     });
 }
-
+//TODO: Create function for converting question into View Model
 module.exports = {
     getQuestions: function (req, res, next) {
         //var pageId = req.params.pageId;
@@ -38,6 +38,7 @@ module.exports = {
                         id: questions[i].author._id,
                         username: questions[i].author.username
                     },
+                    isLocked: questions[i].isLocked,
                     tags: questions[i].tags,
                     votes: questions[i].votes.length,
                     answers: questions[i].answersCount,
