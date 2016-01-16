@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node": "0.10.x",
-    "npm": "1.4.x"
+    "node": "5.4.x",
+    "npm": "3.3.x"
   },
   "author": "Tihomir Dimov",
   "license": "MIT",
