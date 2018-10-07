@@ -4,11 +4,9 @@
   "description": "Forum system based on stackoverflow",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "engines": {
-    "node": "5.4.x",
-    "npm": "3.3.x"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./server.js",
+    "lint": "eslint ."
   },
   "author": "Tihomir Dimov",
   "license": "MIT",
@@ -18,11 +16,20 @@
     "express": "^4.8.8",
     "express-session": "^1.8.1",
     "jade": "^1.6.0",
-    "mongoose": "^3.8.15",
+    "mongodb": "^3.1.6",
+    "mongoose": "4.2.9",
     "multer": "^0.1.6",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "underscore": "^1.7.0",
     "validator": "^3.19.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "prettier": "^1.14.3"
   }
 }

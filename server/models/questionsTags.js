@@ -1,9 +1,10 @@
-var mongoose = require('mongoose'),
-    mongooseSchema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var questionsTagsSchema = new mongoose.Schema({
-    questionId: mongooseSchema.ObjectId,
-    tagId: mongooseSchema.ObjectId
+const mongooseSchema = mongoose.Schema;
+
+const questionsTagsSchema = new mongoose.Schema({
+  questionId: mongooseSchema.ObjectId,
+  tagId: mongooseSchema.ObjectId
 });
 
-var QuestionsTags = mongoose.model('QuestionsTags', questionsTagsSchema);
+mongoose.model('QuestionsTags', questionsTagsSchema);

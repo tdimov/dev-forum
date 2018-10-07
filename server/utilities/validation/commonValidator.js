@@ -1,21 +1,16 @@
-var validator = require('validator');
+const validator = require('validator');
 
 module.exports = {
-    isNullOrEmpty: function (str) {
-        if(!str || validator.isNull(str)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    },
-    areJsonPropsNullOrEmpty: function (obj) {
-        for(var key in obj) {
-            if(this.isNullOrEmpty(obj[key].toString())) {
-                return false;
-            }
-        }
-
-        return true;
+  isNullOrEmpty(str) {
+    return !str || validator.isNull(str);
+  },
+  areJsonPropsNullOrEmpty(obj) {
+    for (const key in obj) {
+      if (this.isNullOrEmpty(obj[key].toString())) {
+        return false;
+      }
     }
+
+    return true;
+  }
 };

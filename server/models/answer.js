@@ -1,18 +1,27 @@
-var mongoose = require('mongoose'),
-    mongooseSchema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var answerSchema = new mongoose.Schema({
-    text: {type: String, require: '{PATH} is required'},
-    postedDate: {type: Date, require: '{PATH} is required', default: Date.now},
-    editedDate: {type: Date, require: '{PATH} is required'},
-    rating: {type: Number, require: '{PATH} is required', default: 0},
-    votes: [{type: mongooseSchema.Types.ObjectId, ref: 'Vote'}],
-    author: {
-        _id: {type: mongooseSchema.Types.ObjectId, ref: 'User', require: '{PATH} is required'},
-        username: {type: String, require: '{PATH} is required'}
+const mongooseSchema = mongoose.Schema;
+
+const answerSchema = new mongoose.Schema({
+  text: { type: String, require: '{PATH} is required' },
+  postedDate: { type: Date, require: '{PATH} is required', default: Date.now },
+  editedDate: { type: Date, require: '{PATH} is required' },
+  rating: { type: Number, require: '{PATH} is required', default: 0 },
+  votes: [{ type: mongooseSchema.Types.ObjectId, ref: 'Vote' }],
+  author: {
+    _id: {
+      type: mongooseSchema.Types.ObjectId,
+      ref: 'User',
+      require: '{PATH} is required'
     },
-    comments: [{type: mongooseSchema.Types.ObjectId, ref: 'Comment'}],
-    questionId: {type: mongooseSchema.Types.ObjectId, ref: 'Question', require: '{PATH} is required'}
+    username: { type: String, require: '{PATH} is required' }
+  },
+  comments: [{ type: mongooseSchema.Types.ObjectId, ref: 'Comment' }],
+  questionId: {
+    type: mongooseSchema.Types.ObjectId,
+    ref: 'Question',
+    require: '{PATH} is required'
+  }
 });
 
-var Answer = mongoose.model('Answer', answerSchema);
+mongoose.model('Answer', answerSchema);

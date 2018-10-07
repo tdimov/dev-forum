@@ -1,48 +1,32 @@
-var validator = require('validator'),
-    commonValidator = require('./commonValidator');
+const validator = require('validator');
+const commonValidator = require('./commonValidator');
 
 function passwordsMatch(pass, conformPass) {
-    if (pass != conformPass) {
-        return false;
-    }
-    return true;
+  return pass !== conformPass;
 }
 
 module.exports = {
-    isRegistrationValid: function (user) {
-        if(user) {
-            if(!commonValidator.areJsonPropsNullOrEmpty(user)) {
-                return false;
-            }
-            else if(!passwordsMatch(user.password, user.confirmPassword)) {
-                return false
-            }
-            else if(!validator.isEmail(user.email)) {
-                return false
-            }
-            else {
-                return true;
-            }
-        }
-    },
-    //TODO: Check passwords
-    isUpdateUserDataValid: function (user) {
-        if(user) {
-            var userRequiredData = {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email
-            };
+  isRegistrationValid(user) {
+    return (
+      user ||
+      !commonValidator.areJsonPropsNullOrEmpty(user) ||
+      !passwordsMatch(user.password, user.confirmPassword) ||
+      !validator.isEmail(user.email)
+    );
+  },
+  // TODO: Check passwords
+  isUpdateUserDataValid(user) {
+    if (user) {
+      const userRequiredData = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      };
 
-            if(!commonValidator.areJsonPropsNullOrEmpty(userRequiredData)) {
-                return false;
-            }
-            else if(!validator.isEmail(user.email)) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
+      return (
+        !commonValidator.areJsonPropsNullOrEmpty(userRequiredData) ||
+        !validator.isEmail(user.email)
+      );
     }
+  }
 };
