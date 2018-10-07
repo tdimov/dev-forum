@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const crypto = require('../common/crypto');
 
 const encryption = require('../utilities/encryption');
 
@@ -31,7 +32,7 @@ userSchema.method({
 const User = mongoose.model('User', userSchema);
 
 module.exports.seedInitialUsers = () => {
-  User.find({}).exec((err, collection) => {
+  User.find({}).exec(async (err, collection) => {
     if (err) {
       console.log(`Cannot find users: ${err}`);
       return;
@@ -42,8 +43,9 @@ module.exports.seedInitialUsers = () => {
     if (collection.length === 0) {
       let salt;
       let hashedPass;
-      salt = encryption.generateSalt();
-      hashedPass = encryption.generateHashedPassword(salt, 'Tihomir');
+      // salt = encryption.generateSalt();
+      // hashedPass = encryption.generateHashedPassword(salt, 'Tihomir');
+      hashedPass = await crypto.hash('Tihomir');
       User.create({
         username: 'tihomir.dimov',
         firstName: 'Tihomir',
@@ -55,8 +57,7 @@ module.exports.seedInitialUsers = () => {
         lastLoginDate: new Date(),
         roles: ['admin']
       });
-      salt = encryption.generateSalt();
-      hashedPass = encryption.generateHashedPassword(salt, 'Vladimir');
+      hashedPass = await crypto.hash('Vladimir');
       User.create({
         username: 'vladimir.dimov',
         firstName: 'Vladimir',

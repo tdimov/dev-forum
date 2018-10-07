@@ -1,40 +1,43 @@
 app.controller('AccountController', function ($scope, $location, notifier, identity, auth) {
-    $scope.identity = identity;
+  const SUCCESS_LOGIN = 'Успешно влязохте в системата!';
+  const FAILED_LOGIN = 'Невалиден потребите и/или парола!';
+  const SUCCESS_LOGOUT = 'Успешно излязохте!';
+  const FAILED_LOGOUT = 'Имаше проблем при излизането от системата!';
 
-    $scope.login = function (user) {
-        auth.login(user).then(function(response) {
-            if(response.success) {
-                notifier.success(response.message);
-                $location.path('/');
-            }
-            else {
-                notifier.error(response.message);
-            }
-        });
-    };
+  $scope.identity = identity;
 
-    $scope.logout = function () {
-        auth.logout().then(function(response){
-            if(response.success) {
-                notifier.success(response.message);
-                $location.path('/');
-            }
-            else {
-                notifier.error('Logout failed!');
-            }
-        });
-    };
+  $scope.login = user => {
+    auth.login(user)
+      .then(() => {
+        notifier.success(SUCCESS_LOGIN);
+        $location.path('/');
+      })
+      .catch(() => {
+        notifier.error(FAILED_LOGIN);
+      });
+  };
 
-    $scope.register = function (user) {
-        console.log(user);
-        auth.register(user).then(function (response) {
-            if(response.success) {
-                notifier.success(response.message);
-                $location.path('/');
-            }
-            else {
-                notifier.error(response.message);
-            }
-        })
-    };
+  $scope.logout = () => {
+    auth.logout()
+      .then(() => {
+        notifier.success(SUCCESS_LOGOUT);
+        $location.path('/');
+      })
+      .catch(() => {
+        notifier.error(FAILED_LOGOUT);
+      });
+  };
+
+  $scope.register = function (user) {
+      console.log(user);
+      auth.register(user).then(function (response) {
+          if(response.success) {
+              notifier.success(response.message);
+              $location.path('/');
+          }
+          else {
+              notifier.error(response.message);
+          }
+      })
+  };
 });

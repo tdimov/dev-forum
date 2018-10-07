@@ -7,7 +7,7 @@ div.navbar-right(ng-controller="AccountController")
     ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
         li.dropdown
             a.dropdown-toggle(href="", data-toggle="dropdown")
-                | {{ identity.currentUser.firstName + ' ' + identity.currentUser.lastName}}
+                | {{identity.getUser().firstName + ' ' + identity.getUser().lastName}}
                 span.caret
             ul.dropdown-menu
                 li(ng-show="identity.currentUser.isInRole('admin')")

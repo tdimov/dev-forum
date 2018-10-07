@@ -1,4 +1,5 @@
 const auth = require('./auth');
+const authController = require('../controllers/auth.controller');
 const usersController = require('../controllers/usersController');
 const questionsController = require('../controllers/questionsController');
 const answersController = require('../controllers/answersController');
@@ -95,7 +96,7 @@ module.exports = app => {
   app.put('/api/tags', auth.isInRole('admin'), tagsController.updateTag);
   app.delete('/api/tags/:id', auth.isInRole('admin'), tagsController.deleteTag);
 
-  app.post('/login', auth.login);
+  app.post('/login', authController.login);
   app.post('/logout', auth.logout);
 
   app.get('*', (req, res) => {

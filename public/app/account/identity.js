@@ -1,18 +1,36 @@
 app.factory('identity', function ($window, UsersResource){
-    var user;
-    var currentUser = $window.siteCurrentUser;
-    if(currentUser) {
+    let user;
+    let currentUser = $window.siteCurrentUser;
+
+    if (currentUser) {
         user = new UsersResource();
         angular.extend(user, currentUser);
     }
 
     return {
-        currentUser: user,
-        isAuthenticated: function () {
-            return !!this.currentUser;
-        },
-        isAuthorizedForRole: function (role) {
-            return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
-        }
+      getUser() {
+        return JSON.parse(localStorage.getItem('user'));
+      },
+      getToken() {
+        return localStorage.getItem('token');
+      },
+      setUser(user) {
+        localStorage.setItem('user', JSON.stringify(user));
+      },
+      setToken(token) {
+        localStorage.setItem('token', token);
+      },
+      removeUser() {
+        localStorage.removeItem('user');
+      },
+      removeToken() {
+        localStorage.removeItem('token');
+      },
+      isAuthenticated: function () {
+        return !!this.getUser() && !!this.getToken();
+      },
+      isAuthorizedForRole: function (role) {
+        return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
+      }
     }
 });
