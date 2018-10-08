@@ -12,6 +12,20 @@ function transformToLoginUserResponse({ user, token }) {
   };
 }
 
+function transformToDbModel(payload) {
+  return {
+    username: payload.username,
+    passHash: payload.passHash,
+    firstName: payload.firstName,
+    lastName: payload.lastName,
+    email: payload.email,
+    roles: payload.roles,
+    registrationDate: payload.registrationDate,
+    lastLoginDate: payload.lastLoginDate
+  };
+}
+
 module.exports = {
+  transformToDbModel,
   transformToLoginUserResponse
 };

@@ -1,6 +1,20 @@
 const authService = require('../services/auth.service');
 const usersMapper = require('../mappers/users.mapper');
 
+async function register(req, res, next) {
+  try {
+    const result = await authService.register(req.body);
+
+    return res.status(200).send({
+      error: null,
+      result
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 async function login(req, res, next) {
   try {
     const result = await authService.login(req.body);
@@ -16,6 +30,7 @@ async function login(req, res, next) {
 }
 
 module.exports = {
+  register,
   login,
   logout(req, res) {
     req.logout();
