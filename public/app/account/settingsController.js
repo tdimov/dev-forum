@@ -1,17 +1,10 @@
-app.controller('SettingsController', function($scope, $location, identity, auth, notifier) {
-  const currentUser = identity.getUser();
+app.controller('SettingsController', function($scope, $location, identity, auth, notifier, usersService) {
+  $scope.user = {};
 
-  $scope.user = {
-    firstName: identity.currentUser.firstName,
-    lastName: identity.currentUser.lastName,
-    email: identity.currentUser.email,
-    country: identity.currentUser.country,
-    city: identity.currentUser.city,
-    aboutMe: identity.currentUser.aboutMe,
-    website: identity.currentUser.website,
-    oldPassword: "",
-    newPassword: ""
-  };
+  usersService.getProfile()
+    .then(response => {
+      $scope.user = response.data.result;
+    });
 
   $scope.update = function(user) {
     auth.update(user).then(function(response) {

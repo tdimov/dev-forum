@@ -25,7 +25,20 @@ function transformToDbModel(payload) {
   };
 }
 
+function transformToUserProfileSettingsModel(payload) {
+  return {
+    firstName: payload.firstName,
+    lastName: payload.lastName,
+    email: payload.email,
+    country: payload.country,
+    city: payload.city,
+    website: payload.website,
+    aboutMe: payload.aboutMe
+  };
+}
+
 module.exports = {
   transformToDbModel,
-  transformToLoginUserResponse
+  transformToLoginUserResponse,
+  transformToUserProfileSettingsModel
 };

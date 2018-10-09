@@ -1,5 +1,8 @@
-app.factory('usersService', function($q, $http) {
+app.factory('usersService', function($q, $http, httpService) {
     return {
+      getProfile() {
+        return httpService.get('/users/profile/me');
+      },
         getUsers: function (itemsPerPage, callback) {
             $http.get('/api/usersByReputation/').success(function(users) {
                 if(users) {

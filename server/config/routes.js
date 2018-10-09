@@ -1,10 +1,12 @@
 const auth = require('./auth');
 const authController = require('../controllers/auth.controller');
+const newUsersController = require('../controllers/users.controller');
 const usersController = require('../controllers/usersController');
 const questionsController = require('../controllers/questionsController');
 const answersController = require('../controllers/answersController');
 const commentsController = require('../controllers/commentsController');
 const tagsController = require('../controllers/tagsController');
+const { authenticate } = require('../common/authenticate');
 
 module.exports = app => {
   app.get('/partials/:partialArea/:partialName', (req, res) => {
@@ -12,6 +14,14 @@ module.exports = app => {
       `../../public/app/${req.params.partialArea}/${req.params.partialName}`
     );
   });
+
+  // new routes
+  app.post('/api/register', authController.register);
+  app.post('/api/login', authController.login);
+  app.post('/api/logout', auth.logout);
+
+  app.get('/api/users/profile/me', authenticate, newUsersController.getProfile);
+  // new routes
 
   app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);
   app.get('/api/users/:id', usersController.getUserById);
@@ -95,11 +105,6 @@ module.exports = app => {
   app.post('/api/tags', auth.isInRole('admin'), tagsController.addTag);
   app.put('/api/tags', auth.isInRole('admin'), tagsController.updateTag);
   app.delete('/api/tags/:id', auth.isInRole('admin'), tagsController.deleteTag);
-
-  // new routes
-  app.post('/api/register', authController.register);
-  app.post('/api/login', authController.login);
-  app.post('/api/logout', auth.logout);
 
   app.get('*', (req, res) => {
     res.render('index', { currentUser: req.user });
