@@ -96,9 +96,10 @@ module.exports = app => {
   app.put('/api/tags', auth.isInRole('admin'), tagsController.updateTag);
   app.delete('/api/tags/:id', auth.isInRole('admin'), tagsController.deleteTag);
 
-  app.post('/register', authController.register);
-  app.post('/login', authController.login);
-  app.post('/logout', auth.logout);
+  // new routes
+  app.post('/api/register', authController.register);
+  app.post('/api/login', authController.login);
+  app.post('/api/logout', auth.logout);
 
   app.get('*', (req, res) => {
     res.render('index', { currentUser: req.user });

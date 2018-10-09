@@ -26,11 +26,14 @@ app.factory('identity', function ($window, UsersResource){
       removeToken() {
         localStorage.removeItem('token');
       },
+      isInRole(role) {
+        return this.getUser() && this.getUser().roles.indexOf(role) > -1;
+      },
       isAuthenticated: function () {
         return !!this.getUser() && !!this.getToken();
       },
       isAuthorizedForRole: function (role) {
-        return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
+        return !!this.getUser() && this.getUser().roles.indexOf(role) > -1;
       }
     }
 });

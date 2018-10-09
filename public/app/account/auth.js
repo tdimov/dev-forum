@@ -21,12 +21,7 @@ app.factory('auth', function ($q, $http, identity, UsersResource, httpService) {
       });
     },
     isAuthorizedForRole: function (role) {
-        if(identity.isAuthorizedForRole(role)) {
-            return true;
-        }
-        else {
-            return $q.reject('not authorized');
-        }
+      return identity.isInRole(role);
     },
     isUserNotAuthenticated: function() {
         if(identity.isAuthenticated()) {
