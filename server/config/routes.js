@@ -21,6 +21,11 @@ module.exports = app => {
   app.post('/api/logout', auth.logout);
 
   app.get('/api/users/profile/me', authenticate, newUsersController.getProfile);
+  app.put(
+    '/api/users/profile/me',
+    authenticate,
+    newUsersController.updateProfile
+  );
   // new routes
 
   app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);

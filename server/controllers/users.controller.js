@@ -16,6 +16,19 @@ async function getProfile(req, res, next) {
   }
 }
 
+async function updateProfile(req, res, next) {
+  try {
+    const userId = req.user.id;
+    await usersService.update(userId, req.body);
+
+    return res.status(204).end();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 module.exports = {
-  getProfile
+  getProfile,
+  updateProfile
 };

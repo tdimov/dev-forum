@@ -3,6 +3,9 @@ app.factory('usersService', function($q, $http, httpService) {
       getProfile() {
         return httpService.get('/users/profile/me');
       },
+      updateProfile(user) {
+        return httpService.put('/users/profile/me', user);
+      },
         getUsers: function (itemsPerPage, callback) {
             $http.get('/api/usersByReputation/').success(function(users) {
                 if(users) {

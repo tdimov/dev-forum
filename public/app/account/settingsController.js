@@ -1,4 +1,7 @@
-app.controller('SettingsController', function($scope, $location, identity, auth, notifier, usersService) {
+app.controller('SettingsController', function($scope, $location, identity, notifier, usersService) {
+  const SUCCESS_UPDATE_PROFILE = 'Успешно променихте профила си!';
+  const FAILED_UPDATE_PROFILE = 'Имаше проблем при промяната на профила!';
+
   $scope.user = {};
 
   usersService.getProfile()
@@ -6,34 +9,26 @@ app.controller('SettingsController', function($scope, $location, identity, auth,
       $scope.user = response.data.result;
     });
 
-  $scope.update = function(user) {
-    auth.update(user).then(function(response) {
-      if(response.success) {
-          updateCurrentUser(user);
-          notifier.success(response.message);
-          $location.path('/');
-      }
-      else {
-          notifier.error(response.message);
-      }
-    });
+  $scope.update = user => {
+    usersService.updateProfile(user)
+      .then(() => {
+        updateCurrentUser();
+        notifier.success(SUCCESS_UPDATE_PROFILE);
+        $location.path('/');
+      })
+      .catch(() => {
+        notifier.error(FAILED_UPDATE_PROFILE);
+      });
   };
 
-  function updateCurrentUser (user) {
-    identity.currentUser.firstName = user.firstName;
-    identity.currentUser.lastName = user.lastName;
-    identity.currentUser.email = user.email;
-    if(user.country) {
-        identity.currentUser.country = user.country;
-    }
-    if(user.city) {
-        identity.currentUser.city = user.city;
-    }
-    if(user.aboutMe) {
-        identity.currentUser.aboutMe = user.aboutMe;
-    }
-    if(user.website) {
-        identity.currentUser.website = user.website
-    }
+  function updateCurrentUser() {
+    const currentUser = identity.getUser();
+
+    identity.setUser( {
+      ...currentUser,
+      firstName: $scope.user.firstName,
+      lastName: $scope.user.lastName,
+      email: $scope.user.email
+    });
   }
 });
