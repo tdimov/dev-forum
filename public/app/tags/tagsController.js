@@ -1,6 +1,6 @@
 app.controller('TagsController', function($scope, $location, notifier, tagsService) {
     var tagForDeleteId;
-    $scope.tags;
+    $scope.tags = [];
 
     $scope.addNewTag = function (tag) {
         if(tag) {
@@ -34,22 +34,32 @@ app.controller('TagsController', function($scope, $location, notifier, tagsServi
             });
     };
 
-    tagsService.getAllTags(function (data) {
-        if(data) {
-            $scope.tags = data;
-            $scope.hasSearchResults = true;
+    tagsService.index()
+      .then(({ data }) => {
+        if (data.result && data.result.length > 0) {
+          $scope.tags = data.result;
+          $scope.hasSearchResults = true;
+        } else {
+          $scope.hasSearchResults = false;
         }
-        else {
-            $scope.hasSearchResults = false;
-        }
-    });
+      })
 
-    $scope.hasTags = function () {
-        if($scope.tags) {
-            return false;
-        }
-        return true;
-    };
+    // tagsService.getAllTags(function (data) {
+    //     if(data) {
+    //         $scope.tags = data;
+    //         $scope.hasSearchResults = true;
+    //     }
+    //     else {
+    //         $scope.hasSearchResults = false;
+    //     }
+    // });
+
+    // $scope.hasTags = function () {
+    //     if($scope.tags) {
+    //         return false;
+    //     }
+    //     return true;
+    // };
 
     $scope.searchTag = function () {
         if($scope.query) {

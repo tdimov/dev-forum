@@ -15,6 +15,21 @@ async function index(req, res, next) {
   }
 }
 
+async function create(req, res, next) {
+  try {
+    const result = await questionsService.create(req.body, req.user.id);
+
+    return res.status(201).send({
+      error: null,
+      result
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 module.exports = {
-  index
+  index,
+  create
 };

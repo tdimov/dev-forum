@@ -2,6 +2,7 @@ const auth = require('./auth');
 const authController = require('../controllers/auth.controller');
 const newUsersController = require('../controllers/users.controller');
 const newQuestionsController = require('../controllers/questions.controller');
+const newTagsController = require('../controllers/tags.controller');
 const usersController = require('../controllers/usersController');
 const questionsController = require('../controllers/questionsController');
 const answersController = require('../controllers/answersController');
@@ -28,7 +29,10 @@ module.exports = app => {
     newUsersController.updateProfile
   );
 
-  app.get('/api/questions', authenticate, newQuestionsController.index);
+  app.get('/api/questions', newQuestionsController.index);
+  app.post('/api/questions', authenticate, newQuestionsController.create);
+
+  app.get('/api/tags', newTagsController.index);
   // new routes
 
   app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);
@@ -67,11 +71,11 @@ module.exports = app => {
     auth.isAuthenticated,
     questionsController.voteDown
   );
-  app.post(
-    '/api/questions',
-    auth.isAuthenticated,
-    questionsController.addQuestion
-  );
+  // app.post(
+  //   '/api/questions',
+  //   auth.isAuthenticated,
+  //   questionsController.addQuestion
+  // );
   app.put(
     '/api/lockQuestion/:id',
     auth.isInRole('admin'),
@@ -101,7 +105,7 @@ module.exports = app => {
     commentsController.addComment
   );
 
-  app.get('/api/tags', tagsController.getTags);
+  // app.get('/api/tags', tagsController.getTags);
   app.get('/api/tags/:id', tagsController.getTagById);
   app.get('/api/tagsAside', tagsController.getTagsAside);
   app.get('/tags/searchTag/:query', tagsController.searchTag);

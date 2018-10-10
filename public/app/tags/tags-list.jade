@@ -2,8 +2,8 @@
     div(ng-controller="TagsController")
         div.margin-top-15
             a.btn.btn-primary(href="#/admin/tags/add") Add new tag
-        p.text.text-info.text-size-18(ng-show="hasTags()") There are no tags added!
-        div.table-responsive.margin-top-15(ng-hide="hasTags()")
+        p.text.text-info.text-size-18(ng-show="tags.length === 0") There are no tags added!
+        div.table-responsive.margin-top-15(ng-hide="tags.length > 0")
             table.table.table-bordered.table-hover
                 thead
                     tr

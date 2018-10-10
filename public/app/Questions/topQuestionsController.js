@@ -1,5 +1,5 @@
 app.controller("TopQuestionsController", function ($scope, questionsService) {
-    questionsService.getTopQuestions(function (data){
-        $scope.questions = data;
+    questionsService.index().then(({ data }) => {
+      $scope.questions = data.result;
     });
 });

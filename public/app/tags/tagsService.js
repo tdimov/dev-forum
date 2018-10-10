@@ -1,5 +1,8 @@
-app.factory('tagsService', function($http, $q, identity) {
+app.factory('tagsService', function($http, $q, identity, httpService) {
     return {
+      index(params) {
+        return httpService.get('/tags', params);
+      },
         addNewTag: function (tag) {
             var deferred = $q.defer();
             $http.post('/api/tags', tag)
@@ -15,9 +18,9 @@ app.factory('tagsService', function($http, $q, identity) {
             return deferred.promise;
         },
         getAllTags: function(callback) {
-            $http.get('/api/tags').success(function(data) {
-                callback(data);
-            });
+          $http.get('/api/tags').success(function(data) {
+              callback(data);
+          });
         },
         getLimitedTags: function (callback) {
             $http.get('/api/tagsAside').success(function(data) {
