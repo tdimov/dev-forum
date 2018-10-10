@@ -4,7 +4,6 @@
   "description": "Forum system based on stackoverflow",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./server.js",
     "lint": "eslint ."
   },
@@ -19,6 +18,7 @@
     "jade": "^1.6.0",
     "joi": "^13.7.0",
     "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
     "mongodb": "^3.1.6",
     "mongoose": "4.2.9",
     "multer": "^0.1.6",

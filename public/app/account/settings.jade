@@ -1,49 +1,49 @@
 .container
-    div.col-md-8
-        div.row
-            div.panel.panel-success(ng-controller="SettingsController")
-                div.panel-heading
-                    h3.panel-title.text-left.text-size-18 Profile settings
-                div.panel-body(ng-controller="AccountController")
-                    form.form-horizontal(name="settingsForm")
-                        //- div.form-group
-                        //-     label.col-md-4.text-size-18(for="oldPassword") Old password
-                        //-     div.col-md-10
-                        //-         input#oldPassword.form-control.form-validation(type="password", name="oldPassword" placeholder="Old password", ng-model="user.oldPassword")
-                        //- div.form-group
-                        //-     label.col-md-4.text-size-18(for="newPassword") New password
-                        //-     div.col-md-10
-                        //-         input#newPassword.form-control.form-validation(type="password", name="newPassword", placeholder="New password", ng-model="user.newPassword")
-                        div.form-group
-                          label.col-md-4.text-size-18(for="FirstName") First name
-                          div.col-md-10
-                            input#FirstName.form-control.form-validation(type="text", name="firstName" placeholder="First name", ng-model="user.firstName", required)
-                            span.text-danger(ng-show="settingsForm.firstName.$error.required") Required!
-                        div.form-group
-                          label.col-md-4.text-size-18(for="LastName") Last name
-                          div.col-md-10
-                            input#LastName.form-control.form-validation(type="text", name="lastName", placeholder="Last name", ng-model="user.lastName", required)
-                            span.text-danger(ng-show="settingsForm.lastName.$error.required") Required!
-                        div.form-group
-                          label.col-md-4.text-size-18(for="Email") Email
-                          div.col-md-10
-                            input#Email.form-control.form-validation(type="email", name="emailAddress" ng-pattern='/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/', placeholder="Email", ng-model="user.email", required)
-                            span.text-danger(ng-show="settingsForm.emailAddress.$error.pattern") Invalid email address!
-                            span.text-danger(ng-show="settingsForm.emailAddress.$error.required") Required!
-                        div.form-group
-                          label.col-md-4.text-size-18(for="country") Country
-                          div.col-md-10
-                            input#country.form-control(type="text", name="country" placeholder="Country", ng-model="user.country")
-                        div.form-group
-                          label.col-md-4.text-size-18(for="city") City
-                          div.col-md-10
-                            input#city.form-control(type="text", name="city" placeholder="City", ng-model="user.city")
-                        div.form-group
-                          label.col-md-4.text-size-18(for="Website") Website
-                          div.col-md-10
-                            input#Website.form-control(type="text", name="website", placeholder="Website", ng-model="user.website", required)
-                        div.form-group
-                          label.col-md-4.text-size-18(for="AboutMe") About me
-                          div.col-md-10
-                            textarea#AboutMe.form-control(name="aboutMe", placeholder="About me", ng-model="user.aboutMe")
-                    button.btn.btn-success.pull-right(ng-click="update(user)") Update
+  div.col-md-8
+    div.row
+      div.panel.panel-success(ng-controller="SettingsController")
+        div.panel-heading
+          h3.panel-title.text-left.text-size-18 Profile settings
+        div.panel-body(ng-controller="AccountController")
+          form.form-horizontal(name="settingsForm")
+            //- div.form-group
+            //-     label.col-md-4.text-size-18(for="oldPassword") Old password
+            //-     div.col-md-10
+            //-         input#oldPassword.form-control.form-validation(type="password", name="oldPassword" placeholder="Old password", ng-model="user.oldPassword")
+            //- div.form-group
+            //-     label.col-md-4.text-size-18(for="newPassword") New password
+            //-     div.col-md-10
+            //-         input#newPassword.form-control.form-validation(type="password", name="newPassword", placeholder="New password", ng-model="user.newPassword")
+            div.form-group
+              label.col-md-4.text-size-18(for="FirstName") First name
+              div.col-md-10
+                input#FirstName.form-control.form-validation(type="text", name="firstName" placeholder="First name", ng-model="user.firstName", required)
+                span.text-danger(ng-show="settingsForm.firstName.$error.required") Required!
+            div.form-group
+              label.col-md-4.text-size-18(for="LastName") Last name
+              div.col-md-10
+                input#LastName.form-control.form-validation(type="text", name="lastName", placeholder="Last name", ng-model="user.lastName", required)
+                span.text-danger(ng-show="settingsForm.lastName.$error.required") Required!
+            div.form-group
+              label.col-md-4.text-size-18(for="Email") Email
+              div.col-md-10
+                input#Email.form-control.form-validation(type="email", name="emailAddress" ng-pattern='/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/', placeholder="Email", ng-model="user.email", required)
+                span.text-danger(ng-show="settingsForm.emailAddress.$error.pattern") Invalid email address!
+                span.text-danger(ng-show="settingsForm.emailAddress.$error.required") Required!
+            div.form-group
+              label.col-md-4.text-size-18(for="country") Country
+              div.col-md-10
+                input#country.form-control(type="text", name="country" placeholder="Country", ng-model="user.country")
+            div.form-group
+              label.col-md-4.text-size-18(for="city") City
+              div.col-md-10
+                input#city.form-control(type="text", name="city" placeholder="City", ng-model="user.city")
+            div.form-group
+              label.col-md-4.text-size-18(for="Website") Website
+              div.col-md-10
+                input#Website.form-control(type="text", name="website", placeholder="Website", ng-model="user.website", required)
+            div.form-group
+              label.col-md-4.text-size-18(for="AboutMe") About me
+              div.col-md-10
+                textarea#AboutMe.form-control(name="aboutMe", placeholder="About me", ng-model="user.aboutMe")
+          button.btn.btn-success.pull-right(ng-click="update(user)") Update

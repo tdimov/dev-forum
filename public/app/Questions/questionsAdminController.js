@@ -1,8 +1,8 @@
 app.controller("QuestionsAdminController", function ($scope, $location, questionsService, notifier) {
     var questionId;
 
-    questionsService.getQuestions(3, function (data) {
-        $scope.questions = data;
+    questionsService.index().then(({ data }) => {
+      $scope.questions = data.result;
     });
 
     $scope.setQuestionId = function (id) {

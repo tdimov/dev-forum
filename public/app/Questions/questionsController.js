@@ -1,5 +1,6 @@
 app.controller('QuestionsController', function ($scope, $routeParams, questionsService) {
-    questionsService.getQuestions(3, function (data) {
-        $scope.questions = data;
-    });
+    questionsService.index()
+      .then(({ data }) => {
+        $scope.questions = data.result;
+      });
 });

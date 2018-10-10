@@ -1,33 +1,8 @@
-app.factory('questionsService', function($http, $q) {
+app.factory('questionsService', function($http, $q, httpService) {
     return {
-        getQuestions: function (pageId, callback) {
-            $http.get('/api/questions/').success(function(questions) {
-                if(questions) {
-                    callback(questions);
-                }
-            })
-        },
-        getTopQuestions: function (callback) {
-            $http.get('/api/topQuestions/').success(function(questions) {
-                if(questions) {
-                    callback(questions);
-                }
-            })
-        },
-        getUnansweredQuestions: function (callback) {
-            $http.get('/api/unansweredQuestions').success(function(questions) {
-                if(questions) {
-                    callback(questions);
-                }
-            })
-        },
-        getLastFiveQuestions: function (callback) {
-            $http.get('/api/lastFiveQuestions').success(function(questions) {
-                if(questions) {
-                    callback(questions);
-                }
-            })
-        },
+      index(params) {
+        return httpService.get('/questions', params);
+      },
         getQuestionsByTag: function (tag, callback) {
             $http.get('/api/questionsByTag/' + tag).success(function(questions) {
                 if(questions) {

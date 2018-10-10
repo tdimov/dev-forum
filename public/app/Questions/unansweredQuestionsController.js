@@ -1,5 +1,5 @@
 app.controller("UnansweredQuestionsController", function ($scope, questionsService) {
-    questionsService.getUnansweredQuestions(function (data) {
-        $scope.questions = data;
-    });
+  questionsService.index({ isAnswered: false }).then(({ data }) => {
+    $scope.questions = data.result;
+  });
 });

@@ -1,6 +1,7 @@
 const auth = require('./auth');
 const authController = require('../controllers/auth.controller');
 const newUsersController = require('../controllers/users.controller');
+const newQuestionsController = require('../controllers/questions.controller');
 const usersController = require('../controllers/usersController');
 const questionsController = require('../controllers/questionsController');
 const answersController = require('../controllers/answersController');
@@ -26,6 +27,8 @@ module.exports = app => {
     authenticate,
     newUsersController.updateProfile
   );
+
+  app.get('/api/questions', authenticate, newQuestionsController.index);
   // new routes
 
   app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);
@@ -45,7 +48,7 @@ module.exports = app => {
     usersController.deleteUser
   );
 
-  app.get('/api/questions', questionsController.getQuestions);
+  // app.get('/api/questions', questionsController.getQuestions);
   app.get('/api/topQuestions', questionsController.getTopQuestions);
   app.get(
     '/api/unansweredQuestions',

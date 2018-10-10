@@ -1,5 +1,6 @@
 app.controller('LastFiveQuestionsController', function ($scope, questionsService){
-    questionsService.getLastFiveQuestions(function (data) {
-        $scope.questions = data;
+  questionsService.index({ limit: 5 })
+    .then(({ data }) => {
+      $scope.questions = data.result;
     });
 });
