@@ -30,6 +30,7 @@ module.exports = app => {
   );
 
   app.get('/api/questions', newQuestionsController.index);
+  app.get('/api/questions/:id', newQuestionsController.get);
   app.post('/api/questions', authenticate, newQuestionsController.create);
 
   app.get('/api/tags', newTagsController.index);
@@ -60,7 +61,7 @@ module.exports = app => {
   );
   app.get('/api/lastFiveQuestions', questionsController.getLastFiveQuestions);
   app.get('/api/questionsByTag/:tag', questionsController.getQuestionsByTag);
-  app.get('/api/questions/:id', questionsController.getQuestionById);
+  // app.get('/api/questions/:id', questionsController.getQuestionById);
   app.post(
     '/api/questionsVoteUp',
     auth.isAuthenticated,

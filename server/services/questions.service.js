@@ -1,5 +1,6 @@
 const Question = require('mongoose').model('Question');
 const User = require('mongoose').model('User');
+const Answer = require('mongoose').model('Answer');
 const usersService = require('./users.service');
 const questionsValidator = require('../validators/questions.validator');
 const { isMissing } = require('../validators/common.validator');
@@ -16,6 +17,23 @@ async function index(query) {
     .exec();
 
   return questions;
+}
+
+async function get(id) {
+  const question = await Question.findById(id).exec();
+
+  if (isMissing(question)) {
+    throw new AppError(
+      resourceNotFound.type,
+      resourceNotFound.httpCode,
+      'Question does not exist!'
+    );
+  }
+
+  const answers = await Answer.find({ questionId: question.id }).exec();
+  question.answers = answers;
+
+  return question;
 }
 
 async function create(payload, userId) {
@@ -50,5 +68,6 @@ async function create(payload, userId) {
 
 module.exports = {
   index,
+  get,
   create
 };

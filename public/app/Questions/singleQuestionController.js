@@ -2,6 +2,10 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
     var questionId = $routeParams.id,
         answerId;
 
+  questionsService.get(questionId).then(({ data }) => {
+    $scope.question = data.result;
+  });
+
     $scope.editorOptions = {
         toolbar: [
             ['document', 'mode'],
@@ -167,8 +171,4 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
         }
 
     };
-
-    questionsService.getQuestionById(questionId, function (data) {
-        $scope.question = data;
-    });
 });

@@ -43,6 +43,6 @@ app.controller("AskQuestionController", function ($scope, $location, notifier, q
           .catch(() => {
             notifier.error(ERROR_CREATE_QUESTION);
           });
-      }
+      } 
     }
 });

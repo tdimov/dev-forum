@@ -87,6 +87,7 @@ async function login(payload) {
   }
 
   const token = await tokenManager.generateToken(user);
+  await User.update({ _id: user._id }, { $set: { lastLoginDate: new Date() } });
   // await loginHistoryRepository.create({ userId: user.id, token });
 
   return { user, token };
