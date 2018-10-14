@@ -32,7 +32,15 @@ async function update(id, payload) {
   await User.update({ _id: id }, payload).exec();
 }
 
+async function updateReputation(userId, incValue) {
+  await User.findOneAndUpdate(
+    { _id: userId },
+    { $inc: { reputation: incValue } }
+  );
+}
+
 module.exports = {
   get,
-  update
+  update,
+  updateReputation
 };

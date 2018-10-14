@@ -1,5 +1,8 @@
-app.factory('answersService', function ($http, $q) {
+app.factory('answersService', function ($http, $q, httpService) {
     return {
+      create(questionId, payload) {
+        return httpService.post(`/questions/${questionId}/answers`, payload);
+      },
         voteUp: function (ids) {
             var deferred = $q.defer();
 //            var vote = {

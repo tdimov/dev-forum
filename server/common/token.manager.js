@@ -10,6 +10,7 @@ module.exports = {
       {
         sub: {
           id: user.id,
+          username: user.username,
           roles: user.roles
         }
       },

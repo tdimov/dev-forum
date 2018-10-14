@@ -1,4 +1,7 @@
 app.controller('SingleQuestionController', function ($scope, $sce, $location, $routeParams, questionsService, answersService, identity, notifier){
+  const SUCCESS_CREATED_ANSWER = 'Успешно добавихте отговор!';
+  const ERROR_CREATED_ANSWER = 'Възникна проблем при добавянето на отговор!';
+
     var questionId = $routeParams.id,
         answerId;
 
@@ -121,30 +124,23 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
         }
     };
 
-    $scope.addAnswer = function (newAnswer) {
-        if(identity.isAuthenticated()) {
-            newAnswer.isQuestionLocked = $scope.question.isLocked;
-            if(newAnswer && newAnswer.text) {
-                newAnswer.questionId = questionId;
-                questionsService.addAnswer(newAnswer)
-                    .then(function (response) {
-                        if(response.success) {
-                            notifier.success(response.message);
-                            $location.path('/');
-                        }
-                        else {
-                            notifier.error(response.message);
-                        }
-                    });
+    $scope.addAnswer = newAnswer => {
+      if (newAnswer && newAnswer.text) {
+        answersService.create(questionId, newAnswer)
+          .then(({ data }) => {
+            if (!$scope.question.answers) {
+              $scope.question.answers = [];
             }
-            else{
-                notifier.error("Please, enter your answer!");
-            }
-        }
-        else {
-            $location.path('/login');
-        }
-    };
+
+            $scope.question.answers.push(data.result);
+
+            notifier.success(SUCCESS_CREATED_ANSWER);
+          })
+          .catch(() => {
+            notifier.error(ERROR_CREATED_ANSWER);
+          });
+      }
+    }
 
     $scope.addComment = function (newComment) {
         if(identity.isAuthenticated()) {

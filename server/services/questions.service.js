@@ -1,5 +1,4 @@
 const Question = require('mongoose').model('Question');
-const User = require('mongoose').model('User');
 const Answer = require('mongoose').model('Answer');
 const usersService = require('./users.service');
 const questionsValidator = require('../validators/questions.validator');
@@ -58,16 +57,22 @@ async function create(payload, userId) {
 
   const newQuestion = await Question.create(payload);
 
-  await User.findOneAndUpdate(
-    { _id: user.id },
-    { $push: { questions: newQuestion._id }, $inc: { reputation: 1 } }
-  );
+  await usersService.updateReputation(user.id, 1);
 
   return newQuestion._id;
+}
+
+async function updateActivity(id) {
+  await Question.update(
+    { _id: id },
+    {
+      $set: { lastActiveDate: new Date() }
+    });
 }
 
 module.exports = {
   index,
   get,
-  create
+  create,
+  updateActivity
 };

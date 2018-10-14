@@ -3,6 +3,7 @@ const authController = require('../controllers/auth.controller');
 const newUsersController = require('../controllers/users.controller');
 const newQuestionsController = require('../controllers/questions.controller');
 const newTagsController = require('../controllers/tags.controller');
+const newAnswersController = require('../controllers/answers.controller');
 const usersController = require('../controllers/usersController');
 const questionsController = require('../controllers/questionsController');
 const answersController = require('../controllers/answersController');
@@ -32,6 +33,12 @@ module.exports = app => {
   app.get('/api/questions', newQuestionsController.index);
   app.get('/api/questions/:id', newQuestionsController.get);
   app.post('/api/questions', authenticate, newQuestionsController.create);
+
+  app.post(
+    '/api/questions/:id/answers',
+    authenticate,
+    newAnswersController.create
+  );
 
   app.get('/api/tags', newTagsController.index);
   // new routes
