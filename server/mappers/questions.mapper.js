@@ -13,7 +13,7 @@ function transformToQuestionListItemModel(question) {
     },
     isLocked: question.isLocked,
     tags: question.tags,
-    votes: question.votes.length,
+    votes: question.rating,
     answers: question.answersCount,
     views: question.viewed,
     date: dateTimeManager.formatDate(question.postedDate)

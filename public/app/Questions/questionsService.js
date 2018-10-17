@@ -9,6 +9,9 @@ app.factory('questionsService', function($http, $q, httpService) {
       create(payload) {
         return httpService.post('/questions', payload);
       },
+      vote(id, isPositive) {
+        return httpService.put(`/questions/${id}/vote`, { isPositive });
+      },
         getQuestionsByTag: function (tag, callback) {
             $http.get('/api/questionsByTag/' + tag).success(function(questions) {
                 if(questions) {

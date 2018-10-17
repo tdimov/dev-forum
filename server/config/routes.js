@@ -33,6 +33,7 @@ module.exports = app => {
   app.get('/api/questions', newQuestionsController.index);
   app.get('/api/questions/:id', newQuestionsController.get);
   app.post('/api/questions', authenticate, newQuestionsController.create);
+  app.put('/api/questions/:id/vote', authenticate, newQuestionsController.vote);
 
   app.post(
     '/api/questions/:id/answers',

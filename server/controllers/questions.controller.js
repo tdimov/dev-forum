@@ -2,7 +2,7 @@ const questionsService = require('../services/questions.service');
 const questionsMapper = require('../mappers/questions.mapper');
 const { isMissing } = require('../validators/common.validator');
 const AppError = require('../errors/app.error');
-const { badRequest, resourceNotFound } = require('../errors/http.errors');
+const { badRequest } = require('../errors/http.errors');
 
 async function index(req, res, next) {
   try {
@@ -55,8 +55,31 @@ async function create(req, res, next) {
   }
 }
 
+async function vote(req, res, next) {
+  try {
+    const questionId = req.params.id;
+    const { isPositive } = req.body;
+
+    if (isMissing(questionId)) {
+      throw new AppError(
+        badRequest.type,
+        badRequest.httpCode,
+        'Question id is missing!'
+      );
+    }
+
+    await questionsService.vote(questionId, req.user.id, isPositive);
+
+    return res.status(204).end();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 module.exports = {
   index,
   get,
-  create
+  create,
+  vote
 };

@@ -6,11 +6,11 @@
             div.row
                 div.col-sm-1.text-center
                     div#voteUp
-                        a(href="javascript:;", title="Vote up", ng-click="voteUpQuestion(question.id)")
+                        a(href="javascript:;", title="Vote up", ng-click="voteUpQuestion()")
                             i.glyphicon.glyphicon-chevron-up
                     span.text-primary.text-size-18 {{ question.votes }}
                     div#voteDown
-                        a(href="javascript:;", title="Vote down", ng-click="voteDownQuestion(question.id)")
+                        a(href="javascript:;", title="Vote down", ng-click="voteDownQuestion()")
                             i.glyphicon.glyphicon-chevron-down
                 div.col-md-11
                     div(ng-bind-html="question.text | sanitize")

@@ -8,6 +8,11 @@ const voteSchema = new mongoose.Schema({
     ref: 'User',
     require: '{PATH} is required'
   },
+  questionId: {
+    type: mongooseSchema.Types.ObjectId,
+    ref: 'Question',
+    require: '{PATH} is required'
+  },
   score: { type: String, require: '{PATH} is required' }
 });
 

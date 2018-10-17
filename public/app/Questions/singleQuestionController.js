@@ -1,6 +1,10 @@
 app.controller('SingleQuestionController', function ($scope, $sce, $location, $routeParams, questionsService, answersService, identity, notifier){
   const SUCCESS_CREATED_ANSWER = 'Успешно добавихте отговор!';
   const ERROR_CREATED_ANSWER = 'Възникна проблем при добавянето на отговор!';
+  const SUCCESS_VOTE = 'Гласувахте успешно!';
+  const ERROR_VOTE = 'Възникна проблем при гласуването!';
+  const SERVER_ERROR_VOTE = 'Already voted!';
+  const ALREADY_VOTED = 'Вече сте гласували!';
 
     var questionId = $routeParams.id,
         answerId;
@@ -9,15 +13,44 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
     $scope.question = data.result;
   });
 
+  function voteQuestion(isPositive) {
+    questionsService.vote(questionId, isPositive)
+      .then(() => {
+        if (isPositive) {
+          $scope.question.votes++;
+        } else {
+          $scope.question.votes--;
+        }
+        notifier.success(SUCCESS_VOTE);
+      })
+      .catch(({ data }) => {
+        const { error } = data;
+
+        if (error.message === SERVER_ERROR_VOTE) {
+          notifier.error(ALREADY_VOTED);
+        } else {
+          notifier.error(ERROR_VOTE);
+        }
+      });
+  }
+
+  $scope.voteUpQuestion = () => {
+    voteQuestion(true);
+  };
+
+  $scope.voteDownQuestion = () => {
+    voteQuestion(false);
+  };
+
     $scope.editorOptions = {
-        toolbar: [
-            ['document', 'mode'],
-            ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-            ['Cut', 'Copy', 'Paste', 'PasteText'],
-            ['Undo', 'Redo'],
-            ['Image', 'SpecialChar']
-        ],
-        height: '300px'
+      toolbar: [
+        ['document', 'mode'],
+        ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
+        ['Cut', 'Copy', 'Paste', 'PasteText'],
+        ['Undo', 'Redo'],
+        ['Image', 'SpecialChar']
+      ],
+      height: '300px'
     };
     $scope.hasUser = function () {
         if(identity.isAuthenticated()) {
@@ -39,42 +72,6 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
     $scope.setAnswerId = function (id) {
         if (id) {
             answerId = id;
-        }
-    };
-
-    $scope.voteUpQuestion = function (questionId) {
-        if(identity.isAuthenticated()) {
-            questionsService.voteUp(questionId)
-                .then(function (response) {
-                    if (response.success) {
-                        notifier.success(response.message);
-                        $location.path('/');
-                    }
-                    else {
-                        notifier.error(response.message);
-                    }
-                });
-        }
-        else {
-            $location.path('/login');
-        }
-    };
-
-    $scope.voteDownQuestion = function (questionId) {
-        if(identity.isAuthenticated()) {
-            questionsService.voteDown(questionId)
-                .then(function (response) {
-                    if (response.success) {
-                        notifier.success(response.message);
-                        $location.path('/');
-                    }
-                    else {
-                        notifier.error(response.message);
-                    }
-                });
-        }
-        else {
-            $location.path('/login');
         }
     };
 
