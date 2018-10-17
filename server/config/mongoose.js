@@ -5,6 +5,7 @@ require('../models/tag');
 require('../models/answer');
 require('../models/vote');
 require('../models/comment');
+require('../models/answer.vote');
 
 module.exports = config => {
   mongoose.connect(config.db);

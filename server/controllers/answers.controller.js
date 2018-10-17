@@ -28,6 +28,30 @@ async function create(req, res, next) {
   }
 }
 
+async function vote(req, res, next) {
+  try {
+    const questionId = req.params.id;
+    const { answerId } = req.params;
+    const { isPositive } = req.body;
+
+    if (isMissing(questionId) && isMissing(answerId)) {
+      throw new AppError(
+        badRequest.type,
+        badRequest.httpCode,
+        'Question and answer ids missing!'
+      );
+    }
+
+    await answersService.vote(questionId, answerId, req.user.id, isPositive);
+
+    return res.status(204).end();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 module.exports = {
-  create
+  create,
+  vote
 };

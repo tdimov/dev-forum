@@ -40,6 +40,11 @@ module.exports = app => {
     authenticate,
     newAnswersController.create
   );
+  app.put(
+    '/api/questions/:id/answers/:answerId/vote',
+    authenticate,
+    newAnswersController.vote
+  );
 
   app.get('/api/tags', newTagsController.index);
   // new routes

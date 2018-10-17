@@ -34,12 +34,41 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
       });
   }
 
+  function voteAnswer(answerId, index, isPositive) {
+    answersService.vote(questionId, answerId, isPositive)
+      .then(() => {
+        if (isPositive) {
+          $scope.question.answers[index].votes++;
+        } else {
+          $scope.question.answers[index].votes--;
+        }
+        notifier.success(SUCCESS_VOTE);
+      })
+      .catch(({ data }) => {
+        const { error } = data;
+
+        if (error.message === SERVER_ERROR_VOTE) {
+          notifier.error(ALREADY_VOTED);
+        } else {
+          notifier.error(ERROR_VOTE);
+        }
+      });
+  }
+
   $scope.voteUpQuestion = () => {
     voteQuestion(true);
   };
 
   $scope.voteDownQuestion = () => {
     voteQuestion(false);
+  };
+
+  $scope.voteUpAnswer = (answerId, index) => {
+    voteAnswer(answerId, index, true);
+  };
+
+  $scope.voteDownAnswer = (answerId, index) => {
+    voteAnswer(answerId, index, false);
   };
 
     $scope.editorOptions = {
@@ -72,52 +101,6 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
     $scope.setAnswerId = function (id) {
         if (id) {
             answerId = id;
-        }
-    };
-
-    $scope.voteUpAnswer = function (answerId) {
-        var ids = {
-            answerId: answerId,
-            questionId: questionId
-        };
-
-        if(identity.isAuthenticated()) {
-            answersService.voteUp(ids)
-                .then(function (response) {
-                    if (response.success) {
-                        notifier.success(response.message);
-                        $location.path('/');
-                    }
-                    else {
-                        notifier.error(response.message);
-                    }
-                });
-        }
-        else {
-            $location.path('/login');
-        }
-    };
-
-    $scope.voteDownAnswer = function (answerId) {
-        var ids = {
-            answerId: answerId,
-            questionId: questionId
-        };
-
-        if(identity.isAuthenticated()) {
-            answersService.voteDown(ids)
-                .then(function (response) {
-                    if (response.success) {
-                        notifier.success(response.message);
-                        $location.path('/');
-                    }
-                    else {
-                        notifier.error(response.message);
-                    }
-                });
-        }
-        else {
-            $location.path('/login');
         }
     };
 

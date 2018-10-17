@@ -7,7 +7,7 @@ const answerSchema = new mongoose.Schema({
   postedDate: { type: Date, require: '{PATH} is required', default: Date.now },
   editedDate: { type: Date, require: '{PATH} is required' },
   rating: { type: Number, require: '{PATH} is required', default: 0 },
-  votes: [{ type: mongooseSchema.Types.ObjectId, ref: 'Vote' }],
+  votes: [{ type: mongooseSchema.Types.ObjectId, ref: 'AnswerVote' }],
   author: {
     _id: {
       type: mongooseSchema.Types.ObjectId,

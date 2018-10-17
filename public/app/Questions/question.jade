@@ -30,11 +30,11 @@
                 div(ng-repeat="answer in question.answers")
                     div.col-sm-1.text-center
                         div#voteUp
-                            a(href="javascript:;", title="Vote up", ng-click="voteUpAnswer(answer.id)")
+                            a(href="javascript:;", title="Vote up", ng-click="voteUpAnswer(answer.id, $index)")
                                 i.glyphicon.glyphicon-chevron-up
                         span.text-primary.text-size-18 {{ answer.votes }}
                         div#voteDown
-                            a(href="javascript:;", title="Vote down", ng-click="voteDownAnswer(answer.id)")
+                            a(href="javascript:;", title="Vote down", ng-click="voteDownAnswer(answer.id, $index)")
                                 i.glyphicon.glyphicon-chevron-down
                     div.col-md-11
                         div(ng-bind-html="answer.text | sanitize")
