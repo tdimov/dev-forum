@@ -5,6 +5,8 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
   const ERROR_VOTE = 'Възникна проблем при гласуването!';
   const SERVER_ERROR_VOTE = 'Already voted!';
   const ALREADY_VOTED = 'Вече сте гласували!';
+  const AUTHENTICATION_SERVER_ERROR = 'Authentication failed!';
+  const AUTHENTICATION_ERROR = 'Трябва да влезнете в системата!'
 
     var questionId = $routeParams.id,
         answerId;
@@ -28,6 +30,9 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
 
         if (error.message === SERVER_ERROR_VOTE) {
           notifier.error(ALREADY_VOTED);
+        } else if(error.message === AUTHENTICATION_SERVER_ERROR) {
+          notifier.error(AUTHENTICATION_ERROR);
+          $location.path('/login');
         } else {
           notifier.error(ERROR_VOTE);
         }
@@ -49,6 +54,9 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
 
         if (error.message === SERVER_ERROR_VOTE) {
           notifier.error(ALREADY_VOTED);
+        } else if(error.message === AUTHENTICATION_SERVER_ERROR) {
+          notifier.error(AUTHENTICATION_ERROR);
+          $location.path('/login');
         } else {
           notifier.error(ERROR_VOTE);
         }
