@@ -1,4 +1,4 @@
-app.controller('SingleQuestionController', function ($scope, $sce, $location, $routeParams, questionsService, answersService, identity, notifier){
+app.controller('SingleQuestionController', function ($scope, $sce, $location, $routeParams, questionsService, answersService, identity, notifier, errorHandler){
   const SUCCESS_CREATED_ANSWER = 'Успешно добавихте отговор!';
   const ERROR_CREATED_ANSWER = 'Възникна проблем при добавянето на отговор!';
   const SUCCESS_VOTE = 'Гласувахте успешно!';
@@ -26,16 +26,7 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
         notifier.success(SUCCESS_VOTE);
       })
       .catch(({ data }) => {
-        const { error } = data;
-
-        if (error.message === SERVER_ERROR_VOTE) {
-          notifier.error(ALREADY_VOTED);
-        } else if(error.message === AUTHENTICATION_SERVER_ERROR) {
-          notifier.error(AUTHENTICATION_ERROR);
-          $location.path('/login');
-        } else {
-          notifier.error(ERROR_VOTE);
-        }
+        errorHandler.handle(data.error);
       });
   }
 
@@ -50,33 +41,40 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
         notifier.success(SUCCESS_VOTE);
       })
       .catch(({ data }) => {
-        const { error } = data;
-
-        if (error.message === SERVER_ERROR_VOTE) {
-          notifier.error(ALREADY_VOTED);
-        } else if(error.message === AUTHENTICATION_SERVER_ERROR) {
-          notifier.error(AUTHENTICATION_ERROR);
-          $location.path('/login');
-        } else {
-          notifier.error(ERROR_VOTE);
-        }
+        errorHandler.handle(data.error);
       });
   }
 
   $scope.voteUpQuestion = () => {
-    voteQuestion(true);
+    if (identity.isAuthenticated()) {
+      voteQuestion(true);
+    } else {
+      $location.path('/login');
+    }
   };
 
   $scope.voteDownQuestion = () => {
-    voteQuestion(false);
+    if (identity.isAuthenticated()) {
+      voteQuestion(false);
+    } else {
+      $location.path('/login');
+    }
   };
 
   $scope.voteUpAnswer = (answerId, index) => {
-    voteAnswer(answerId, index, true);
+    if (identity.isAuthenticated()) {
+      voteAnswer(answerId, index, true);
+    } else {
+      $location.path('/login');
+    }
   };
 
   $scope.voteDownAnswer = (answerId, index) => {
-    voteAnswer(answerId, index, false);
+    if (identity.isAuthenticated()) {
+      voteAnswer(answerId, index, false);
+    } else {
+      $location.path('/login');
+    }
   };
 
     $scope.editorOptions = {
