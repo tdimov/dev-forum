@@ -9,12 +9,9 @@ const answerSchema = new mongoose.Schema({
   rating: { type: Number, require: '{PATH} is required', default: 0 },
   votes: [{ type: mongooseSchema.Types.ObjectId, ref: 'AnswerVote' }],
   author: {
-    _id: {
-      type: mongooseSchema.Types.ObjectId,
-      ref: 'User',
-      require: '{PATH} is required'
-    },
-    username: { type: String, require: '{PATH} is required' }
+    type: mongooseSchema.Types.ObjectId,
+    ref: 'User',
+    require: '{PATH} is required'
   },
   comments: [{ type: mongooseSchema.Types.ObjectId, ref: 'Comment' }],
   questionId: {
@@ -24,4 +21,6 @@ const answerSchema = new mongoose.Schema({
   }
 });
 
-mongoose.model('Answer', answerSchema);
+const Answer = mongoose.model('Answer', answerSchema);
+
+module.exports = Answer;

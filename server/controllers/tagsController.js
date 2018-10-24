@@ -148,7 +148,7 @@ module.exports = {
   addTag(req, res, next) {
     const newTag = req.body;
 
-    if (tagsValidator.isTagValid(newTag)) {
+    if (true) {
       Tag.create(newTag, (err, tag) => {
         if (err) {
           console.log(`An error occurred while creating new tag: ${err}`);

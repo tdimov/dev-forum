@@ -29,7 +29,7 @@ async function update(id, payload) {
     );
   }
 
-  await User.update({ _id: id }, payload).exec();
+  await User.findOneAndUpdate({ _id: id }, payload).exec();
 }
 
 async function updateReputation(userId, incValue) {

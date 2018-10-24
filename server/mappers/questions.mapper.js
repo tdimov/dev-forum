@@ -11,10 +11,9 @@ function transformToQuestionListItemModel(question) {
       id: question.author._id,
       username: question.author.username
     },
-    isLocked: question.isLocked,
     tags: question.tags,
     votes: question.rating,
-    answers: question.answersCount,
+    answers: question.answers.length,
     views: question.viewed,
     date: dateTimeManager.formatDate(question.postedDate)
   };

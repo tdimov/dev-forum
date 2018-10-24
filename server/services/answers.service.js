@@ -1,5 +1,4 @@
-const Answer = require('mongoose').model('Answer');
-const Question = require('mongoose').model('Question');
+const Answer = require('../models/answer');
 const questionsService = require('./questions.service');
 const usersService = require('./users.service');
 const answerVotesService = require('./answer.votes.service');
@@ -10,8 +9,8 @@ const { badRequest } = require('../errors/http.errors');
 const INCREMENT_STEP = 1;
 const DECREMENT_STEP = -1;
 
-async function create(questionId, user, payload) {
-  await questionsService.get(questionId);
+async function create(questionId, userId, payload) {
+  const question = await questionsService.get(questionId);
 
   if (isMissing(payload.text)) {
     throw new AppError(
@@ -22,14 +21,13 @@ async function create(questionId, user, payload) {
   }
 
   payload.questionId = questionId;
-  payload.author = {
-    _id: user.id,
-    username: user.username
-  };
+  payload.author = userId;
 
   const newAnswer = await Answer.create(payload);
+  question.answers.push(newAnswer._id);
+  question.save();
   await questionsService.updateActivity(questionId);
-  await usersService.updateReputation(user.id, 2);
+  await usersService.updateReputation(userId, 2);
 
   return newAnswer;
 }
@@ -49,7 +47,7 @@ async function vote(questionId, answerId, userId, isPositive) {
   });
   usersService.updateReputation(userId, 1);
   questionsService.updateActivity(questionId);
-  Answer.update(
+  Answer.findOneAndUpdate(
     {
       _id: answerId
     },

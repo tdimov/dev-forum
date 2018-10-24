@@ -1,5 +1,5 @@
-const Question = require('mongoose').model('Question');
-const Answer = require('mongoose').model('Answer');
+const Answer = require('../models/answer');
+const Question = require('../models/question');
 const usersService = require('./users.service');
 const votesService = require('./votes.service');
 const questionsValidator = require('../validators/questions.validator');
@@ -14,6 +14,8 @@ async function index(query) {
   const { limit, offset, ...filters } = query;
 
   const questions = await Question.find(filters)
+    .populate('author')
+    .populate('answers')
     .sort('-postedDate')
     .limit(Number(limit))
     .skip(Number(offset))
@@ -23,7 +25,14 @@ async function index(query) {
 }
 
 async function get(id) {
-  const question = await Question.findById(id).exec();
+  const question = await Question
+    .findById(id)
+    .populate('author')
+    .populate({
+      path: 'answers',
+      populate: { path: 'author'}
+    })
+    .exec();
 
   if (isMissing(question)) {
     throw new AppError(
@@ -32,9 +41,6 @@ async function get(id) {
       'Question does not exist!'
     );
   }
-
-  const answers = await Answer.find({ questionId: question.id }).exec();
-  question.answers = answers;
 
   return question;
 }
@@ -54,10 +60,7 @@ async function create(payload, userId) {
 
   const user = await usersService.get(userId);
 
-  payload.author = {
-    _id: userId,
-    username: user.username
-  };
+  payload.author = userId;
 
   const newQuestion = await Question.create(payload);
 
@@ -84,7 +87,7 @@ async function vote(questionId, userId, isPositive) {
     score
   });
   usersService.updateReputation(userId, 1);
-  Question.update(
+  Question.findOneAndUpdate(
     { _id: questionId },
     {
       $set: { lastActiveDate: new Date() },
@@ -94,7 +97,7 @@ async function vote(questionId, userId, isPositive) {
 }
 
 async function updateActivity(id) {
-  await Question.update(
+  await Question.findOneAndUpdate(
     { _id: id },
     {
       $set: { lastActiveDate: new Date() }

@@ -16,7 +16,11 @@ async function create(req, res, next) {
       );
     }
 
-    const result = await answersService.create(questionId, req.user, req.body);
+    const result = await answersService.create(
+      questionId,
+      req.user.id,
+      req.body
+    );
 
     return res.status(201).send({
       error: null,
