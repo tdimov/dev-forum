@@ -1,7 +1,9 @@
 app.controller("UsersByReputationController", function ($scope, notifier, usersService) {
-    usersService.getUsers(3, function (data) {
-        $scope.hasSearchResults = true;
-        $scope.users = data;
+  $scope.users = [];
+
+  usersService.index()
+    .then(({ data }) => {
+      $scope.users = data.result;
     });
 
     $scope.searchUser = function () {

@@ -4,6 +4,12 @@ const { isMissing } = require('../validators/common.validator');
 const AppError = require('../errors/app.error');
 const { badRequest, resourceNotFound } = require('../errors/http.errors');
 
+async function index(query) {
+  const users = await User.find(query).exec();
+
+  return users;
+}
+
 async function get(id) {
   const user = await User.findById(id);
 
@@ -40,6 +46,7 @@ async function updateReputation(userId, incValue) {
 }
 
 module.exports = {
+  index,
   get,
   update,
   updateReputation

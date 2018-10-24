@@ -23,6 +23,8 @@ module.exports = app => {
   app.post('/api/login', authController.login);
   app.post('/api/logout', auth.logout);
 
+  app.get('/api/users', newUsersController.index);
+  app.get('/api/users/:id', newUsersController.get);
   app.get('/api/users/profile/me', authenticate, newUsersController.getProfile);
   app.put(
     '/api/users/profile/me',
@@ -49,8 +51,8 @@ module.exports = app => {
   app.get('/api/tags', newTagsController.index);
   // new routes
 
-  app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);
-  app.get('/api/users/:id', usersController.getUserById);
+  // app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);
+  // app.get('/api/users/:id', usersController.getUserById);
   app.get('/api/usersByReputation', usersController.getUsersByReputation);
   app.get('/users/searchUser/:query', usersController.searchUser);
   app.post('/api/users', usersController.register);

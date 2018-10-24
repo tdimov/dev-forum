@@ -11,16 +11,16 @@
                 p.text-center reputation
             div.col-md-9
                 div.col-md-4
-                    p website:
-                    p address:
-                    p real name:
+                    p(ng-if="user.website") website:
+                    p(ng-if="user.address") address:
+                    p name:
                     p email:
                     p last login:
                     p member since:
                 div.com-md-8
-                    p
+                    p(ng-if="user.website")
                         a(href="{{ user.website }}", target="_blank") Link
-                    p
+                    p(ng-if="user.address")
                         span {{ user.address }}
                     p
                         span {{ user.firstName + ' ' + user.lastName}}

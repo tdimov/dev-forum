@@ -1,3 +1,5 @@
+const dateTimeManager = require('../common/date.time.manager');
+
 function transformToLoginUserResponse({ user, token }) {
   return {
     token,
@@ -25,6 +27,14 @@ function transformToDbModel(payload) {
   };
 }
 
+function transformToUsersListModel(users) {
+  return users.map(user => ({
+    id: user._id,
+    username: user.username,
+    reputation: user.reputation
+  }));
+}
+
 function transformToUserProfileSettingsModel(payload) {
   return {
     firstName: payload.firstName,
@@ -37,8 +47,24 @@ function transformToUserProfileSettingsModel(payload) {
   };
 }
 
+function transformToUserProfileDetailsModel(user) {
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    address: user.city && user.country ? `${user.city}, ${user.country}` : '',
+    website: user.website,
+    aboutMe: user.aboutMe,
+    reputation: user.reputation,
+    lastLoginDate: dateTimeManager.formatDate(user.lastLoginDate),
+    registrationDate: dateTimeManager.formatDate(user.registrationDate)
+  };
+}
+
 module.exports = {
   transformToDbModel,
+  transformToUsersListModel,
   transformToLoginUserResponse,
+  transformToUserProfileDetailsModel,
   transformToUserProfileSettingsModel
 };
