@@ -8,7 +8,11 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
   const AUTHENTICATION_SERVER_ERROR = 'Authentication failed!';
   const AUTHENTICATION_ERROR = 'Трябва да влезнете в системата!'
 
-    var questionId = $routeParams.id,
+  $scope.newAnswer = {
+    text: ''
+  };
+
+  var questionId = $routeParams.id,
         answerId;
 
   questionsService.get(questionId).then(({ data }) => {
@@ -110,9 +114,9 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
         }
     };
 
-    $scope.addAnswer = newAnswer => {
-      if (newAnswer && newAnswer.text) {
-        answersService.create(questionId, newAnswer)
+    $scope.addAnswer = () => {
+      if ($scope.newAnswer.text) {
+        answersService.create(questionId, $scope.newAnswer)
           .then(({ data }) => {
             if (!$scope.question.answers) {
               $scope.question.answers = [];
@@ -121,6 +125,7 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
             $scope.question.answers.push(data.result);
 
             notifier.success(SUCCESS_CREATED_ANSWER);
+            $scope.newAnswer.text = '';
           })
           .catch(() => {
             notifier.error(ERROR_CREATED_ANSWER);

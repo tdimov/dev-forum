@@ -71,6 +71,16 @@ async function create(payload, userId) {
 
 async function vote(questionId, userId, isPositive) {
   const score = isPositive ? 'up' : 'down';
+  const question = await get(questionId);
+
+  if (question.author.id === userId) {
+    throw new AppError(
+      badRequest.type,
+      badRequest.httpCode,
+      'Cannot vote for your own question!'
+    );
+  }
+
   const isUserVoted = await votesService.isUserVoted(questionId, userId);
 
   if (isUserVoted) {

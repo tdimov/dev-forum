@@ -4,10 +4,26 @@ const usersService = require('./users.service');
 const answerVotesService = require('./answer.votes.service');
 const { isMissing } = require('../validators/common.validator');
 const AppError = require('../errors/app.error');
-const { badRequest } = require('../errors/http.errors');
+const { badRequest, resourceNotFound } = require('../errors/http.errors');
 
 const INCREMENT_STEP = 1;
 const DECREMENT_STEP = -1;
+
+async function get(id) {
+  const answer = await Answer.findById(id)
+    .populate('author')
+    .exec();
+
+  if (isMissing(answer)) {
+    throw new AppError(
+      resourceNotFound.type,
+      resourceNotFound.httpCode,
+      'Answer does not exist!'
+    );
+  }
+
+  return answer;
+}
 
 async function create(questionId, userId, payload) {
   const question = await questionsService.get(questionId);
@@ -34,6 +50,16 @@ async function create(questionId, userId, payload) {
 
 async function vote(questionId, answerId, userId, isPositive) {
   const score = isPositive ? 'up' : 'down';
+  const answer = await get(answerId);
+
+  if (answer.author.id === userId) {
+    throw new AppError(
+      badRequest.type,
+      badRequest.httpCode,
+      'Cannot vote for your own answer!'
+    );
+  }
+
   const isUserVoted = await answerVotesService.isUserVoted(answerId, userId);
 
   if (isUserVoted) {

@@ -64,7 +64,7 @@
             div.row(ng-show="hasUser()")
                 h3 Your answer
                 textarea#Answer.form-control.margin-bottom(rows="12", ckeditor="editorOptions", ng-model="newAnswer.text")
-                button.margin-top-15.btn.btn-success(ng-click="addAnswer(newAnswer)") Post your answer
+                button.margin-top-15.btn.btn-success(ng-click="addAnswer()") Post your answer
                 div#commentModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
                     div.modal-dialog
                         div.modal-content
