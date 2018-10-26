@@ -1,7 +1,8 @@
 app.controller('EditTagController', function($scope, $routeParams, $location, notifier, tagsService){
-    tagsService.getTagById($routeParams.id, function(tag) {
-        $scope.tag = tag;
-    });
+    tagsService.get($routeParams.id)
+      .then(({ data }) => {
+        $scope.tag = data.result;
+      });
 
     $scope.update = function (updatedTag) {
         tagsService.updateEditedTag(updatedTag)

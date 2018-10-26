@@ -1,25 +1,23 @@
 .container
-    div(ng-controller="TagsController")
+    div(ng-controller="TagsAdminListController")
         div.margin-top-15
             a.btn.btn-primary(href="#/admin/tags/add") Add new tag
-        p.text.text-info.text-size-18(ng-show="tags.length === 0") There are no tags added!
-        div.table-responsive.margin-top-15(ng-hide="tags.length > 0")
+        p.text.text-info.text-size-18(ng-if="tags.length === 0") There are no tags added!
+        div.table-responsive.margin-top-15(ng-if="tags.length > 0")
             table.table.table-bordered.table-hover
                 thead
                     tr
                         th Name
                         th Description
-                        th Questions count
                         th Actions
                 .tbody
                     tr(ng-repeat="tag in tags")
                         td {{ tag.name }}
                         td {{ tag.description }}
-                        td {{ tag.questionsCount }}
                         td
-                            a.btn.btn-primary.btn-sm.margin-right(href="#/admin/tags/{{ tag._id }}", title="Edit")
+                            a.btn.btn-primary.btn-sm.margin-right(href="#/admin/tags/{{ tag.id }}", title="Edit")
                                 i.glyphicon.glyphicon-pencil
-                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="deleteTag(tag._id)" title="Delete", data-toggle="modal", data-target="#acceptModal")
+                            btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="deleteTag(tag.id)" title="Delete", data-toggle="modal", data-target="#acceptModal")
                                 i.glyphicon.glyphicon-remove
 
             div#acceptModal.modal(tabindex="-1", role="dialog", aria-hidden="true")

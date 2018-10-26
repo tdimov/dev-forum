@@ -10,6 +10,7 @@ const answersController = require('../controllers/answersController');
 const commentsController = require('../controllers/commentsController');
 const tagsController = require('../controllers/tagsController');
 const { authenticate } = require('../common/authenticate');
+const { isAdmin } = require('../common/authorize');
 
 module.exports = app => {
   app.get('/partials/:partialArea/:partialName', (req, res) => {
@@ -49,6 +50,7 @@ module.exports = app => {
   );
 
   app.get('/api/tags', newTagsController.index);
+  app.get('/api/tags/:id', authenticate, isAdmin, newTagsController.get);
   // new routes
 
   // app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);
@@ -122,7 +124,7 @@ module.exports = app => {
   );
 
   // app.get('/api/tags', tagsController.getTags);
-  app.get('/api/tags/:id', tagsController.getTagById);
+  // app.get('/api/tags/:id', tagsController.getTagById);
   app.get('/api/tagsAside', tagsController.getTagsAside);
   app.get('/tags/searchTag/:query', tagsController.searchTag);
   app.get(

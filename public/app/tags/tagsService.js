@@ -3,6 +3,9 @@ app.factory('tagsService', function($http, $q, identity, httpService) {
       index(params) {
         return httpService.get('/tags', params);
       },
+      get(id) {
+        return httpService.get(`/tags/${id}`);
+      },
         addNewTag: function (tag) {
             var deferred = $q.defer();
             $http.post('/api/tags', tag)
