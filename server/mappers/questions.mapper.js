@@ -1,5 +1,6 @@
 const dateTimeManager = require('../common/date.time.manager');
 const answersMapper = require('./answers.mapper');
+const tagsMapper = require('../mappers/tags.mapper');
 
 const DATE_TIME_FORMAT = 'MM/DD/YYYY HH:mm:ss';
 
@@ -11,7 +12,7 @@ function transformToQuestionListItemModel(question) {
       id: question.author._id,
       username: question.author.username
     },
-    tags: question.tags,
+    tags: tagsMapper.transformToTagsModel(question.tags),
     votes: question.rating,
     answers: question.answers.length,
     views: question.viewed,
@@ -32,7 +33,7 @@ function transformToQuestionModel(question) {
       id: question.author._id,
       username: question.author.username
     },
-    tags: question.tags,
+    tags: tagsMapper.transformToTagsModel(question.tags),
     votes: question.rating,
     isLocked: question.isLocked,
     answers: answersMapper.transformToAnswersModel(question.answers),

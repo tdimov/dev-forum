@@ -30,7 +30,22 @@ async function get(req, res, next) {
   }
 }
 
+async function create(req, res, next) {
+  try {
+    const result = await tagsService.create(req.body);
+
+    return res.status(201).send({
+      error: null,
+      result
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 module.exports = {
   index,
-  get
+  get,
+  create
 };

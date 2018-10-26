@@ -21,7 +21,7 @@ const questionSchema = new mongoose.Schema({
     ref: 'User',
     require: '{PATH} is required'
   },
-  tags: [{ type: String, ref: 'Tag' }],
+  tags: [{ type: mongooseSchema.Types.ObjectId, ref: 'Tag' }],
   answers: [{ type: mongooseSchema.Types.ObjectId, ref: 'Answer' }]
 });
 

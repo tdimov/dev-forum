@@ -49,8 +49,9 @@ module.exports = app => {
     newAnswersController.vote
   );
 
-  app.get('/api/tags', newTagsController.index);
+  app.get('/api/tags', authenticate, newTagsController.index);
   app.get('/api/tags/:id', authenticate, isAdmin, newTagsController.get);
+  app.post('/api/tags', newTagsController.create);
   // new routes
 
   // app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);
@@ -132,7 +133,7 @@ module.exports = app => {
     auth.isAuthenticated,
     tagsController.getTagsAskQuestion
   );
-  app.post('/api/tags', tagsController.addTag);
+  // app.post('/api/tags', tagsController.addTag);
   app.put('/api/tags', auth.isInRole('admin'), tagsController.updateTag);
   app.delete('/api/tags/:id', auth.isInRole('admin'), tagsController.deleteTag);
 

@@ -16,6 +16,7 @@ async function index(query) {
   const questions = await Question.find(filters)
     .populate('author')
     .populate('answers')
+    .populate('tags')
     .sort('-postedDate')
     .limit(Number(limit))
     .skip(Number(offset))
@@ -32,6 +33,7 @@ async function get(id) {
       path: 'answers',
       populate: { path: 'author'}
     })
+    .populate('tags')
     .exec();
 
   if (isMissing(question)) {

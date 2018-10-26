@@ -7,52 +7,27 @@
                 div#panelBody.panel-body(ng-controller="AskQuestionController")
                     form.form-horizontal(name="askQuestionForm", method="post")
                         div.form-group
-                            label.col-md-3.text-size-18(for="Title") Title
+                            label.col-md-3.text-size-18(for="Title") Заглавие *
                             div.col-md-8
-                                input#Title.form-control.form-validation(type="text", placeholder="Title", ng-model="question.title", required)
+                                input#Title.form-control.form-validation(type="text", placeholder="Заглавие", ng-model="question.title", required)
                         div.form-group
-                            label.col-md-3.text-size-18(for="Question") Question
+                            label.col-md-3.text-size-18(for="Question") Въпрос *
                             div.col-md-8
                                 textarea#Question.form-control.form-validation(ckeditor="editorOptions", ng-model="question.text", rows="12", required)
                         div.form-group
-                            label.col-md-3.text-size-18(for="Tags") Tags
+                            label.col-md-3.text-size-18(for="Tags") Тагове *
                             div.col-md-8
-                                select#chooseTags.form-control
-                                    option(value='') choose tags...
-                                    option(ng-repeat="tag in tags", value="{{ tag.name }}") {{tag.name}}
-                                span.text.text-info min 1 tag, max 5 tags
+                                input#Tag.form-control(type="text", placeholder="Име на таг", ng-model="questionTag", ng-change="onQuestionTagChange()", ng-keyup="$event.keyCode == 13 ? onEnterTagSelect() : null", required)
+                                div.list-group(ng-if="tagsSuggestions.length > 0")
+                                  a.list-group-item(href="javascript:;" ng-repeat="suggestedTag in tagsSuggestions", ng-click="selectSuggestedTag(suggestedTag)")
+                                    | {{suggestedTag.name}}
+                                span.text.text-info минимум 1 таг
                                 ul#choosenTags.list-unstyled.list-inline.margin-top-15
-                    button.btn.btn-success.pull-right(ng-click="askQuestion(question)") Ask your question
-        script.
-            var choosenTagsValues = [];
-
-            function removeTag(element) {
-                var tag = $(element).parent().text().trim(),
-                    index = choosenTagsValues.indexOf(tag);
-                angular.element('#panelBody').scope().removeSelectedTag(tag);
-                if(index > -1) {
-                    choosenTagsValues.splice(index, 1);
-                    $(element).parent().remove();
-                }
-            }
-            $(document).ready(function() {
-                $('#chooseTags').change(function() {
-                    var choosenTags = $('#choosenTags'),
-                        selectedVal = $('#chooseTags option:selected').val().trim();
-
-                    if(selectedVal) {
-                        if(choosenTagsValues.indexOf(selectedVal) > -1) {
-                            toastr.error("The tag is already added!");
-                        }
-                        else {
-                            var html = "<li>" + selectedVal + "&nbsp<button onclick='removeTag(this)' class='btn btn-primary badge'><i class='glyphicon glyphicon-remove'></i></button></li>";
-                            choosenTagsValues.push(selectedVal);
-                            angular.element('#panelBody').scope().updateSelected(selectedVal);
-                            choosenTags.append(html);
-                        }
-                    }
-                });
-            });
+                                  li(ng-repeat="selectedTag in selectedTags")
+                                    span.badge {{selectedTag.name}} 
+                                      a(href="javascript:;", ng-click="deleteSelectedTag($index)")
+                                        i.glyphicon.glyphicon-remove
+                    button.btn.btn-success.pull-right(ng-click="askQuestion(question)") Задай върпос
         div.col-md-3
             include ../includes/lastQuestions
             include ../includes/tagsAside

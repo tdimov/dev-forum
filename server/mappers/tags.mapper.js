@@ -1,8 +1,7 @@
 function transformToTagModel(tag) {
   return {
     id: tag._id,
-    name: tag.name,
-    description: tag.description
+    name: tag.name
   };
 }
 

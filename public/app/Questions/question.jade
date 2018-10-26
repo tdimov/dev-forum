@@ -17,7 +17,7 @@
                     div.row
                         ul.col-md-8.list-inline
                             li.label.label-primary.margin-right(ng-repeat="tag in question.tags")
-                                a.text-white.not-hover(href="#/questionsByTag/{{tag}}") {{ tag }}
+                                span.text-white.not-hover {{ tag.name }}
                         div.col-md-4.well.pull-right
                             span.text-default asked {{ question.date }}
                                 br
