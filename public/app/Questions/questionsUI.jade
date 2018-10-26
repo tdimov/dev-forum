@@ -1,4 +1,4 @@
-ul.list-group
+ul.list-group(ng-if="questions.length > 0")
     li.row.list-group-item(ng-repeat="question in questions")
         div.col-sm-1
             p.text-primary.text-center.text-size-18 {{ question.votes }}

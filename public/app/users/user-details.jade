@@ -34,12 +34,7 @@
             span about me:
             p.well {{ user.aboutMe }}
     div.row
-        div.col-md-6.margin-top-15
+        div.col-md-10.margin-top-15
             h4 {{ questions.length }} Questions
             hr
-            ul.list-unstyled
-                li(ng-repeat="question in user.questions")
-                    div.col-md-1
-                        span.text-center.text-size-18 {{ question.rating }}
-                    div.col-md-11
-                        a(href="#/questions/{{ question.id }}") {{ question.title }}
+            include ../questions/questionsUI
