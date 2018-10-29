@@ -7,15 +7,15 @@
                     th Name
                     th Email
                     th Actions
-            .tbody
+            tbody.tbody
                 tr(ng-repeat="user in users")
                     td {{ user.username }}
                     td {{ user.firstName + ' ' + user.lastName }}
                     td {{ user.email }}
                     td
-                        a.btn.btn-primary.btn-sm.margin-right(href="#/admin/users/{{ user._id }}", title="Edit")
+                        a.btn.btn-primary.btn-sm.margin-right(href="#/admin/users/{{ user.id }}", title="Edit")
                             i.glyphicon.glyphicon-pencil
-                        btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="deleteUser(user._id)" title="Delete", data-toggle="modal", data-target="#acceptModal")
+                        btn.btn.btn-primary.btn-sm.margin-right(type="button", ng-click="deleteUser(user.id)" title="Delete", data-toggle="modal", data-target="#acceptModal")
                             i.glyphicon.glyphicon-remove
 
         div#acceptModal.modal(tabindex="-1", role="dialog", aria-hidden="true")

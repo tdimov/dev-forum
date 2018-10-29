@@ -1,6 +1,11 @@
 app.controller('UsersController', function ($scope, $location, $route, UsersResource, usersService, notifier) {
     var userForDeleteId;
-    $scope.users = UsersResource.query();
+    $scope.users = [];
+
+    usersService.index()
+      .then(({ data }) => {
+        $scope.users = data.result;
+      });
 
     $scope.deleteUser = function (userId) {
         userForDeleteId = userId;

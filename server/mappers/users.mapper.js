@@ -31,6 +31,9 @@ function transformToUsersListModel(users) {
   return users.map(user => ({
     id: user._id,
     username: user.username,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
     reputation: user.reputation
   }));
 }
@@ -49,6 +52,8 @@ function transformToUserProfileSettingsModel(payload) {
 
 function transformToUserProfileDetailsModel(user) {
   return {
+    id: user._id,
+    username: user.username,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
