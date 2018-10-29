@@ -8,11 +8,6 @@ app.config(function ($routeProvider) {
                 return auth.isAuthorizedForRole('admin');
             }
         },
-        moderator: {
-            auth: function(auth) {
-                return auth.isAuthorizedForRole('moderator');
-            }
-        },
         authenticatedUser: {
             authenticated: function (auth) {
                 return auth.isUserAuthenticated();
@@ -75,11 +70,6 @@ app.config(function ($routeProvider) {
             controller: 'QuestionsAdminController',
             resolve: routeChecks.admin
         })
-        //MODERATOR
-        .when('/moderator/moderator-panel', {
-            templateUrl: '/partials/moderator/moderator-panel',
-            resolve: routeChecks.moderator
-        })
         .when('/users', {
             templateUrl: '/partials/users/users',
             controller: 'UsersByReputationController'
@@ -109,17 +99,13 @@ app.config(function ($routeProvider) {
             templateUrl: '/partials/questions/questionsByTag',
             controller: 'QuestionsByTagController'
         })
-        .when('/tags', {
-            templateUrl: '/partials/tags/tags',
-            controller: ''
-        })
         .otherwise({
             redirectTo: '/'
         });
 });
-//TODO: create MainController in another file
+
 app.controller('MainController', function ($scope) {
-    $scope.hello = "Hi from angular";
+
 });
 
 app.run(function($rootScope, $location) {

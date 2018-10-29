@@ -10,7 +10,9 @@ async function index(query) {
     filter.name = { $regex: `.*${query.name}.*` };
   }
 
-  const tags = await Tag.find(filter).exec();
+  const tags = await Tag.find(filter)
+    .limit(Number(query.limit))
+    .exec();
 
   return tags;
 }

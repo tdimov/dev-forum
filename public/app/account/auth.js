@@ -1,15 +1,12 @@
-app.factory('auth', function ($q, $http, identity, UsersResource, httpService) {
+app.factory('auth', function ($q, $http, identity, httpService) {
   return {
     register(user) {
       return httpService.post('/register', user);
     },
     login(user) {
       return httpService.post('/login', user)
-        .then(response => {
-          const { result } = response.data;
-          const user = new UsersResource();
-
-          angular.extend(user, result.user);
+        .then(({ data }) => {
+          const { result } = data;
           identity.setUser(result.user);
           identity.setToken(result.token);
         });
@@ -38,18 +35,6 @@ app.factory('auth', function ($q, $http, identity, UsersResource, httpService) {
         else {
             return $q.reject('authenticated');
         }
-    },
-    update: function (user) {
-        var deferred = $q.defer();
-        var updatedUser = new UsersResource(user);
-        updatedUser._id = identity.currentUser._id;
-        updatedUser.$update().then(function(response) {
-            deferred.resolve(response);
-        }, function(response) {
-            deferred.reject(response);
-        });
-
-        return deferred.promise;
     }
   };
 });

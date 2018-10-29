@@ -1,4 +1,4 @@
-app.controller('UsersController', function ($scope, $location, $route, UsersResource, usersService, notifier) {
+app.controller('UsersController', function ($scope, $location, $route, usersService, notifier) {
     var userForDeleteId;
     $scope.users = [];
 

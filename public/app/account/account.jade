@@ -12,8 +12,6 @@ div.navbar-right(ng-controller="AccountController")
             ul.dropdown-menu
                 li(ng-show="identity.isInRole('admin')")
                     a(href="#/admin/admin-panel") Admin panel
-                li(ng-show="identity.isInRole('moderator')")
-                    a(href="#/moderator/moderator-panel") Moderator panel
                 li(ng-show="identity.isAuthenticated()")
                     a(href="#/account/settings") Settings
                 li

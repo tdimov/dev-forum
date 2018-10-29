@@ -1,12 +1,4 @@
-app.factory('identity', function ($window, UsersResource){
-    let user;
-    let currentUser = $window.siteCurrentUser;
-
-    if (currentUser) {
-        user = new UsersResource();
-        angular.extend(user, currentUser);
-    }
-
+app.factory('identity', function (){
     return {
       getUser() {
         return JSON.parse(localStorage.getItem('user'));
