@@ -1,0 +1,24 @@
+.container
+  div.row(ng-controller="RankingsController", ng-if="ranking")
+    h3 Класиране за {{ranking.month}}.{{ranking.year}}
+    hr
+    div.col-md-9
+      div.table-responsive.margin-top-15
+        table.table.table-bordered.table-hover
+          thead
+            tr
+              th Награда
+              th Победител
+          tbody.tbody
+            tr
+              td {{ ranking.firstPlacePrize }}
+              td {{ ranking.firstPlaceWinner }}
+            tr
+              td {{ ranking.secondPlacePrize }}
+              td {{ ranking.secondPlaceWinner }}
+            tr
+              td {{ ranking.firstPlacePrize }}
+              td {{ ranking.secondPlaceWinner }}
+    div.col-md-3
+      include ../includes/lastQuestions
+      include ../includes/tagsAside

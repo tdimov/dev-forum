@@ -31,46 +31,49 @@ userSchema.method({
 
 const User = mongoose.model('User', userSchema);
 
-module.exports.seedInitialUsers = () => {
-  User.find({}).exec(async (err, collection) => {
-    if (err) {
-      console.log(`Cannot find users: ${err}`);
-      return;
-    }
-    //        User.remove({}, function (err) {
-    //            console.log('Users removed!');
+module.exports = {
+  User,
+  seedInitialUsers() {
+    User.find({}).exec(async (err, collection) => {
+      if (err) {
+        console.log(`Cannot find users: ${err}`);
+        return;
+      }
+      //        User.remove({}, function (err) {
+      //            console.log('Users removed!');
 
-    if (collection.length === 0) {
-      let salt;
-      let hashedPass;
-      // salt = encryption.generateSalt();
-      // hashedPass = encryption.generateHashedPassword(salt, 'Tihomir');
-      hashedPass = await crypto.hash('Tihomir');
-      User.create({
-        username: 'tihomir.dimov',
-        firstName: 'Tihomir',
-        lastName: 'Dimov',
-        email: 'tihomir@abv.bg',
-        salt,
-        passHash: hashedPass,
-        registrationDate: new Date(),
-        lastLoginDate: new Date(),
-        roles: ['admin']
-      });
-      hashedPass = await crypto.hash('Vladimir');
-      User.create({
-        username: 'vladimir.dimov',
-        firstName: 'Vladimir',
-        lastName: 'Dimov',
-        email: 'vladimir@abv.bg',
-        salt,
-        passHash: hashedPass,
-        registrationDate: new Date(),
-        lastLoginDate: new Date(),
-        roles: ['user']
-      });
-      console.log('Users addded to database');
-    }
-    // });
-  });
+      if (collection.length === 0) {
+        let salt;
+        let hashedPass;
+        // salt = encryption.generateSalt();
+        // hashedPass = encryption.generateHashedPassword(salt, 'Tihomir');
+        hashedPass = await crypto.hash('Tihomir');
+        User.create({
+          username: 'tihomir.dimov',
+          firstName: 'Tihomir',
+          lastName: 'Dimov',
+          email: 'tihomir@abv.bg',
+          salt,
+          passHash: hashedPass,
+          registrationDate: new Date(),
+          lastLoginDate: new Date(),
+          roles: ['admin']
+        });
+        hashedPass = await crypto.hash('Vladimir');
+        User.create({
+          username: 'vladimir.dimov',
+          firstName: 'Vladimir',
+          lastName: 'Dimov',
+          email: 'vladimir@abv.bg',
+          salt,
+          passHash: hashedPass,
+          registrationDate: new Date(),
+          lastLoginDate: new Date(),
+          roles: ['user']
+        });
+        console.log('Users addded to database');
+      }
+      // });
+    });
+  }
 };

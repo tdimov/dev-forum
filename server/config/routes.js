@@ -5,6 +5,7 @@ const questionsController = require('../controllers/questions.controller');
 const tagsController = require('../controllers/tags.controller');
 const answersController = require('../controllers/answers.controller');
 const usersController = require('../controllers/usersController');
+const rankingsController = require('../controllers/rankings.controller');
 const { authenticate } = require('../common/authenticate');
 const { isAdmin } = require('../common/authorize');
 
@@ -47,6 +48,9 @@ module.exports = app => {
 
   app.get('/api/tags', authenticate, tagsController.index);
   app.post('/api/tags', tagsController.create);
+
+  app.get('/api/rankings', rankingsController.getCurrentRanking);
+  app.post('/api/rankings', authenticate, isAdmin, rankingsController.create);
   // new routes
 
   // app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);

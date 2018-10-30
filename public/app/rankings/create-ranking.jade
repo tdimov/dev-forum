@@ -1,0 +1,27 @@
+.container
+  div.row(ng-controller="CreateRankingController")
+    div.col-md-9
+      div.panel.panel-success
+        div.panel-heading
+          h3.panel-title.text-left.text-size-18 Създаване на ново класиране
+        div.panel-body(ng-controller="AccountController")
+          form.form-horizontal(name="rankingForm")
+            div.form-group
+              label.col-md-4.text-size-18(for="firstPlacePrize") Първа награда
+              div.col-md-10
+                input#firstPlacePrize.form-control.form-validation(type="text", name="firstPlacePrize" placeholder="Първа награда", ng-model="ranking.firstPlacePrize", required)
+                span.text-danger(ng-show="rankingForm.firstPlacePrize.$error.required") Полето е задължително!
+            div.form-group
+              label.col-md-4.text-size-18(for="secondPlacePrize") Втора награда
+              div.col-md-10
+                input#secondPlacePrize.form-control.form-validation(type="text", name="secondPlacePrize" placeholder="Втора награда", ng-model="ranking.secondPlacePrize", required)
+                span.text-danger(ng-show="rankingForm.secondPlacePrize.$error.required") Полето е задължително!
+            div.form-group
+              label.col-md-4.text-size-18(for="thirdPlacePrize") Трета награда
+              div.col-md-10
+                input#thirdPlacePrize.form-control.form-validation(type="text", name="thirdPlacePrize" placeholder="Трета награда", ng-model="ranking.thirdPlacePrize", required)
+                span.text-danger(ng-show="rankingForm.thirdPlacePrize.$error.required") Полето е задължително!
+            button.btn.btn-success.pull-right(ng-click="create()") Запиши
+    div.col-md-3
+      include ../includes/lastQuestions
+      include ../includes/tagsAside

@@ -70,6 +70,15 @@ app.config(function ($routeProvider) {
             controller: 'QuestionsAdminController',
             resolve: routeChecks.admin
         })
+        .when('/ranking', {
+          templateUrl: '/partials/rankings/ranking',
+          controller: 'RankingsController'
+        })
+        .when('/admin/ranking/create', {
+          templateUrl: '/partials/rankings/create-ranking',
+          controller: 'CreateRankingController',
+          resolve: routeChecks.admin
+        })
         .when('/users', {
             templateUrl: '/partials/users/users',
             controller: 'UsersByReputationController'
