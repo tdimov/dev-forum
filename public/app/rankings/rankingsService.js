@@ -5,6 +5,9 @@ app.factory('rankingService', function($http, $q, httpService) {
     },
     create(payload) {
       return httpService.post('/rankings', payload);
+    },
+    finishCurrentRanking() {
+      return httpService.put('/rankings', {});
     }
   };
 });

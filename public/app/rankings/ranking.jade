@@ -3,22 +3,29 @@
     h3 Класиране за {{ranking.month}}.{{ranking.year}}
     hr
     div.col-md-9
+      div(ng-if="identity.isInRole('admin')")
+        a.btn.btn-success.margin-right(href="#/admin/ranking/create") Създай ново класиране
+        a.btn.btn-success(href="javascript:;" ng-click="finishCurrentRanking()") Приключи класирането
       div.table-responsive.margin-top-15
         table.table.table-bordered.table-hover
           thead
             tr
               th Награда
               th Победител
+              th Репутация
           tbody.tbody
             tr
               td {{ ranking.firstPlacePrize }}
               td {{ ranking.firstPlaceWinner }}
+              td {{ ranking.firstPlaceWinner }}
             tr
               td {{ ranking.secondPlacePrize }}
               td {{ ranking.secondPlaceWinner }}
-            tr
-              td {{ ranking.firstPlacePrize }}
               td {{ ranking.secondPlaceWinner }}
+            tr
+              td {{ ranking.thirdPlacePrize }}
+              td {{ ranking.thirdPlaceWinner }}
+              td {{ ranking.thirdPlaceWinner }}
     div.col-md-3
       include ../includes/lastQuestions
       include ../includes/tagsAside

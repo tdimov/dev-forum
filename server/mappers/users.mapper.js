@@ -1,5 +1,9 @@
 const dateTimeManager = require('../common/date.time.manager');
 
+function transformFullName(user) {
+  return user ? `${user.firstName} ${user.lastName}` : '';
+}
+
 function transformToLoginUserResponse({ user, token }) {
   return {
     token,
@@ -67,6 +71,7 @@ function transformToUserProfileDetailsModel(user) {
 }
 
 module.exports = {
+  transformFullName,
   transformToDbModel,
   transformToUsersListModel,
   transformToLoginUserResponse,

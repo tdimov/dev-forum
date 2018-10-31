@@ -1,3 +1,5 @@
+const usersMapper = require('./users.mapper');
+
 function transformToRankingModel(payload) {
   return {
     month: payload.month,
@@ -5,9 +7,9 @@ function transformToRankingModel(payload) {
     firstPlacePrize: payload.firstPlacePrize,
     secondPlacePrize: payload.secondPlacePrize,
     thirdPlacePrize: payload.thirdPlacePrize,
-    firstPlaceWinner: payload.firstPlaceWinner,
-    secondPlaceWinner: payload.secondPlaceWinner,
-    thirdPlaceWinner: payload.thirdPlaceWinner
+    firstPlaceWinner: usersMapper.transformFullName(payload.firstPlaceWinner),
+    secondPlaceWinner: usersMapper.transformFullName(payload.secondPlaceWinner),
+    thirdPlaceWinner: usersMapper.transformFullName(payload.thirdPlaceWinner)
   };
 }
 

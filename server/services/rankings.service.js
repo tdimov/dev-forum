@@ -6,8 +6,8 @@ const { isMissing } = require('../validators/common.validator');
 const AppError = require('../errors/app.error');
 const { badRequest, resourceNotFound } = require('../errors/http.errors');
 
-async function get(id) {
-  const ranking = await Ranking.findById(id);
+async function get(filter = {}) {
+  const ranking = await Ranking.findOne(filter);
 
   if (isMissing(ranking)) {
     throw new AppError(
@@ -25,7 +25,10 @@ async function getCurrentRanking() {
   const ranking = await Ranking.findOne({
     month,
     year
-  });
+  })
+    .populate('firstPlaceWinner')
+    .populate('secondPlaceWinner')
+    .populate('thirdPlaceWinner');
 
   if (isMissing(ranking)) {
     throw new AppError(
@@ -73,25 +76,25 @@ async function create(payload) {
   return newRanking;
 }
 
-async function endRanking(id) {
-  await get(id);
+async function finishCurrentRanking() {
+  const currentMonthAndYear = dateTimeManager.getCurrentMonthAndYear();
+  // checks if the current ranking exist otherwise throws AppError
+  await get(currentMonthAndYear);
+
   const winners = await User.find()
     .sort('-reputation')
     .limit(3)
     .exec();
 
-  await Ranking.update(
-    { _id: id },
-    {
-      firstPlaceWinner: winners[0]._id,
-      secondPlaceWinner: winners[1]._id,
-      thirdPlaceWinner: winners[2]._id
-    }
-  );
+  await Ranking.update(currentMonthAndYear, {
+    firstPlaceWinner: winners[0] ? winners[0].id : null,
+    secondPlaceWinner: winners[1] ? winners[1].id : null,
+    thirdPlaceWinner: winners[2] ? winners[2].id : null
+  });
 }
 
 module.exports = {
   getCurrentRanking,
   create,
-  endRanking
+  finishCurrentRanking
 };

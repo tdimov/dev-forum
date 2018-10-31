@@ -46,11 +46,17 @@ module.exports = app => {
     answersController.vote
   );
 
-  app.get('/api/tags', authenticate, tagsController.index);
+  app.get('/api/tags', tagsController.index);
   app.post('/api/tags', tagsController.create);
 
   app.get('/api/rankings', rankingsController.getCurrentRanking);
   app.post('/api/rankings', authenticate, isAdmin, rankingsController.create);
+  app.put(
+    '/api/rankings',
+    authenticate,
+    isAdmin,
+    rankingsController.finishCurrentRanking
+  );
   // new routes
 
   // app.get('/api/users', auth.isInRole('admin'), usersController.getAllUsers);

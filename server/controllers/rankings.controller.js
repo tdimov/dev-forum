@@ -29,7 +29,19 @@ async function create(req, res, next) {
   }
 }
 
+async function finishCurrentRanking(req, res, next) {
+  try {
+    await rankingsService.finishCurrentRanking();
+
+    return res.status(204).end();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 module.exports = {
   getCurrentRanking,
-  create
+  create,
+  finishCurrentRanking
 };
