@@ -8,9 +8,18 @@ const rankingSchema = new mongoose.Schema({
   firstPlacePrize: { type: String, require: '{PATH} is required' },
   secondPlacePrize: { type: String, require: '{PATH} is required' },
   thirdPlacePrize: { type: String, require: '{PATH} is required' },
-  firstPlaceWinner: { type: mongooseSchema.Types.ObjectId, ref: 'User' },
-  secondPlaceWinner: { type: mongooseSchema.Types.ObjectId, ref: 'User' },
-  thirdPlaceWinner: { type: mongooseSchema.Types.ObjectId, ref: 'User' },
+  firstPlaceWinner: {
+    type: mongooseSchema.Types.ObjectId,
+    ref: 'RankingWinner'
+  },
+  secondPlaceWinner: {
+    type: mongooseSchema.Types.ObjectId,
+    ref: 'RankingWinner'
+  },
+  thirdPlaceWinner: {
+    type: mongooseSchema.Types.ObjectId,
+    ref: 'RankingWinner'
+  },
   finished: { type: String, default: false }
 });
 

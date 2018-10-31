@@ -1,12 +1,14 @@
 .container
   div.row(ng-controller="RankingsController", ng-if="ranking")
-    h3 Класиране за {{ranking.month}}.{{ranking.year}}
+    h3(ng-if="!ranking.id") Класиране
+    h3(ng-if="ranking.id") Класиране за {{ranking.month}}.{{ranking.year}}
     hr
     div.col-md-9
       div(ng-if="identity.isInRole('admin')")
         a.btn.btn-success.margin-right(href="#/admin/ranking/create") Създай ново класиране
-        a.btn.btn-success(href="javascript:;" ng-click="finishCurrentRanking()") Приключи класирането
-      div.table-responsive.margin-top-15
+        a.btn.btn-success(href="javascript:;" ng-click="finishCurrentRanking()" ng-if="ranking.id") Приключи класирането
+      p Не съществува класиране!
+      div.table-responsive.margin-top-15(ng-if="ranking.id")
         table.table.table-bordered.table-hover
           thead
             tr
@@ -16,16 +18,19 @@
           tbody.tbody
             tr
               td {{ ranking.firstPlacePrize }}
-              td {{ ranking.firstPlaceWinner }}
-              td {{ ranking.firstPlaceWinner }}
+              td
+                a(href="#/users/{{ranking.firstPlaceWinner.userId}}") {{ ranking.firstPlaceWinner.name }}
+              td {{ ranking.firstPlaceWinner.reputation }}
             tr
               td {{ ranking.secondPlacePrize }}
-              td {{ ranking.secondPlaceWinner }}
-              td {{ ranking.secondPlaceWinner }}
+              td 
+                a(href="#/users/{{ranking.secondPlaceWinner.userId}}") {{ ranking.secondPlaceWinner.name }}
+              td {{ ranking.secondPlaceWinner.reputation }}
             tr
               td {{ ranking.thirdPlacePrize }}
-              td {{ ranking.thirdPlaceWinner }}
-              td {{ ranking.thirdPlaceWinner }}
+              td 
+                a(href="#/users/{{ranking.thirdPlaceWinner.userId}}") {{ ranking.thirdPlaceWinner.name }}
+              td {{ ranking.thirdPlaceWinner.reputation }}
     div.col-md-3
       include ../includes/lastQuestions
       include ../includes/tagsAside

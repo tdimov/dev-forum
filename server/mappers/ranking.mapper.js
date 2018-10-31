@@ -1,15 +1,28 @@
-const usersMapper = require('./users.mapper');
+const rankingWinnersMapper = require('./ranking.winner.mapper');
 
 function transformToRankingModel(payload) {
   return {
+    id: payload.id,
     month: payload.month,
     year: payload.year,
     firstPlacePrize: payload.firstPlacePrize,
     secondPlacePrize: payload.secondPlacePrize,
     thirdPlacePrize: payload.thirdPlacePrize,
-    firstPlaceWinner: usersMapper.transformFullName(payload.firstPlaceWinner),
-    secondPlaceWinner: usersMapper.transformFullName(payload.secondPlaceWinner),
-    thirdPlaceWinner: usersMapper.transformFullName(payload.thirdPlaceWinner)
+    firstPlaceWinner: payload.firstPlaceWinner
+      ? rankingWinnersMapper.transformToRankingWinnerModel(
+          payload.firstPlaceWinner
+        )
+      : null,
+    secondPlaceWinner: payload.secondPlaceWinner
+      ? rankingWinnersMapper.transformToRankingWinnerModel(
+          payload.secondPlaceWinner
+        )
+      : null,
+    thirdPlaceWinner: payload.thirdPlaceWinner
+      ? rankingWinnersMapper.transformToRankingWinnerModel(
+          payload.thirdPlaceWinner
+        )
+      : null
   };
 }
 

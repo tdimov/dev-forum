@@ -1,6 +1,8 @@
 const { Ranking } = require('../models/ranking');
+const { RankingWinner } = require('../models/ranking.winner');
 const { User } = require('../models/user');
 const rankingValidator = require('../validators/ranking.validator');
+const rankingWinnerMapper = require('../mappers/ranking.winner.mapper');
 const dateTimeManager = require('../common/date.time.manager');
 const { isMissing } = require('../validators/common.validator');
 const AppError = require('../errors/app.error');
@@ -30,15 +32,7 @@ async function getCurrentRanking() {
     .populate('secondPlaceWinner')
     .populate('thirdPlaceWinner');
 
-  if (isMissing(ranking)) {
-    throw new AppError(
-      resourceNotFound.type,
-      resourceNotFound.httpCode,
-      'Ranking does not exist!'
-    );
-  }
-
-  return ranking;
+  return ranking || {};
 }
 
 async function create(payload) {
@@ -86,10 +80,21 @@ async function finishCurrentRanking() {
     .limit(3)
     .exec();
 
+  const firstPlaceWinner = await RankingWinner.create(
+    rankingWinnerMapper.transformToRankingWinnerDbModel(winners[0])
+  );
+  const secondPlaceWinner = await RankingWinner.create(
+    rankingWinnerMapper.transformToRankingWinnerDbModel(winners[1])
+  );
+  const thirdPlaceWinner = await RankingWinner.create(
+    rankingWinnerMapper.transformToRankingWinnerDbModel(winners[2])
+  );
+
   await Ranking.update(currentMonthAndYear, {
-    firstPlaceWinner: winners[0] ? winners[0].id : null,
-    secondPlaceWinner: winners[1] ? winners[1].id : null,
-    thirdPlaceWinner: winners[2] ? winners[2].id : null
+    finished: true,
+    firstPlaceWinner,
+    secondPlaceWinner,
+    thirdPlaceWinner
   });
 }
 
