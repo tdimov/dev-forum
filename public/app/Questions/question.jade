@@ -17,11 +17,11 @@
                     div.row
                         ul.col-md-8.list-inline
                             li.label.label-primary.margin-right(ng-repeat="tag in question.tags")
-                                span.text-white.not-hover {{ tag.name }}
+                                a(href="#/questions/tags/{{tag.name}}").text-white.not-hover {{ tag.name }}
                         div.col-md-4.well.pull-right
-                            span.text-default asked {{ question.date }}
+                            span.text-default попитан на {{ question.date }}
                                 br
-                                | by &nbsp
+                                | от &nbsp
                                 a(href="#/users/{{ question.author.id }}") {{ question.author.username }}
             div.row(ng-show="question.answers.length > 0")
                 h4
@@ -40,33 +40,18 @@
                         div(ng-bind-html="answer.text | sanitize")
                         div.row
                             div.col-md-4.well.pull-right
-                                span.text-default answered {{ answer.date }}
+                                span.text-default отговорен {{ answer.date }}
                                     br
-                                    | by &nbsp
+                                    | от &nbsp
                                     a(href="#/users/{{ answer.author.id }}") {{ answer.author.username }}
                     hr
-            div.row.alert.alert-dismissable.alert-success(ng-hide="hasUser()")
-                strong To add an answer you have to &nbsp
-                    a.text.text-uppercase.text-danger(href="#/login") log in
-            div.row.alert.alert-dismissable.alert-warning(ng-show="hasUser() && question.isLocked")
-                strong The question is locked!
-            div.row(ng-show="hasUser()")
-                h3 Your answer
+            div.row.alert.alert-dismissable.alert-success(ng-hide="identity.isAuthenticated()")
+                strong За да зададете въпрос трябва да &nbsp
+                    a.text.text-uppercase.text-danger(href="#/login") влезете в системата
+            div.row(ng-if="identity.isAuthenticated()")
+                h3 Вашият отговор
                 textarea#Answer.form-control.margin-bottom(rows="12", ckeditor="editorOptions", ng-model="newAnswer.text")
-                button.margin-top-15.btn.btn-success(ng-click="addAnswer()") Post your answer
-                div#commentModal.modal(tabindex="-1", role="dialog", aria-hidden="true")
-                    div.modal-dialog
-                        div.modal-content
-                            div.modal-header
-                                button.close(type="button", data-dismiss="modal")
-                                    span(aria-hidden="true") &times;
-                                    span.sr-only Close
-                                h4.modal-title Enter your comment
-                            div.modal-body
-                                textarea#Comment.form-control(rows="10", required="true", ng-model="newAnswerComment.text")
-                            div.modal-footer
-                                button.btn.btn-primary(type="button", ng-click="addComment(newAnswerComment)", data-dismiss="modal") Comment
-                                button.btn.btn-default(data-dismiss="modal") Cancel
+                button.margin-top-15.btn.btn-success(ng-click="addAnswer()") Запиши
         div.col-md-3
             div.panel.panel-default
                 div.panel-body

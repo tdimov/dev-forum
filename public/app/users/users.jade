@@ -1,11 +1,11 @@
 .container(ng-controller="UsersByReputationController")
     div.row
-        h3 Users
+        h3 Потребители
         hr
         div.form-group
-            label.control-label Search user
+            label.control-label Търси потребител
             div.input-group.col-md-6
-                input#Search.form-control(type="text", ng-model="query", placeholder="Username")
+                input#Search.form-control(type="text", ng-model="query")
                 span.input-group-btn
                     button.btn.btn-primary(type="button", ng-click="searchUser()") Search
     div.row

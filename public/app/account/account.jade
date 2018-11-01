@@ -1,9 +1,9 @@
 div.navbar-right(ng-controller="AccountController")
     ul.nav.navbar-nav.navbar-right(ng-hide="identity.isAuthenticated()")
         li
-            a(href="#/login") Login
+            a(href="#/login") Вход
         li
-            a(href="#/register") Register
+            a(href="#/register") Регистрация
     ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
         li.dropdown
             a.dropdown-toggle(href="", data-toggle="dropdown")
@@ -11,8 +11,8 @@ div.navbar-right(ng-controller="AccountController")
                 span.caret
             ul.dropdown-menu
                 li(ng-show="identity.isInRole('admin')")
-                    a(href="#/admin/admin-panel") Admin panel
+                    a(href="#/admin/admin-panel") Админ панел
                 li(ng-show="identity.isAuthenticated()")
-                    a(href="#/account/settings") Settings
+                    a(href="#/account/settings") Настройки на профил
                 li
-                    a(href="#", ng-click="logout()") Logout
+                    a(href="#", ng-click="logout()") Изход

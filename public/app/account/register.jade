@@ -3,39 +3,39 @@
         div.row
             div.panel.panel-success
                 div.panel-heading
-                    h3.panel-title.text-center.text-size-18 Registration
+                    h3.panel-title.text-center.text-size-18 Регистрация
                 div.panel-body(ng-controller="AccountController")
                     form.form-horizontal(name="registerForm", enctype="multipart/form-data", method="post")
                         div.form-group
-                            label.col-md-4.text-size-18(for="Username") Username
+                            label.col-md-6.text-size-18(for="Username") Потребителско име
                             div.col-md-12
-                                input#Username.form-control.form-validation(type="text", name="username" placeholder="Username", ng-model="user.username", required)
+                                input#Username.form-control.form-validation(type="text", name="username" ng-model="user.username", required)
                         div.form-group
-                            label.col-md-4.text-size-18(for="Password") Password
+                            label.col-md-6.text-size-18(for="Password") Парола
                             div.col-md-12
-                                input#Password.form-control.form-validation(type="password", name="password" placeholder="Password", ng-model="user.password", required)
+                                input#Password.form-control.form-validation(type="password", name="password", ng-model="user.password", required)
                         div.form-group
-                            label.col-md-4.text-size-18(for="ConfirmPassword") Confirm password
+                            label.col-md-6.text-size-18(for="ConfirmPassword") Повтори парола
                             div.col-md-12
-                                input#ConfirmPassword.form-control.form-validation(type="password", name="confirmPass", placeholder="Confirm password", data-match="user.password", ng-model="user.confirmPassword", required)
-                                span.text-danger(ng-show="registerForm.confirmPass.$error.match") Passwords don't match!
+                                input#ConfirmPassword.form-control.form-validation(type="password", name="confirmPass", data-match="user.password", ng-model="user.confirmPassword", required)
+                                span.text-danger(ng-show="registerForm.confirmPass.$error.match") Паролите не съвпадат
                         div.form-group
-                            label.col-md-4.text-size-18(for="FirstName") First name
+                            label.col-md-6.text-size-18(for="FirstName") Име
                             div.col-md-12
-                                input#FirstName.form-control.form-validation(type="text", name="firstName" placeholder="First name", ng-model="user.firstName", required)
+                                input#FirstName.form-control.form-validation(type="text", name="firstName", ng-model="user.firstName", required)
                         div.form-group
-                            label.col-md-4.text-size-18(for="LastName") Last name
+                            label.col-md-6.text-size-18(for="LastName") Фамилия
                             div.col-md-12
-                                input#LastName.form-control.form-validation(type="text", name="lastName", placeholder="Last name", ng-model="user.lastName", required)
+                                input#LastName.form-control.form-validation(type="text", name="lastName", ng-model="user.lastName", required)
                         div.form-group
-                            label.col-md-4.text-size-18(for="Email") Email
+                            label.col-md-6.text-size-18(for="Email") Имейл
                             div.col-md-12
-                                input#Email.form-control.form-validation(type="email", name="emailAddress" ng-pattern='/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/', placeholder="Email", ng-model="user.email", required)
-                                span.text-danger(ng-show="registerForm.emailAddress.$error.pattern") Invalid email address!
+                                input#Email.form-control.form-validation(type="email", name="emailAddress" ng-pattern='/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/', ng-model="user.email", required)
+                                span.text-danger(ng-show="registerForm.emailAddress.$error.pattern") Невалиден имейл
                         //div.form-group
                         //    label.col-md-4.text-size-18(for="Avatar") Avatar
                         //    div.col-md-12
                         //        input#Avatar.form-control(type="file", name="avatar", ng-model="user.avatar")
-                    span.text-info All fields are required
-                    button.btn.btn-success.pull-right(ng-click="register(user)", ng-disabled="registerForm.$invalid") Register
+                    span.text-info Всички полета са задължителни
+                    button.btn.btn-success.pull-right(ng-click="register(user)", ng-disabled="registerForm.$invalid") Регистрация
                         //ng-disabled="registerForm.$invalid

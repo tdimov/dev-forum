@@ -7,12 +7,12 @@
                 div.panel-body
                     form.form-horizontal
                         div.form-group
-                            label.col-md-3.text-size-18(for="Username") Username
+                            label.col-md-6.text-size-18(for="Username") Потребителско име
                             div.col-md-12
-                                input#Username.form-control(type="text", placeholder="Username", ng-model="user.username")
+                                input#Username.form-control(type="text", ng-model="user.username")
                         div.form-group
-                            label.col-md-3.text-size-18(for="Password") Password
+                            label.col-md-6.text-size-18(for="Password") Парола
                             div.col-md-12
-                                input#Password.form-control(type="password", placeholder="Password", ng-model="user.password")
-                    button.btn.btn-success.pull-right(ng-click="login(user)") Login
+                                input#Password.form-control(type="password", ng-model="user.password")
+                    button.btn.btn-success.pull-right(ng-click="login(user)") Влез
 

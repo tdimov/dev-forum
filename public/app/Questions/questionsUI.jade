@@ -1,23 +1,20 @@
 ul.list-group(ng-if="questions.length > 0")
-    li.row.list-group-item(ng-repeat="question in questions")
-        div.col-sm-1
-            p.text-primary.text-center.text-size-18 {{ question.votes }}
-            p.text-primary.text-center votes
-        div.col-sm-1
-            p.text-primary.text-center.text-size-18 {{ question.answers }}
-            p.text-primary.text-center answers
-        div.col-sm-1
-            p.text-primary.text-center.text-size-18 {{ question.views }}
-            p.text-primary.text-center views
-        div.col-md-9
-            h3.h-margin-top
-                a(href="#/questions/{{ question.id }}") {{ question.title }}
-            div.row
-                ul.col-md-7.list-inline
-                    li.label.label-primary.margin-right(ng-repeat="tag in question.tags")
-                        span.text-white.not-hover {{ tag.name }}
-                div.col-md-5.well
-                    span.text-default.pull-right asked {{ question.date }}
-                        br
-                        | by &nbsp
-                        a(href="#/users/{{ question.author.id }}") {{ question.author.username }}
+  li.row.list-group-item(ng-repeat="question in questions")
+    div.col-md-1
+      p.text-primary.text-center.text-size-18 {{ question.votes }}
+      p.text-primary.text-center.text-size-14 рейтинг
+    div.col-md-1
+      p.text-primary.text-center.text-size-18 {{ question.answers }}
+      p.text-primary.text-center.text-size-14 отговори
+    div.col-md-10
+      h3.h-margin-top
+        a(href="#/questions/{{ question.id }}") {{ question.title }}
+      div.row
+        ul.col-md-7.list-inline
+          li.label.label-primary.margin-right(ng-repeat="tag in question.tags")
+            a(href="#/questions/tags/{{tag.name}}").text-white.not-hover {{ tag.name }}
+        div.col-md-5.well
+          span.text-default.pull-right попитан на {{ question.date }}
+            br
+            | от &nbsp
+            a(href="#/users/{{ question.author.id }}") {{ question.author.username }}

@@ -8,6 +8,7 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
   const AUTHENTICATION_SERVER_ERROR = 'Authentication failed!';
   const AUTHENTICATION_ERROR = 'Трябва да влезнете в системата!'
 
+  $scope.identity = identity;
   $scope.newAnswer = {
     text: ''
   };
@@ -91,28 +92,6 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
       ],
       height: '300px'
     };
-    $scope.hasUser = function () {
-        if(identity.isAuthenticated()) {
-            return true;
-        }
-
-        return false;
-    };
-//
-//    $scope.isLocked = function () {
-//        console.log($scope.question);
-//        if($scope.question.isLocked) {
-//            return true;
-//        }
-//
-//        return false;
-//    };
-
-    $scope.setAnswerId = function (id) {
-        if (id) {
-            answerId = id;
-        }
-    };
 
     $scope.addAnswer = () => {
       if ($scope.newAnswer.text) {
@@ -132,30 +111,4 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
           });
       }
     }
-
-    $scope.addComment = function (newComment) {
-        if(identity.isAuthenticated()) {
-            newComment.isQuestionLocked = $scope.question.isLocked;
-            if(newComment && newComment.text) {
-                newComment.answerId = answerId;
-                questionsService.addComment(newComment)
-                    .then(function (response) {
-                        if(response.success) {
-                            notifier.success(response.message);
-                            $location.path('/');
-                        }
-                        else {
-                            notifier.error(response.message);
-                        }
-                    });
-            }
-            else {
-                notifier.error("Please, enter your comment!");
-            }
-        }
-        else {
-            $location.path('/login');
-        }
-
-    };
 });

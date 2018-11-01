@@ -11,7 +11,7 @@ const INCREMENT_STEP = 1;
 const DECREMENT_STEP = -1;
 
 async function index(query) {
-  const { limit, offset, notAnswered, ...filters } = query;
+  const { limit, offset, notAnswered, tagName, ...filters } = query;
 
   let questions = await Question.find(filters)
     .populate('author')
@@ -24,6 +24,18 @@ async function index(query) {
 
   if (notAnswered) {
     questions = questions.filter(question => question.answers.length === 0);
+  }
+
+  if (tagName) {
+    const result = [];
+    questions.reduce((acc, question) => {
+      if (question.tags.some(tag => tag.name === tagName)) {
+        acc.push(question);
+      }
+
+      return acc;
+    }, result)
+    questions = result;
   }
 
   return questions;
