@@ -1,4 +1,4 @@
-const User = require('mongoose').model('User');
+const { User } = require('../models/user');
 const usersValidator = require('../validators/users.validator');
 const { isMissing } = require('../validators/common.validator');
 const AppError = require('../errors/app.error');
@@ -6,6 +6,18 @@ const { badRequest, resourceNotFound } = require('../errors/http.errors');
 
 async function index(query) {
   const users = await User.find(query).exec();
+
+  return users;
+}
+
+async function getUsersByReputation(query) {
+  const { limit, offset, ...filters } = query;
+
+  const users = await User.find(filters)
+    .sort('-reputation')
+    .limit(Number(limit))
+    .skip(Number(offset))
+    .exec();
 
   return users;
 }
@@ -45,9 +57,15 @@ async function updateReputation(userId, incValue) {
   );
 }
 
+function resetUsersReputation() {
+  User.update({}, { $set: { reputation: 0 } }, { multi: true}).exec();
+}
+
 module.exports = {
   index,
+  getUsersByReputation,
   get,
   update,
-  updateReputation
+  updateReputation,
+  resetUsersReputation
 };

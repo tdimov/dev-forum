@@ -1,6 +1,6 @@
 const { Ranking } = require('../models/ranking');
 const { RankingWinner } = require('../models/ranking.winner');
-const { User } = require('../models/user');
+const usersService = require('./users.service');
 const rankingValidator = require('../validators/ranking.validator');
 const rankingWinnerMapper = require('../mappers/ranking.winner.mapper');
 const dateTimeManager = require('../common/date.time.manager');
@@ -75,19 +75,20 @@ async function finishCurrentRanking() {
   // checks if the current ranking exist otherwise throws AppError
   await get(currentMonthAndYear);
 
-  const winners = await User.find()
-    .sort('-reputation')
-    .limit(3)
-    .exec();
+  const [
+    firstWinner,
+    secondWinner,
+    thirdWinner
+  ] = await usersService.getUsersByReputation({ limit: 3 });
 
   const firstPlaceWinner = await RankingWinner.create(
-    rankingWinnerMapper.transformToRankingWinnerDbModel(winners[0])
+    rankingWinnerMapper.transformToRankingWinnerDbModel(firstWinner)
   );
   const secondPlaceWinner = await RankingWinner.create(
-    rankingWinnerMapper.transformToRankingWinnerDbModel(winners[1])
+    rankingWinnerMapper.transformToRankingWinnerDbModel(secondWinner)
   );
   const thirdPlaceWinner = await RankingWinner.create(
-    rankingWinnerMapper.transformToRankingWinnerDbModel(winners[2])
+    rankingWinnerMapper.transformToRankingWinnerDbModel(thirdWinner)
   );
 
   await Ranking.update(currentMonthAndYear, {
@@ -96,6 +97,8 @@ async function finishCurrentRanking() {
     secondPlaceWinner,
     thirdPlaceWinner
   });
+
+  usersService.resetUsersReputation();
 }
 
 module.exports = {

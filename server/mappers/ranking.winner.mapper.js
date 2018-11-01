@@ -8,7 +8,7 @@ function transformToRankingWinnerDbModel(payload) {
 
 function transformToRankingWinnerModel(payload) {
   return {
-    userId: payload.id,
+    userId: payload.userId,
     name: payload.name,
     reputation: payload.reputation
   };
