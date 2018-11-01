@@ -11,9 +11,9 @@ const INCREMENT_STEP = 1;
 const DECREMENT_STEP = -1;
 
 async function index(query) {
-  const { limit, offset, ...filters } = query;
+  const { limit, offset, notAnswered, ...filters } = query;
 
-  const questions = await Question.find(filters)
+  let questions = await Question.find(filters)
     .populate('author')
     .populate('answers')
     .populate('tags')
@@ -22,16 +22,19 @@ async function index(query) {
     .skip(Number(offset))
     .exec();
 
+  if (notAnswered) {
+    questions = questions.filter(question => question.answers.length === 0);
+  }
+
   return questions;
 }
 
 async function get(id) {
-  const question = await Question
-    .findById(id)
+  const question = await Question.findById(id)
     .populate('author')
     .populate({
       path: 'answers',
-      populate: { path: 'author'}
+      populate: { path: 'author' }
     })
     .populate('tags')
     .exec();
@@ -86,11 +89,7 @@ async function vote(questionId, userId, isPositive) {
   const isUserVoted = await votesService.isUserVoted(questionId, userId);
 
   if (isUserVoted) {
-    throw new AppError(
-      badRequest.type,
-      badRequest.httpCode,
-      'Already voted!'
-    );
+    throw new AppError(badRequest.type, badRequest.httpCode, 'Already voted!');
   }
 
   votesService.create({

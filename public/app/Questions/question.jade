@@ -44,17 +44,6 @@
                                     br
                                     | by &nbsp
                                     a(href="#/users/{{ answer.author.id }}") {{ answer.author.username }}
-                        div(ng-show="answer.comments.length > 0")
-                            h4
-                                strong Comments
-                            hr
-                            div(ng-repeat="comment in answer.comments")
-                                p.text-size-14 {{ comment.text }} - &nbsp
-                                    a.text-size-14(href="#") {{ comment.author.username }}
-                                    span.text-size-14 &nbsp {{ comment.date }}
-                                hr
-                            hr
-                    a(href="#", target="_self", data-toggle="modal", data-target="#commentModal", ng-click="setAnswerId(answer.id)") add a comment
                     hr
             div.row.alert.alert-dismissable.alert-success(ng-hide="hasUser()")
                 strong To add an answer you have to &nbsp
