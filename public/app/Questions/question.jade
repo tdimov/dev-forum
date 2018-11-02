@@ -25,7 +25,7 @@
                                 a(href="#/users/{{ question.author.id }}") {{ question.author.username }}
             div.row(ng-show="question.answers.length > 0")
                 h4
-                    strong {{ question.answers.length }} Answers
+                    strong {{ question.answers.length }} Отговори
                 hr
                 div(ng-repeat="answer in question.answers")
                     div.col-sm-1.text-center

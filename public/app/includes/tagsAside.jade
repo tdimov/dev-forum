@@ -1,9 +1,7 @@
 div.panel.panel-default
     div.panel-heading
-        h4 Tags
+        h4 Последни 5 тага
     div.panel-body
         ul.list-inline(ng-controller="TagsAsideController")
             li.label.label-primary.margin-right(ng-repeat="tag in tags")
-                a.text-white.not-hover(href="#/questionsByTag/{{tag.name}}") {{ tag.name }}
-    div.panel-footer
-        a(href="#/tags") See all...
+                a.text-white.not-hover(href="#/questions/tags/{{tag.name}}") {{ tag.name }}

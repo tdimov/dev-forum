@@ -1,9 +1,9 @@
 div.panel.panel-default
     div.panel-heading
-        h4 Last 5 questions
+        h4 Последни 5 въпроса
     div.panel-body(ng-controller="LastFiveQuestionsController")
         ul.list-unstyled
             li(ng-repeat="question in questions")
                 a(href="#/questions/{{ question.id }}") {{ question.title }}
     div.panel-footer
-        a(href="#/questions") See all...
+        a(href="#/questions") Виж всички...
