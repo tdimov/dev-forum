@@ -16,9 +16,11 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
   var questionId = $routeParams.id,
         answerId;
 
-  questionsService.get(questionId).then(({ data }) => {
-    $scope.question = data.result;
-  });
+  function getQuestion() {
+    questionsService.get(questionId).then(({ data }) => {
+      $scope.question = data.result;
+    });
+  }
 
   function voteQuestion(isPositive) {
     questionsService.vote(questionId, isPositive)
@@ -82,33 +84,35 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
     }
   };
 
-    $scope.editorOptions = {
-      toolbar: [
-        ['document', 'mode'],
-        ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-        ['Cut', 'Copy', 'Paste', 'PasteText'],
-        ['Undo', 'Redo'],
-        ['Image', 'SpecialChar']
-      ],
-      height: '300px'
-    };
+  $scope.editorOptions = {
+    toolbar: [
+      ['document', 'mode'],
+      ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
+      ['Cut', 'Copy', 'Paste', 'PasteText'],
+      ['Undo', 'Redo'],
+      ['Image', 'SpecialChar']
+    ],
+    height: '300px'
+  };
 
-    $scope.addAnswer = () => {
-      if ($scope.newAnswer.text) {
-        answersService.create(questionId, $scope.newAnswer)
-          .then(({ data }) => {
-            if (!$scope.question.answers) {
-              $scope.question.answers = [];
-            }
+  $scope.addAnswer = () => {
+    if ($scope.newAnswer.text) {
+      answersService.create(questionId, $scope.newAnswer)
+        .then(({ data }) => {
+          if (!$scope.question.answers) {
+            $scope.question.answers = [];
+          }
 
-            $scope.question.answers.push(data.result);
+          $scope.question.answers.push(data.result);
 
-            notifier.success(SUCCESS_CREATED_ANSWER);
-            $scope.newAnswer.text = '';
-          })
-          .catch(() => {
-            notifier.error(ERROR_CREATED_ANSWER);
-          });
-      }
+          notifier.success(SUCCESS_CREATED_ANSWER);
+          $scope.newAnswer.text = '';
+        })
+        .catch(() => {
+          notifier.error(ERROR_CREATED_ANSWER);
+        });
     }
+  }
+
+  getQuestion();
 });

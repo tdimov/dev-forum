@@ -2,13 +2,20 @@ app.controller('UserDetailsController', function ($scope, $routeParams, usersSer
   $scope.user = {};
   $scope.questions = [];
  
-  usersService.get($routeParams.id)
-    .then(({ data }) => {
-      $scope.user = data.result;
-    });
+  function getUser() {
+    usersService.get($routeParams.id)
+      .then(({ data }) => {
+        $scope.user = data.result;
+      });
+  }
 
-  questionsService.index({ author: $routeParams.id })
+  function getQuestions() {
+    questionsService.index({ author: $routeParams.id })
     .then(({ data }) => {
       $scope.questions = data.result;
     });
+  }
+
+  getUser();
+  getQuestions();
 });

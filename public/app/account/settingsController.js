@@ -12,14 +12,22 @@ app.controller('SettingsController', function($scope, $location, identity, notif
   $scope.update = user => {
     usersService.updateProfile(user)
       .then(() => {
-        updateCurrentUser();
-        notifier.success(SUCCESS_UPDATE_PROFILE);
-        $location.path('/');
+        successUpdate();
       })
       .catch(() => {
-        notifier.error(FAILED_UPDATE_PROFILE);
+        failedUpdate();
       });
   };
+
+  function successUpdate() {
+    updateCurrentUser();
+    notifier.success(SUCCESS_UPDATE_PROFILE);
+    $location.path('/');
+  }
+
+  function failedUpdate() {
+    notifier.error(FAILED_UPDATE_PROFILE);
+  }
 
   function updateCurrentUser() {
     const currentUser = identity.getUser();

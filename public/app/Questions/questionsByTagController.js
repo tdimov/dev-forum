@@ -2,8 +2,12 @@ app.controller('QuestionsByTagController', function ($scope, $routeParams, quest
   $scope.questions = []
   $scope.tagName = $routeParams.tag;
 
-  questionsService.index({ tagName: $routeParams.tag })
-    .then(({ data }) => {
-      $scope.questions = data.result;
-    });
+  function getQuestionsByTag() {
+    questionsService.index({ tagName: $routeParams.tag })
+      .then(({ data }) => {
+        $scope.questions = data.result;
+      });
+  }
+
+  getQuestionsByTag();
 });

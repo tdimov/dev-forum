@@ -1,6 +1,12 @@
-app.controller('TagsAsideController', function ($scope, tagsService){
-  tagsService.index({ limit: 5 })
-    .then(({ data }) => {
-      $scope.tags = data.result;
-    });
+app.controller('TagsAsideController', function ($scope, tagsService) {
+  $scope.tags = [];
+
+  function getLastFiveTags() {
+    tagsService.index({ limit: 5 })
+      .then(({ data }) => {
+        $scope.tags = data.result;
+      });
+  }
+
+  getLastFiveTags();
 });

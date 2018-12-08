@@ -84,14 +84,22 @@ app.controller("AskQuestionController", function ($scope, $location, notifier, q
         question.tags = $scope.selectedTags.map(tag => tag.id);
         questionsService.create(question) 
           .then(({ data }) => {
-            notifier.success(SUCCESS_CREATE_QUESTION);
-            $location.path(`/questions/${data.result}`);
+            successAskQuestion();
           })
           .catch(() => {
-            notifier.error(ERROR_CREATE_QUESTION);
+            failedAskQuestion();
           });
       } else {
         notifier.error(INVALID_QUESTION_DATA);
       }
+    }
+
+    function successAskQuestion() {
+      notifier.success(SUCCESS_CREATE_QUESTION);
+      $location.path(`/questions/${data.result}`);
+    }
+
+    function failedAskQuestion() {
+      notifier.error(ERROR_CREATE_QUESTION);
     }
 });

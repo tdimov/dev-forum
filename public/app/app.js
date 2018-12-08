@@ -27,12 +27,12 @@ app.config(function ($routeProvider) {
         })
         .when('/login', {
             templateUrl: '/partials/account/login',
-            controller: 'AccountController',
+            controller: 'LoginController',
             resolve: routeChecks.authenticatedUser
         })
         .when('/register', {
             templateUrl: '/partials/account/register',
-            controller: 'AccountController',
+            controller: 'RegisterController',
             resolve: routeChecks.authenticatedUser
         })
         .when('/account/settings', {
