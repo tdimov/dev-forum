@@ -1,4 +1,5 @@
 const { User } = require('../models/user');
+const crypto = require('../common/crypto');
 const usersValidator = require('../validators/users.validator');
 const { isMissing } = require('../validators/common.validator');
 const AppError = require('../errors/app.error');
@@ -61,11 +62,48 @@ function resetUsersReputation() {
   User.update({}, { $set: { reputation: 0 } }, { multi: true}).exec();
 }
 
+async function changePassword(userId, payload) {
+  const isPasswordDataValid = usersValidator.isChangePasswordDataPresent(
+    payload
+  );
+
+  if (!isPasswordDataValid) {
+    throw new AppError(
+      badRequest.type,
+      badRequest.httpCode,
+      'Invalid change password data!'
+    );
+  }
+
+  const user = await User.findById(userId).exec();
+
+  const isUserOldPasswrodValid = await crypto.compare(
+    payload.oldPassword,
+    user.passHash
+  );
+
+  if (!isUserOldPasswrodValid) {
+    throw new AppError(
+      badRequest.type,
+      badRequest.httpCode,
+      'Wrong old password!'
+    );
+  }
+
+  await User.findOneAndUpdate(
+    { _id: userId },
+    {
+      passHash: await crypto.hash(payload.newPassword)
+    }
+  ).exec();
+}
+
 module.exports = {
   index,
   getUsersByReputation,
   get,
   update,
   updateReputation,
-  resetUsersReputation
+  resetUsersReputation,
+  changePassword
 };

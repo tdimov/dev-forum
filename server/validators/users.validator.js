@@ -28,6 +28,11 @@ const updateUserSchema = Joi.object().keys({
   aboutMe: Joi.string()
 });
 
+const changePasswordDataSchema = Joi.object().keys({
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().required()
+});
+
 function isRegisterUserDataPresent(user) {
   const { error } = Joi.validate(user || {}, registerUserSchema);
   return error == null;
@@ -43,8 +48,14 @@ function isUpdateUserDataPresent(user) {
   return error == null;
 }
 
+function isChangePasswordDataPresent(passwordData) {
+  const { error } = Joi.validate(passwordData || {}, changePasswordDataSchema);
+  return error == null;
+}
+
 module.exports = {
   isRegisterUserDataPresent,
   isLoginUserDataPresent,
-  isUpdateUserDataPresent
+  isUpdateUserDataPresent,
+  isChangePasswordDataPresent
 };

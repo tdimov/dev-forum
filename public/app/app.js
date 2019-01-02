@@ -109,7 +109,9 @@ app.config(function ($routeProvider) {
             controller: 'QuestionsByTagController'
         })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/404',
+            templateUrl: '/partials/404/404',
+            controller: '404Controller'
         });
 });
 

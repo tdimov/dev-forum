@@ -71,7 +71,7 @@ module.exports = {
           lastLoginDate: new Date(),
           roles: ['user']
         });
-        console.log('Users addded to database');
+        console.log('Users added to database');
       }
       // });
     });

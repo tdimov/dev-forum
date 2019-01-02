@@ -7,4 +7,6 @@ app.controller('LastFiveQuestionsController', function ($scope, questionsService
         $scope.questions = data.result;
       });
   }
+
+  getLastFiveQuestions();
 });

@@ -36,6 +36,8 @@ input.ng-valid.ng-dirty.form-validation, textarea.ng-valid.ng-dirty.form-validat
 
 .margin-right { margin-right: 5px;}
 .margin-bottom { margin-bottom: 5px;}
+.margin-bottom-10 { margin-bottom: 10px;}
+.margin-bottom-30 { margin-bottom: 30px; }
 .margin-top-15 { margin-top: 15px; }
 .text-white { color: #ffffff; }
 .h-margin-top {margin-top: 0;}

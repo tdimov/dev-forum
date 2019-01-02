@@ -29,6 +29,11 @@ module.exports = app => {
     authenticate,
     newUsersController.updateProfile
   );
+  app.put(
+    '/api/users/change-password',
+    authenticate,
+    newUsersController.changePassword
+  );
 
   app.get('/api/questions', questionsController.index);
   app.get('/api/questions/:id', questionsController.get);

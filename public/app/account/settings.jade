@@ -1,49 +1,42 @@
 .container
-  div.col-md-8
-    div.row
-      div.panel.panel-success(ng-controller="SettingsController")
-        div.panel-heading
-          h3.panel-title.text-left.text-size-18 Настройки на профил
-        div.panel-body(ng-controller="AccountController")
-          form.form-horizontal(name="settingsForm")
-            //- div.form-group
-            //-     label.col-md-4.text-size-18(for="oldPassword") Old password
-            //-     div.col-md-10
-            //-         input#oldPassword.form-control.form-validation(type="password", name="oldPassword" placeholder="Old password", ng-model="user.oldPassword")
-            //- div.form-group
-            //-     label.col-md-4.text-size-18(for="newPassword") New password
-            //-     div.col-md-10
-            //-         input#newPassword.form-control.form-validation(type="password", name="newPassword", placeholder="New password", ng-model="user.newPassword")
-            div.form-group
-              label.col-md-4.text-size-18(for="FirstName") Име
-              div.col-md-10
-                input#FirstName.form-control.form-validation(type="text", name="firstName", ng-model="user.firstName", required)
-                span.text-danger(ng-show="settingsForm.firstName.$error.required") Задължително поле!
-            div.form-group
-              label.col-md-4.text-size-18(for="LastName") Фамилия
-              div.col-md-10
-                input#LastName.form-control.form-validation(type="text", name="lastName", ng-model="user.lastName", required)
-                span.text-danger(ng-show="settingsForm.lastName.$error.required") Задължително поле!
-            div.form-group
-              label.col-md-4.text-size-18(for="Email") Имейл
-              div.col-md-10
-                input#Email.form-control.form-validation(type="email", name="emailAddress" ng-pattern='/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/', ng-model="user.email", required)
-                span.text-danger(ng-show="settingsForm.emailAddress.$error.pattern") Невалиден имейл
-                span.text-danger(ng-show="settingsForm.emailAddress.$error.required") Задължително поле!
-            div.form-group
-              label.col-md-4.text-size-18(for="country") Страна
-              div.col-md-10
-                input#country.form-control(type="text", name="country", ng-model="user.country")
-            div.form-group
-              label.col-md-4.text-size-18(for="city") Град
-              div.col-md-10
-                input#city.form-control(type="text", name="city", ng-model="user.city")
-            div.form-group
-              label.col-md-4.text-size-18(for="Website") Уебсайт
-              div.col-md-10
-                input#Website.form-control(type="text", name="website", ng-model="user.website", required)
-            div.form-group
-              label.col-md-4.text-size-18(for="AboutMe") За мен
-              div.col-md-10
-                textarea#AboutMe.form-control(name="aboutMe", ng-model="user.aboutMe")
-          button.btn.btn-success.pull-right(ng-click="update(user)") Запиши
+  div.col-md-6
+    div.panel.panel-success(ng-controller="SettingsController")
+      div.panel-heading
+        h3.panel-title.text-left.text-size-18 Настройки на профил
+      div.panel-body(ng-controller="AccountController")
+        form.form-horizontal(name="settingsForm")
+          div.form-group
+            label.col-md-4.text-size-18(for="FirstName") Име
+            div.col-md-10
+              input#FirstName.form-control.form-validation(type="text", name="firstName", ng-model="user.firstName", required)
+              span.text-danger(ng-show="settingsForm.firstName.$error.required") Задължително поле!
+          div.form-group
+            label.col-md-4.text-size-18(for="LastName") Фамилия
+            div.col-md-10
+              input#LastName.form-control.form-validation(type="text", name="lastName", ng-model="user.lastName", required)
+              span.text-danger(ng-show="settingsForm.lastName.$error.required") Задължително поле!
+          div.form-group
+            label.col-md-4.text-size-18(for="Email") Имейл
+            div.col-md-10
+              input#Email.form-control.form-validation(type="email", name="emailAddress" ng-pattern='/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/', ng-model="user.email", required)
+              span.text-danger(ng-show="settingsForm.emailAddress.$error.pattern") Невалиден имейл
+              span.text-danger(ng-show="settingsForm.emailAddress.$error.required") Задължително поле!
+          div.form-group
+            label.col-md-4.text-size-18(for="country") Страна
+            div.col-md-10
+              input#country.form-control(type="text", name="country", ng-model="user.country")
+          div.form-group
+            label.col-md-4.text-size-18(for="city") Град
+            div.col-md-10
+              input#city.form-control(type="text", name="city", ng-model="user.city")
+          div.form-group
+            label.col-md-4.text-size-18(for="Website") Уебсайт
+            div.col-md-10
+              input#Website.form-control(type="text", name="website", ng-model="user.website", required)
+          div.form-group
+            label.col-md-4.text-size-18(for="AboutMe") За мен
+            div.col-md-10
+              textarea#AboutMe.form-control(name="aboutMe", ng-model="user.aboutMe")
+        button.btn.btn-success.pull-right(ng-click="update(user)") Запиши
+  .col-md-6
+    include changePassword

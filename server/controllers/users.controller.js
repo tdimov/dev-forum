@@ -57,9 +57,21 @@ async function updateProfile(req, res, next) {
   }
 }
 
+async function changePassword(req, res, next) {
+  try {
+    await usersService.changePassword(req.user.id, req.body);
+
+    return res.status(204).end();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 module.exports = {
   index,
   get,
   getProfile,
-  updateProfile
+  updateProfile,
+  changePassword
 };

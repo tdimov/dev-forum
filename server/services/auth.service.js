@@ -20,7 +20,7 @@ async function register(payload) {
   }
 
   const existingUser = await User.findOne({
-    username: payload.email
+    username: payload.username
   });
 
   if (existingUser) {
@@ -91,7 +91,6 @@ async function login(payload) {
     { _id: user._id },
     { $set: { lastLoginDate: new Date() } }
   );
-  // await loginHistoryRepository.create({ userId: user.id, token });
 
   return { user, token };
 }

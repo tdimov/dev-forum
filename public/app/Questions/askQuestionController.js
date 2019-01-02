@@ -84,7 +84,7 @@ app.controller("AskQuestionController", function ($scope, $location, notifier, q
         question.tags = $scope.selectedTags.map(tag => tag.id);
         questionsService.create(question) 
           .then(({ data }) => {
-            successAskQuestion();
+            successAskQuestion(data.result);
           })
           .catch(() => {
             failedAskQuestion();
@@ -94,9 +94,9 @@ app.controller("AskQuestionController", function ($scope, $location, notifier, q
       }
     }
 
-    function successAskQuestion() {
+    function successAskQuestion(questionId) {
       notifier.success(SUCCESS_CREATE_QUESTION);
-      $location.path(`/questions/${data.result}`);
+      $location.path(`/questions/${questionId}`);
     }
 
     function failedAskQuestion() {
