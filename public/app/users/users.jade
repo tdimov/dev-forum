@@ -5,12 +5,10 @@
         div.form-group
             label.control-label Търси потребител
             div.input-group.col-md-6
-                input#Search.form-control(type="text", ng-model="query")
-                span.input-group-btn
-                    button.btn.btn-primary(type="button", ng-click="searchUser()") Search
+              input#Search.form-control(type="text", ng-model="query")
     div.row
         p.text-size-14(ng-show="users.length === 0") No user found!
-        div.col-xs-6.col-sm-3(ng-repeat="user in users")
+        div.col-xs-6.col-sm-3(ng-repeat="user in users | filter:query")
             div.col-md-4
                 img(src="https://www.gravatar.com/avatar/24780fb6df85a943c7aea0402c843737?s=128&d=identicon&r=PG", width="75" height="75")
             div.col-md-8

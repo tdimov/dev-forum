@@ -11,6 +11,9 @@ app.factory('questionsService', function($http, $q, httpService) {
       },
       vote(id, isPositive) {
         return httpService.put(`/questions/${id}/vote`, { isPositive });
+      },
+      delete(id) {
+        return httpService.delete(`/questions/${id}`);
       }
     };
 });

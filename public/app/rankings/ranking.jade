@@ -6,7 +6,7 @@
     div.col-md-9
       div(ng-if="identity.isInRole('admin')")
         a.btn.btn-success.margin-right(href="#/admin/ranking/create" ng-if="!ranking.id") Създай ново класиране
-        a.btn.btn-success(href="javascript:;" ng-click="finishCurrentRanking()" ng-if="ranking.id") Приключи класирането
+        a.btn.btn-success(href="javascript:;" ng-click="finishCurrentRanking()" ng-if="!ranking.finished") Приключи класирането
       p(ng-if="!ranking.id") Не съществува класиране!
       div.table-responsive.margin-top-15(ng-if="ranking.id")
         table.table.table-bordered.table-hover

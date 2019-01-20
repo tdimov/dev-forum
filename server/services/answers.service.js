@@ -43,7 +43,6 @@ async function create(questionId, userId, payload) {
   question.answers.push(newAnswer._id);
   question.save();
   await questionsService.updateActivity(questionId);
-  await usersService.updateReputation(userId, 2);
 
   return newAnswer;
 }
@@ -71,7 +70,12 @@ async function vote(questionId, answerId, userId, isPositive) {
     userId,
     score
   });
-  usersService.updateReputation(userId, 1);
+
+  if (isPositive) {
+    usersService.updateReputation(answer.author.id, 10);
+  } else {
+    usersService.updateReputation(answer.author.id, -10);
+  }
   questionsService.updateActivity(questionId);
   Answer.findOneAndUpdate(
     {

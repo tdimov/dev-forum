@@ -1,3 +1,4 @@
+span(ng-if="questions.length === 0") Не бяха намерени въпроси!
 ul.list-group(ng-if="questions.length > 0")
   li.row.list-group-item.margin-bottom-10(ng-repeat="question in questions")
     div.col-md-1

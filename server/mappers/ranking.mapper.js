@@ -5,6 +5,7 @@ function transformToRankingModel(payload) {
     id: payload.id,
     month: payload.month,
     year: payload.year,
+    finished: payload.finished,
     firstPlacePrize: payload.firstPlacePrize,
     secondPlacePrize: payload.secondPlacePrize,
     thirdPlacePrize: payload.thirdPlacePrize,

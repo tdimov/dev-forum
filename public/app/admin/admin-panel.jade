@@ -1,17 +1,17 @@
 .container
-    h1 Admin panel
+    h1 Администраторски панел
     hr
     ul.nav.nav-tabs
         li.active
-            a(href="#questions", target="_self", data-toggle="tab") Questions
-        li
-            a(href="#tags", target="_self", data-toggle="tab") Tags
-        li
-            a(href="#users", target="_self", data-toggle="tab") Users
+            a(href="#questions", target="_self", data-toggle="tab") Въпроси
+        //- li
+        //-     a(href="#tags", target="_self", data-toggle="tab") Tags
+        //- li
+        //-     a(href="#users", target="_self", data-toggle="tab") Users
     div#tabContent.tab-content
         div#questions.tab-pane.fade.active.in
             include ../questions/questions-list
-        div#tags.tab-pane.fade
-            include ../tags/tags-list
-        div#users.tab-pane.fade
-            include users-list
+        //- div#tags.tab-pane.fade
+        //-     include ../tags/tags-list
+        //- div#users.tab-pane.fade
+        //-     include users-list

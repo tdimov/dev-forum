@@ -77,9 +77,31 @@ async function vote(req, res, next) {
   }
 }
 
+async function del(req, res, next) {
+  try {
+    const questionId = req.params.id;
+
+    if (isMissing(questionId)) {
+      throw new AppError(
+        badRequest.type,
+        badRequest.httpCode,
+        'Question id is missing!'
+      );
+    }
+
+    await questionsService.del(questionId);
+
+    return res.status(200).end();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 module.exports = {
   index,
   get,
   create,
-  vote
+  vote,
+  del
 };

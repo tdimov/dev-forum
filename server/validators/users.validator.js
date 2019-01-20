@@ -25,7 +25,8 @@ const updateUserSchema = Joi.object().keys({
   country: Joi.string(),
   city: Joi.string(),
   website: Joi.string(),
-  aboutMe: Joi.string()
+  aboutMe: Joi.string(),
+  avatar: Joi.string()
 });
 
 const changePasswordDataSchema = Joi.object().keys({

@@ -27,7 +27,8 @@ function transformToDbModel(payload) {
     email: payload.email,
     roles: payload.roles,
     registrationDate: payload.registrationDate,
-    lastLoginDate: payload.lastLoginDate
+    lastLoginDate: payload.lastLoginDate,
+    avatar: payload.avatar
   };
 }
 
@@ -38,7 +39,8 @@ function transformToUsersListModel(users) {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
-    reputation: user.reputation
+    reputation: user.reputation,
+    avatar: user.avatar
   }));
 }
 
@@ -50,7 +52,8 @@ function transformToUserProfileSettingsModel(payload) {
     country: payload.country,
     city: payload.city,
     website: payload.website,
-    aboutMe: payload.aboutMe
+    aboutMe: payload.aboutMe,
+    avatar: payload.avatar
   };
 }
 
@@ -65,6 +68,7 @@ function transformToUserProfileDetailsModel(user) {
     website: user.website,
     aboutMe: user.aboutMe,
     reputation: user.reputation,
+    avatar: user.avatar,
     lastLoginDate: dateTimeManager.formatDate(user.lastLoginDate),
     registrationDate: dateTimeManager.formatDate(user.registrationDate)
   };

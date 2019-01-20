@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   registrationDate: { type: Date, require: '{PATH} is required' },
   lastLoginDate: { type: Date, default: new Date() },
   questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
+  avatar: { type: String },
   roles: [String]
 });
 

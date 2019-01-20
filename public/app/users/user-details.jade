@@ -5,7 +5,8 @@
         div.col-md-7
             div.col-md-3
                 div.margin-bottom
-                    img.center-block(src="https://www.gravatar.com/avatar/24780fb6df85a943c7aea0402c843737?s=128&d=identicon&r=PG", width="128" height="128")
+                    img.center-block(src="https://www.gravatar.com/avatar/24780fb6df85a943c7aea0402c843737?s=128&d=identicon&r=PG", width="128" height="128" ng-if="!user.avatar")
+                    img.center-block(src="{{user.avatar}}", width="128" height="128" ng-if="user.avatar")
                 strong
                     p.text-center.text-size-18 {{ user.reputation }}
                 p.text-center reputation
@@ -19,7 +20,7 @@
                     p member since:
                 div.com-md-8
                     p(ng-if="user.website")
-                        a(href="{{ user.website }}", target="_blank") Link
+                        a(href="javascript:;", target="_blank", ng-click="openWebsite(user.website)") Link
                     p(ng-if="user.address")
                         span {{ user.address }}
                     p

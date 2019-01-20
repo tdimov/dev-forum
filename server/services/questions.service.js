@@ -81,8 +81,6 @@ async function create(payload, userId) {
 
   const newQuestion = await Question.create(payload);
 
-  await usersService.updateReputation(user.id, 1);
-
   return newQuestion._id;
 }
 
@@ -109,7 +107,13 @@ async function vote(questionId, userId, isPositive) {
     userId,
     score
   });
-  usersService.updateReputation(userId, 1);
+
+  if (isPositive) {
+    usersService.updateReputation(question.author.id, 10);
+  } else {
+    usersService.updateReputation(question.author.id, -10);
+  }
+
   Question.findOneAndUpdate(
     { _id: questionId },
     {
@@ -128,10 +132,15 @@ async function updateActivity(id) {
   );
 }
 
+async function del(id) {
+  await Question.findById(id).remove();
+}
+
 module.exports = {
   index,
   get,
   create,
   vote,
-  updateActivity
+  updateActivity,
+  del
 };

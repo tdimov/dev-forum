@@ -32,11 +32,15 @@
           div.form-group
             label.col-md-4.text-size-18(for="Website") Уебсайт
             div.col-md-10
-              input#Website.form-control(type="text", name="website", ng-model="user.website", required)
+              input#Website.form-control(type="text", name="website", ng-model="user.website")
           div.form-group
             label.col-md-4.text-size-18(for="AboutMe") За мен
             div.col-md-10
               textarea#AboutMe.form-control(name="aboutMe", ng-model="user.aboutMe")
+          div.form-group
+            label.col-md-4.text-size-18(for="Avatar") Аватар
+            div.col-md-10
+              input#Avatar.form-control(name="avatar", ng-model="user.avatar")
         button.btn.btn-success.pull-right(ng-click="update(user)") Запиши
   .col-md-6
     include changePassword
