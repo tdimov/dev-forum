@@ -89,8 +89,7 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
       ['document', 'mode'],
       ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
       ['Cut', 'Copy', 'Paste', 'PasteText'],
-      ['Undo', 'Redo'],
-      ['Image', 'SpecialChar']
+      ['Undo', 'Redo']
     ],
     height: '300px'
   };
@@ -102,6 +101,8 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
           if (!$scope.question.answers) {
             $scope.question.answers = [];
           }
+
+          data.result.author = identity.getUser();
 
           $scope.question.answers.push(data.result);
 

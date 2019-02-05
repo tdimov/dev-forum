@@ -9,15 +9,15 @@
                     img.center-block(src="{{user.avatar}}", width="128" height="128" ng-if="user.avatar")
                 strong
                     p.text-center.text-size-18 {{ user.reputation }}
-                p.text-center reputation
+                p.text-center Репутация
             div.col-md-9
                 div.col-md-4
-                    p(ng-if="user.website") website:
-                    p(ng-if="user.address") address:
-                    p name:
-                    p email:
-                    p last login:
-                    p member since:
+                    p(ng-if="user.website") Уебсайт:
+                    p(ng-if="user.address") Адрес:
+                    p Име:
+                    p Имейл:
+                    p Последен вход:
+                    p Потребител от:
                 div.com-md-8
                     p(ng-if="user.website")
                         a(href="javascript:;", target="_blank", ng-click="openWebsite(user.website)") Link
@@ -32,10 +32,10 @@
                     p
                         span {{ user.registrationDate }}
         div.col-md-5
-            span about me:
+            span За мен:
             p.well {{ user.aboutMe }}
     div.row
         div.col-md-10.margin-top-15
-            h4 {{ questions.length }} Questions
+            h4 {{ questions.length }} Въпроси
             hr
             include ../questions/questionsUI

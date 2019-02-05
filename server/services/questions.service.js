@@ -59,6 +59,13 @@ async function get(id) {
     );
   }
 
+  await Question.update({
+    _id: question._id
+  }, {
+    $set: { lastActiveDate: new Date() },
+    $inc: { viewed: 1 }
+  });
+
   return question;
 }
 

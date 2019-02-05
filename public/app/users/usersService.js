@@ -13,7 +13,6 @@ app.factory('usersService', function($q, $http, httpService) {
         return httpService.put('/users/profile/me', user);
       },
       changePassword(payload) {
-        debugger;
         return httpService.put('/users/change-password', payload);
       },
     }

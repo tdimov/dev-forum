@@ -20,7 +20,7 @@ const rankingSchema = new mongoose.Schema({
     type: mongooseSchema.Types.ObjectId,
     ref: 'RankingWinner'
   },
-  finished: { type: String, default: false }
+  finished: { type: Boolean, default: false }
 });
 
 const Ranking = mongoose.model('Ranking', rankingSchema);

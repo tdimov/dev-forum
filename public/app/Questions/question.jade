@@ -1,5 +1,5 @@
 .container
-    div.row(ng-controller="SingleQuestionController")
+    div.row
         h3 {{ question.title }}
         hr
         div.col-md-9
@@ -55,13 +55,13 @@
         div.col-md-3
             div.panel.panel-default
                 div.panel-body
-                    div.col-md-4 asked
+                    div.col-md-4 Дата
                     div.col-md-8
                         strong {{ question.date }}
-                    div.col-md-4 viewed
+                    div.col-md-4 Преглед
                     div.col-md-8
                         strong {{ question.views }} times
-                    div.col-md-4 active
+                    div.col-md-4 Активен
                     div.col-md-8
                         strong {{ question.lastActiveDate }}
             include ../includes/lastQuestions

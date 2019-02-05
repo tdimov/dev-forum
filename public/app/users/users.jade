@@ -9,8 +9,9 @@
     div.row
         p.text-size-14(ng-show="users.length === 0") No user found!
         div.col-xs-6.col-sm-3(ng-repeat="user in users | filter:query")
-            div.col-md-4
-                img(src="https://www.gravatar.com/avatar/24780fb6df85a943c7aea0402c843737?s=128&d=identicon&r=PG", width="75" height="75")
+            div.col-md-4.margin-bottom-20
+                img(src="https://www.gravatar.com/avatar/24780fb6df85a943c7aea0402c843737?s=128&d=identicon&r=PG", width="75" height="75" ng-if="!user.avatar")
+                img(src="{{user.avatar}}", width="75" height="75" ng-if="user.avatar")
             div.col-md-8
                 a.text-size-14(href="#/users/{{ user.id }}") {{ user.username }}
                 br

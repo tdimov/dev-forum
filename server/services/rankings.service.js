@@ -67,6 +67,8 @@ async function create(payload) {
 
   const newRanking = await Ranking.create(payload);
 
+  usersService.resetUsersReputation();
+
   return newRanking;
 }
 
