@@ -89,7 +89,8 @@ app.controller('SingleQuestionController', function ($scope, $sce, $location, $r
       ['document', 'mode'],
       ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
       ['Cut', 'Copy', 'Paste', 'PasteText'],
-      ['Undo', 'Redo']
+      ['Undo', 'Redo'],
+      ['Image', 'SpecialChar']
     ],
     height: '300px'
   };
